@@ -7,7 +7,7 @@ use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use backend\models\LoginFormAdmin;
 use  yii\web\Session;
-
+use backend\models\Admin;
 /**
  * Site controller
  */
@@ -96,5 +96,14 @@ class SiteController extends Controller
         Yii::$app->user->logout();
 
         return $this->goHome();
+    }
+
+    protected function findModel($id)
+    {
+        if (($model = Admin::findOne($id)) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException('The requested page does not exist.');
     }
 }

@@ -1,36 +1,40 @@
 <?php
+
 namespace backend\models;
-use Yii;
-use yii\base\NotSupportedException;
-use yii\behaviors\TimestampBehavior;
-use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
+use Yii;
+use yii\db\ActiveRecord;
+use yii\behaviors\TimestampBehavior;
 /**
- * User model
+ * This is the model class for table "tbl_user".
  *
- * @property integer $idUser
+ * @property int $idUser
  * @property string $username
+ * @property string $name
+ * @property string $surname
+ * @property string $photo
+ * @property string $auth_key
  * @property string $password_hash
  * @property string $password_reset_token
- * @property string $verification_token
  * @property string $email
- * @property string $auth_key
- * @property integer $status
- * @property integer $created_at
- * @property integer $updated_at
- * @property string $password write-only password
+ * @property int $status
+ * @property int $created_at
+ * @property int $updated_at
+ * @property string $verification_token
  */
 class User extends ActiveRecord implements IdentityInterface
 {
     const STATUS_DELETED = 0;
     const STATUS_INACTIVE = 9;
     const STATUS_ACTIVE = 10;
+    public $password;
+    public $confirmpassword;
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return '{{%user}}';
+        return '{{%tbl_user}}';
     }
     /**
      * {@inheritdoc}
@@ -47,8 +51,26 @@ class User extends ActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
-            ['status', 'default', 'value' => self::STATUS_INACTIVE],
+            ['status', 'default', 'value' => self::STATUS_ACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_INACTIVE, self::STATUS_DELETED]],
+            ['username', 'trim'],
+            ['username', 'required', 'message' => 'É obrigatório preencher o username!'],
+            ['username', 'unique', 'targetClass' => '\backend\models\User', 'message' => 'Este username já existe!'],
+            ['username', 'string', 'max' => 255, ],
+            ['name', 'trim'],
+            ['surname', 'trim'],
+            ['photo', 'trim'],
+            ['email', 'trim'],
+            ['email', 'required', 'message' => 'É obrigatório preencher o email!'],
+            ['email', 'email', 'message' => 'O email não é válido!'],
+            ['email', 'string', 'max' => 255],
+            ['email', 'unique', 'targetClass' => '\backend\models\User', 'message' => 'Este email já existe!.'],
+            ['password', 'required', 'message' => 'É obrigatório preencher a palavra-passe!'],
+            ['password', 'string', 'min' => 6, 'tooShort' => 'A palavra-passe tem de conter pelo menos 6 carateres!'],
+            ['confirmpassword', 'required', 'message' => 'É obrigatório preencher o confirmar palavra-passe!'],
+            ['confirmpassword', 'string', 'min' => 6, 'tooShort' => 'O confirmar palavra-passe tem de conter pelo menos 6 carateres!'],
+            ['confirmpassword', 'compare', 'compareAttribute'=>'password', 'message'=>"As palavras-passe não combinam!" ],
+            
         ];
     }
     /**
@@ -125,8 +147,6 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return $this->getPrimaryKey();
     }
-
-    
     /**
      * {@inheritdoc}
      */
@@ -185,15 +205,25 @@ class User extends ActiveRecord implements IdentityInterface
     {
         $this->password_reset_token = null;
     }
-
-     public function beforeSave($insert)
+    public function findModel($id)
     {
-        if (parent::beforeSave($insert)) {
-            if ($this->isNewRecord) {
-                $this->auth_key = \Yii::$app->security->generateRandomString();
-            }
-            return true;
+        if (($model = User::findOne($id)) !== null) {
+            return $model;
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
         }
-        return false;
+    }
+    public function beforeSave($insert) {
+        if ($insert) {  
+            $this->setPassword($this->password_hash);
+            $this->auth_key = \Yii::$app->security->generateRandomString();
+        } else {
+            if (!empty($this->password_hash)) {
+                $this->setPassword($this->password_hash);
+            } else {
+                $this->password_hash = (string) $this->getOldAttribute('password_hash');
+            }
+        }
+        return parent::beforeSave($insert);
     }
 }

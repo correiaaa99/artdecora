@@ -125,11 +125,7 @@ use yii\helpers\Url;
                                 ) ?>
                             </div>
                             <div class="pull-left">
-                            <?= Html::a(
-                                    'Editar perfil',
-                                    ['/admin/index'],
-                                    ['class' => 'btn btn-default btn-flat']
-                                ) ?>
+                            <?= Html::a('Editar perfil', ['admin/update', 'id' => Yii::$app->user->identity->id], ['class' => 'btn btn-default btn-flat']) ?>
                             </div>
                         </li>
                     </ul>

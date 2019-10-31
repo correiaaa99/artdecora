@@ -17,29 +17,29 @@ $this->title = '';
       <!-- Info boxes -->
       <div class="row">
         <div class="col-md-3 col-sm-6 col-xs-12">
-          <div class="info-box">
-            <span class="info-box-icon bg-aqua"><i class="fa fa-user "></i></span>
-
-            <div class="info-box-content">
-              <span class="info-box-text">Utilizadores</span>
-              <span class="info-box-number"><?= UserController::getCountUser();?></span>
+          <div class="small-box bg-aqua">
+            <div class="inner">
+              <h3><?= UserController::getCountUser()?></h3>
+              <p>Utilizadores</p>
             </div>
-            <!-- /.info-box-content -->
+            <div class="icon">
+              <i class="fa fa-user"></i>
+            </div>
+            <a href="/user/index" class="small-box-footer">Mais info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
-          <!-- /.info-box -->
         </div>
         <!-- /.col -->
         <div class="col-md-3 col-sm-6 col-xs-12">
-          <div class="info-box">
-            <span class="info-box-icon bg-red"><i class="fa fa-calendar"></i></span>
-
-            <div class="info-box-content">
-              <span class="info-box-text">Pedidos</span>
-              <span class="info-box-number">1000</span>
+          <div class="small-box bg-red">
+            <div class="inner">
+              <h3>1000</h3>
+              <p>Pedidos</p>
             </div>
-            <!-- /.info-box-content -->
+            <div class="icon">
+              <i class="fa fa-calendar"></i>
+            </div>
+            <a href="#" class="small-box-footer">Mais info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
-          <!-- /.info-box -->
         </div>
         <!-- /.col -->
 
@@ -47,27 +47,28 @@ $this->title = '';
         <div class="clearfix visible-sm-block"></div>
 
         <div class="col-md-3 col-sm-6 col-xs-12">
-          <div class="info-box">
-            <span class="info-box-icon bg-green"><i class="fa fa-home"></i></span>
-
-            <div class="info-box-content">
-              <span class="info-box-text">Projetos</span>
-              <span class="info-box-number">1000</span>
+          <div class="small-box bg-green">
+            <div class="inner">
+              <h3>1000</h3>
+              <p>Projetos</p>
             </div>
-            <!-- /.info-box-content -->
+            <div class="icon">
+              <i class="fa fa-home"></i>
+            </div>
+            <a href="#" class="small-box-footer">Mais info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
-          <!-- /.info-box -->
         </div>
         <!-- /.col -->
         <div class="col-md-3 col-sm-6 col-xs-12">
-          <div class="info-box">
-            <span class="info-box-icon bg-yellow"><i class=" fa fa-commenting-o"></i></span>
-
-            <div class="info-box-content">
-              <span class="info-box-text">Mensagens</span>
-              <span class="info-box-number">2,000</span>
+        <div class="small-box bg-yellow">
+          <div class="inner">
+              <h3>1000</h3>
+              <p>Mensagens</p>
             </div>
-            <!-- /.info-box-content -->
+            <div class="icon">
+              <i class="fa fa-comments"></i>
+            </div>
+            <a href="#" class="small-box-footer">Mais info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
           <!-- /.info-box -->
         </div>

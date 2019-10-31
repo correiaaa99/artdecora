@@ -20,13 +20,12 @@
                 'options' => ['class' => 'sidebar-menu tree', 'data-widget'=> 'tree'],
                 'items' => [
                     ['label' => 'Menu', 'options' => ['class' => 'header']],
-                    ['label' => 'Utilizadores', 'icon' => ' fa-user', 'url' => '#'],
+                    ['label' => 'Utilizadores', 'icon' => ' fa-user', 'url' => '/user/index'],
                     ['label' => 'Pedidos', 'icon' => ' fa-calendar', 'url' => '/gii'],
                     ['label' => 'Livros de ideias', 'icon' => ' fa-book', 'url' => '/debug'],       
-                    ['label' => 'Designers', 'icon' => ' fa-users', 'url' => '#'],   
+                    ['label' => 'Designers', 'icon' => ' fa-users', 'url' => '/designer/index'],   
                     ['label' => 'Projetos', 'icon' => ' fa-home', 'url' => '#'],  
-                    ['label' => 'Categorias', 'icon' => ' fa-image', 'url' => '#'], 
-                    ['label' => 'Foo', 'url' => ['/admin/index']],      
+                    ['label' => 'Categorias', 'icon' => ' fa-image', 'url' => '/category/index'],    
                 ],
             ]
         

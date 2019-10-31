@@ -1,37 +1,39 @@
 <?php
 
 use yii\helpers\Html;
-use yii\widgets\ActiveForm;
-
+use yii\bootstrap\ActiveForm;
 /* @var $this yii\web\View */
-/* @var $model app\models\Admin */
+/* @var $model app\models\Category */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="admin-form">
+<div class="category-form">
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'username')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'auth_key')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'password_hash')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'password_reset_token')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'status')->textInput() ?>
-
-    <?= $form->field($model, 'created_at')->textInput() ?>
-
-    <?= $form->field($model, 'updated_at')->textInput() ?>
-
-    <?= $form->field($model, 'verification_token')->textInput(['maxlength' => true]) ?>
-
+    <?php $fieldOptions1 = [
+    'options' => ['class' => 'form-group has-feedback'],
+    'inputTemplate' => "{input}<span class='glyphicon glyphicon-user form-control-feedback'></span>"
+];?>
+<?php $fieldOptions2 = [
+    'options' => ['class' => 'form-group has-feedback'],
+    'inputTemplate' => "{input}<span class='glyphicon glyphicon-envelope form-control-feedback'></span>"
+];?>
+<?php $fieldOptions3 = [
+    'options' => ['class' => 'form-group has-feedback'],
+    'inputTemplate' => "{input}<span class='fa fa-key form-control-feedback'></span>"
+];?>
+    <?= $form
+            ->field($model, 'username', $fieldOptions1)
+            ->label('Nome')
+            ->textInput(['placeholder' => $model->getAttributeLabel('Nome')]) ?>
+    <?= $form
+            ->field($model, 'email', $fieldOptions2)
+            ->label('Email')
+            ->textInput(['placeholder' => $model->getAttributeLabel('Email')]) ?>    
+     <?= $form->field($model, 'password_hash')->passwordInput(['placeholder' => Yii::t('app', 'Password'), 'value' => ''])->label('Palavra-passe') ?>
     <div class="form-group">
-        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton('Guardar', ['class' => 'btn btn-primary']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

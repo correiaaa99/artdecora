@@ -32,26 +32,28 @@ class Admin extends \yii\db\ActiveRecord implements IdentityInterface
     {
         return 'admin';
     }
-
+    
     /**
      * {@inheritdoc}
      */
     public function rules()
     {
         return [
-            [['username', 'auth_key', 'password_hash', 'email', 'created_at', 'updated_at'], 'required'],
+            [['auth_key', 'password_hash', 'created_at', 'updated_at'], 'required'],
             [['status', 'created_at', 'updated_at'], 'integer'],
             [['username', 'password_hash', 'password_reset_token', 'email', 'verification_token'], 'string', 'max' => 255],
             [['auth_key'], 'string', 'max' => 32],
             [['username'], 'unique'],
+            [['username'], 'required', 'message' => 'É obrigatório preencher o nome!'],
+            [['email'], 'required', 'message' => 'É obrigatório preencher o email!'],
             [['email'], 'unique'],
+            ['email', 'email', 'message' => 'O email não é válido!'],
             [['password_reset_token'], 'unique'],
+            ['password_hash', 'required', 'on' => 'insert', 'message' => 'É obrigatório preencher a palavra-passe!'],
+            ['password_hash', 'string', 'min' => 6, 'tooShort' => 'A palavra-passe tem de conter pelo menos 6 carateres!'],
+
         ];
     }
-
-    /**
-     * {@inheritdoc}
-     */
     public function attributeLabels()
     {
         return [
@@ -71,6 +73,9 @@ class Admin extends \yii\db\ActiveRecord implements IdentityInterface
     {
         return static::findOne(['id' => $id, 'status' => self::STATUS_ACTIVE]);
     }
+        /**
+     * {@inheritdoc}
+     */
     /**
      * {@inheritdoc}
      */
@@ -198,15 +203,16 @@ class Admin extends \yii\db\ActiveRecord implements IdentityInterface
     {
         $this->password_reset_token = null;
     }
-
-     public function beforeSave($insert)
-    {
-        if (parent::beforeSave($insert)) {
-            if ($this->isNewRecord) {
-                $this->auth_key = \Yii::$app->security->generateRandomString();
+    public function beforeSave($insert) {
+        if ($insert) {
+            $this->setPassword($this->password_hash);
+        } else {
+            if (!empty($this->password_hash)) {
+                $this->setPassword($this->password_hash);
+            } else {
+                $this->password_hash = (string) $this->getOldAttribute('password_hash');
             }
-            return true;
         }
-        return false;
+        return parent::beforeSave($insert);
     }
 }
