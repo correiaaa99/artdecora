@@ -20,7 +20,7 @@ use yii\bootstrap\ActiveForm;
     <p>
     <?= $form
         ->field($model, 'name', $fieldOptions1)
-        ->label(false)
+        ->label('Nome * ')
         ->textInput(['placeholder' => $model->getAttributeLabel('Nome *')]) ?>
 
     <div class="form-group">

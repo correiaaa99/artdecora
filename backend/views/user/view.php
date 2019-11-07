@@ -7,20 +7,17 @@ use yii\widgets\DetailView;
 /* @var $model app\models\User */
 
 $this->title = $model->name;
-$this->params['breadcrumbs'][] = ['label' => 'Users', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Utilizadores', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
 <div class="user-view">
-
-    <h1><?= Html::encode($this->title) ?></h1>
-
     <p>
-        <?= Html::a('Update', ['update', 'id' => $model->idUser], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->idUser], [
+        <?= Html::a('Atualizar', ['update', 'id' => $model->idUser], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Eliminar', ['delete', 'id' => $model->idUser], [
             'class' => 'btn btn-danger',
             'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
+                'confirm' => 'Tens a certeza que desejas eliminar este utilizador?',
                 'method' => 'post',
             ],
         ]) ?>
@@ -29,19 +26,30 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'idUser',
-            'username',
-            'name',
-            'surname',
-            'photo',
-            'auth_key',
-            'password_hash',
-            'password_reset_token',
-            'email:email',
-            'status',
-            'created_at',
-            'updated_at',
-            'verification_token',
+            [
+                'attribute'=> 'idUser',
+                'label' => 'Identificador',
+            ],
+            [
+                'attribute'=> 'username',
+                'label' => 'Username',
+            ],
+            [
+                'attribute'=> 'name',
+                'label' => 'Nome',
+            ],
+            [
+                'attribute'=> 'surname',
+                'label' => 'Apelido',
+            ],
+            [
+                'attribute'=> 'photo',
+                'label' => 'Foto',
+            ],
+            [
+                'attribute'=> 'email',
+                'label' => 'Email',
+            ],
         ],
     ]) ?>
 

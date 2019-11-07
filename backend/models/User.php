@@ -5,6 +5,7 @@ use yii\web\IdentityInterface;
 use Yii;
 use yii\db\ActiveRecord;
 use yii\behaviors\TimestampBehavior;
+
 /**
  * This is the model class for table "tbl_user".
  *
@@ -13,6 +14,8 @@ use yii\behaviors\TimestampBehavior;
  * @property string $name
  * @property string $surname
  * @property string $photo
+ * @property string $birth_date
+ * @property string $telephone
  * @property string $auth_key
  * @property string $password_hash
  * @property string $password_reset_token
@@ -22,7 +25,7 @@ use yii\behaviors\TimestampBehavior;
  * @property int $updated_at
  * @property string $verification_token
  */
-class User extends ActiveRecord implements IdentityInterface
+class User extends \yii\db\ActiveRecord implements IdentityInterface
 {
     const STATUS_DELETED = 0;
     const STATUS_INACTIVE = 9;
@@ -34,17 +37,9 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public static function tableName()
     {
-        return '{{%tbl_user}}';
+        return 'tbl_user';
     }
-    /**
-     * {@inheritdoc}
-     */
-    public function behaviors()
-    {
-        return [
-            TimestampBehavior::className(),
-        ];
-    }
+
     /**
      * {@inheritdoc}
      */
@@ -70,7 +65,30 @@ class User extends ActiveRecord implements IdentityInterface
             ['confirmpassword', 'required', 'message' => 'É obrigatório preencher o confirmar palavra-passe!'],
             ['confirmpassword', 'string', 'min' => 6, 'tooShort' => 'O confirmar palavra-passe tem de conter pelo menos 6 carateres!'],
             ['confirmpassword', 'compare', 'compareAttribute'=>'password', 'message'=>"As palavras-passe não combinam!" ],
-            
+        ];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function attributeLabels()
+    {
+        return [
+            'idUser' => 'Id User',
+            'username' => 'Username',
+            'name' => 'Name',
+            'surname' => 'Surname',
+            'photo' => 'Photo',
+            'birth_date' => 'Birth Date',
+            'telephone' => 'Telephone',
+            'auth_key' => 'Auth Key',
+            'password_hash' => 'Password Hash',
+            'password_reset_token' => 'Password Reset Token',
+            'email' => 'Email',
+            'status' => 'Status',
+            'created_at' => 'Created At',
+            'updated_at' => 'Updated At',
+            'verification_token' => 'Verification Token',
         ];
     }
     /**

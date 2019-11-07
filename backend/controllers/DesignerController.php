@@ -8,6 +8,8 @@ use app\models\DesignerSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
+use yii\web\Session;
 
 /**
  * DesignerController implements the CRUD actions for Designer model.
@@ -20,6 +22,18 @@ class DesignerController extends Controller
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => \yii\filters\AccessControl::className(),
+                'only' => ['update', 'create', 'index', 'delete'],
+                'rules' => [                
+                    // allow authenticated users
+                    [
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                    // everything else is denied
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [

@@ -30,8 +30,12 @@ use yii\bootstrap\ActiveForm;
     <?= $form
             ->field($model, 'email', $fieldOptions2)
             ->label('Email')
-            ->textInput(['placeholder' => $model->getAttributeLabel('Email')]) ?>    
-     <?= $form->field($model, 'password_hash')->passwordInput(['placeholder' => Yii::t('app', 'Password'), 'value' => ''])->label('Palavra-passe') ?>
+            ->textInput(['placeholder' => $model->getAttributeLabel('Email')]) ?>        
+    <?= $form->field($model, 'password_hash', $fieldOptions3)->passwordInput(['placeholder' => Yii::t('app', 'Palavra-passe'), 'value' => ''])->label('Palavra-passe') ?>
+    <?= $form
+        ->field($model, 'confirmpassword', $fieldOptions3)
+        ->label('Confirmar palavra-passe')
+        ->passwordInput(['placeholder' => $model->getAttributeLabel('Confirmar Palavra-passe ')]) ?>
     <div class="form-group">
         <?= Html::submitButton('Guardar', ['class' => 'btn btn-primary']) ?>
     </div>

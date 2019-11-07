@@ -25,12 +25,13 @@ class Admin extends \yii\db\ActiveRecord implements IdentityInterface
     const STATUS_DELETED = 0;
     const STATUS_INACTIVE = 9;
     const STATUS_ACTIVE = 10;
+    public $confirmpassword;
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return 'admin';
+        return 'tbl_admin';
     }
     
     /**
@@ -39,7 +40,7 @@ class Admin extends \yii\db\ActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
-            [['auth_key', 'password_hash', 'created_at', 'updated_at'], 'required'],
+            [['auth_key', 'created_at', 'updated_at'], 'required'],
             [['status', 'created_at', 'updated_at'], 'integer'],
             [['username', 'password_hash', 'password_reset_token', 'email', 'verification_token'], 'string', 'max' => 255],
             [['auth_key'], 'string', 'max' => 32],
@@ -49,7 +50,10 @@ class Admin extends \yii\db\ActiveRecord implements IdentityInterface
             [['email'], 'unique'],
             ['email', 'email', 'message' => 'O email não é válido!'],
             [['password_reset_token'], 'unique'],
-            ['password_hash', 'required', 'on' => 'insert', 'message' => 'É obrigatório preencher a palavra-passe!'],
+            ['confirmpassword', 'required', 'message' => 'É obrigatório preencher o confirmar palavra-passe!'],
+            ['confirmpassword', 'string', 'min' => 6, 'tooShort' => 'O confirmar palavra-passe tem de conter pelo menos 6 carateres!'],
+            ['confirmpassword', 'compare', 'compareAttribute'=>'password_hash', 'message'=>"As palavras-passe não combinam!" ],  
+            ['password_hash', 'required', 'message' => 'É obrigatório preencher a palavra-passe!'],
             ['password_hash', 'string', 'min' => 6, 'tooShort' => 'A palavra-passe tem de conter pelo menos 6 carateres!'],
 
         ];

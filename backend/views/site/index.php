@@ -63,10 +63,10 @@ $this->title = '';
         <div class="small-box bg-yellow">
           <div class="inner">
               <h3>1000</h3>
-              <p>Mensagens</p>
+              <p>Livro de ideias</p>
             </div>
             <div class="icon">
-              <i class="fa fa-comments"></i>
+              <i class="fa fa-book"></i>
             </div>
             <a href="#" class="small-box-footer">Mais info <i class="fa fa-arrow-circle-right"></i></a>
           </div>

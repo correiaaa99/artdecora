@@ -17,13 +17,15 @@ class AdminController extends Controller
     {
         return [
             'access' => [
-                'class' => AccessControl::className(),
-                'rules' => [
+                'class' => \yii\filters\AccessControl::className(),
+                'only' => ['update'],
+                'rules' => [                
+                    // allow authenticated users
                     [
-                        'actions' => ['update', 'update'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
+                    // everything else is denied
                 ],
             ],
             'verbs' => [
@@ -55,7 +57,7 @@ class AdminController extends Controller
         }
         return $this->render('/admin/update', [
             'model' => $model,
-        ]);   
+        ]);  
     }
 
     protected function findModel($id)
