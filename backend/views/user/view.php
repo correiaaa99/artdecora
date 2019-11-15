@@ -6,7 +6,7 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model app\models\User */
 
-$this->title = $model->name;
+$this->title = $model->username;
 $this->params['breadcrumbs'][] = ['label' => 'Utilizadores', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
@@ -45,6 +45,14 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute'=> 'photo',
                 'label' => 'Foto',
+            ],
+            [
+                'attribute'=> 'birth_date',
+                'label' => 'Data de nascimento',
+            ],
+            [
+                'attribute'=> 'telephone',
+                'label' => 'Telemóvel',
             ],
             [
                 'attribute'=> 'email',

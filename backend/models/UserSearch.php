@@ -18,7 +18,7 @@ class UserSearch extends User
     {
         return [
             [['idUser', 'status', 'created_at', 'updated_at'], 'integer'],
-            [['username', 'name', 'surname', 'photo', 'auth_key', 'password_hash', 'password_reset_token', 'email', 'verification_token'], 'safe'],
+            [['username', 'name', 'surname', 'photo', 'telephone', 'birth_date', 'auth_key', 'password_hash', 'password_reset_token', 'email', 'verification_token'], 'safe'],
         ];
     }
 

@@ -9,7 +9,7 @@ use kartik\date\DatePicker;
 ?>
 
 <div class="user-form">
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']])?>
     <?php $fieldOptions1 = [
     'options' => ['class' => 'form-group has-feedback'],
     'inputTemplate' => "{input}<span class='glyphicon glyphicon-user form-control-feedback'></span>"
@@ -34,6 +34,7 @@ use kartik\date\DatePicker;
     'options' => ['class' => 'form-group has-feedback'],
     'inputTemplate' => "{input}<span class='fa fa-phone form-control-feedback'></span>"
     ];?>
+
     <small id="emailHelp" class="form-text text-muted">Campo de preenchimento obrigatório (*)</small>
     <p>
     <?= $form
@@ -48,25 +49,26 @@ use kartik\date\DatePicker;
         ->field($model, 'surname', $fieldOptions1)
         ->label('Apelido')
         ->textInput(['placeholder' => $model->getAttributeLabel('Apelido')]) ?>
+    <?= $form->field($model, 'file')->fileInput()
+    ->label('Foto') ?>
     <?= $form
         ->field($model, 'email', $fieldOptions4)
         ->label('Email *')
         ->textInput(['placeholder' => $model->getAttributeLabel('Email *')]) ?>
     
-    <label>Data de nascimento</label>
-    <?php
-    echo DatePicker::widget([
-        'model' => $model,
-        'name' => 'birth_date', 
-        'options' => ['placeholder' => 'Data de nascimento'],
-        'pluginOptions' => [
-            'format' => 'dd-M-yyyy',
-            'todayHighlight' => true
-        ]
-    ]); ?>
-    <br>
+    <?= $form->field($model, 'birth_date')
+        ->label('Data de nascimento')
+        ->widget(
+        DatePicker::className(), [
+            'options' => ['placeholder' => 'Data de nascimento'],
+            'pluginOptions' => [
+                'format' => 'dd-M-yyyy',
+                'todayHighlight' => true,
+
+            ]
+    ]);?>    
     <?= $form->field($model, 'telephone', $fieldOptions6)->widget(\yii\widgets\MaskedInput::className(), [
-    'mask' => '999-999-999',
+    'mask' => '999[-]999[-]999',
     ])
     ->label('Telemóvel') 
     ->textInput(['placeholder' => $model->getAttributeLabel('Telemóvel')]) ?>
@@ -78,10 +80,18 @@ use kartik\date\DatePicker;
         ->field($model, 'confirmpassword', $fieldOptions3)
         ->label('Confirma palavra-passe *')
         ->passwordInput(['placeholder' => $model->getAttributeLabel('Confirmar Palavra-passe *')]) ?>
+    <?php
+    if(!$model->isNewRecord)
+    {
+        ?>
+        <?= Html::a('Endereços', ['address/index'], ['class' => 'btn btn-primary']) ?>
+       <?php
+    }
+    ?>
+    <p>
     <div class="form-group">
         <?= Html::submitButton('Guardar', ['class' => 'btn btn-primary']) ?>
     </div>
-
     <?php ActiveForm::end(); ?>
 
 </div>

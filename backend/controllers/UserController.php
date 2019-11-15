@@ -8,9 +8,9 @@ use backend\models\UserSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use backend\models\UserForm;
-use  yii\web\Session;
+use yii\web\Session;
 use yii\filters\AccessControl;
+use yii\web\UploadedFile;
 /**
  * UserController implements the CRUD actions for User model.
  */
@@ -84,9 +84,20 @@ class UserController extends Controller
     public function actionCreate()
     {
         $model = new User();
-        $model->generateEmailVerificationToken();
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['index']);
+        
+        if ($model->load(Yii::$app->request->post()))
+        {    
+            $model->generateEmailVerificationToken();
+            if($model->file = UploadedFile::getInstance($model,'file'))
+            {
+                $imageName = $model->username;
+                $model->photo = 'images/' . $imageName . '.' . $model->file->extension;
+                $model->file->saveAs('images/'.$imageName .'.'. $model->file->extension);
+                //guardar foto na bd
+               
+            }
+            $model->save();
+            return $this->redirect(['index']); 
         }
         return $this->render('create', [
             'model' => $model,
@@ -102,7 +113,9 @@ class UserController extends Controller
      */
     public function actionUpdate($id)
     {
+        $session = Yii::$app->session;
         $model = $this->findModel($id);
+        $session->set('id', $model->idUser);
         if ($model->load(Yii::$app->request->post()) && $model->save()) {  
             return $this->redirect(['index']);
         } else {
@@ -122,9 +135,21 @@ class UserController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
+        try 
+        {
+            $model = $this->findModel($id);
+            if($model->photo != '')
+            {
+                unlink(Yii::$app->basePath . '/web/' . $model->photo);
+            }
+            $this->findModel($id)->delete();        
+            return $this->redirect(['index']);
+        }
+        catch(\yii\db\IntegrityException $e)
+        {
+            \Yii::$app->session->setFlash('erro', 'Não é possível eliminar este utilizador porque está relacionado!');
+            return $this->redirect(['index']);
+        }
     }
 
     protected function findModel($id) {
@@ -133,12 +158,5 @@ class UserController extends Controller
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
-    }    
-    protected function findFormModel($id) {
-        if (($model = UserForm::findOne($id)) !== null) {
-            return $model;
-        } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
-        }
-    }    
+    }      
 }

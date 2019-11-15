@@ -24,6 +24,8 @@ use yii\behaviors\TimestampBehavior;
  * @property int $created_at
  * @property int $updated_at
  * @property string $verification_token
+ *
+ * @property TblAddress[] $tblAddresses
  */
 class User extends \yii\db\ActiveRecord implements IdentityInterface
 {
@@ -32,6 +34,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     const STATUS_ACTIVE = 10;
     public $password;
     public $confirmpassword;
+    public $file;
     /**
      * {@inheritdoc}
      */
@@ -51,11 +54,12 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
             ['username', 'trim'],
             ['username', 'required', 'message' => 'É obrigatório preencher o username!'],
             ['username', 'unique', 'targetClass' => '\backend\models\User', 'message' => 'Este username já existe!'],
-            ['username', 'string', 'max' => 255, ],
+            ['username', 'string', 'max' => 255],
             ['name', 'trim'],
             ['surname', 'trim'],
-            ['photo', 'trim'],
             ['email', 'trim'],
+            ['birth_date', 'trim'],
+            ['telephone', 'trim'],
             ['email', 'required', 'message' => 'É obrigatório preencher o email!'],
             ['email', 'email', 'message' => 'O email não é válido!'],
             ['email', 'string', 'max' => 255],
@@ -65,9 +69,10 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
             ['confirmpassword', 'required', 'message' => 'É obrigatório preencher o confirmar palavra-passe!'],
             ['confirmpassword', 'string', 'min' => 6, 'tooShort' => 'O confirmar palavra-passe tem de conter pelo menos 6 carateres!'],
             ['confirmpassword', 'compare', 'compareAttribute'=>'password', 'message'=>"As palavras-passe não combinam!" ],
+            ['file', 'trim'],
+            [['file'], 'image', 'skipOnEmpty' => true, 'extensions' => 'png, jpg, jpeg'],
         ];
-    }
-
+    } 
     /**
      * {@inheritdoc}
      */
@@ -78,7 +83,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
             'username' => 'Username',
             'name' => 'Name',
             'surname' => 'Surname',
-            'photo' => 'Photo',
+            'file' => 'Photo',
             'birth_date' => 'Birth Date',
             'telephone' => 'Telephone',
             'auth_key' => 'Auth Key',
@@ -90,6 +95,14 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
             'updated_at' => 'Updated At',
             'verification_token' => 'Verification Token',
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getTblAddresses()
+    {
+        return $this->hasMany(TblAddress::className(), ['idUser' => 'idUser']);
     }
     /**
      * {@inheritdoc}
@@ -231,17 +244,33 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
-    public function beforeSave($insert) {
-        if ($insert) {  
-            $this->setPassword($this->password_hash);
-            $this->auth_key = \Yii::$app->security->generateRandomString();
-        } else {
-            if (!empty($this->password_hash)) {
+    public function beforeSave($insert)
+    {         
+        if (parent::beforeSave($insert)) 
+        {             
+            if ($this->isNewRecord) 
+            {                      
                 $this->setPassword($this->password_hash);
-            } else {
-                $this->password_hash = (string) $this->getOldAttribute('password_hash');
+                $this->auth_key = \Yii::$app->security->generateRandomString();
+                $this->created_at = time();    
             }
+            else
+            {
+                if (!empty($this->password_hash))
+                {
+                    $this->setPassword($this->password_hash);
+                } else 
+                {
+                    $this->password_hash = (string) $this->getOldAttribute('password_hash');
+                }
+            }                         
+            $this->updated_at = time();            
+        
+            return true;         
+   
         }
-        return parent::beforeSave($insert);
+        return false;   
+   
     }
+
 }
