@@ -1,5 +1,6 @@
 <?php
 use backend\Controllers\UserController;
+use backend\Controllers\IdeaBookController;
 /* @var $this yii\web\View */
 $this->title = '';
 ?>
@@ -62,13 +63,13 @@ $this->title = '';
         <div class="col-md-3 col-sm-6 col-xs-12">
         <div class="small-box bg-yellow">
           <div class="inner">
-              <h3>1000</h3>
+              <h3><?= IdeaBookController::getCountBook();?></h3>
               <p>Livro de ideias</p>
             </div>
             <div class="icon">
               <i class="fa fa-book"></i>
             </div>
-            <a href="#" class="small-box-footer">Mais info <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="/idea-book/index" class="small-box-footer">Mais info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
           <!-- /.info-box -->
         </div>

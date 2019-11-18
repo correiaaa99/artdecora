@@ -5,7 +5,6 @@ use yii\web\IdentityInterface;
 use Yii;
 use yii\db\ActiveRecord;
 use yii\behaviors\TimestampBehavior;
-
 /**
  * This is the model class for table "tbl_user".
  *
@@ -69,8 +68,8 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
             ['confirmpassword', 'required', 'message' => 'É obrigatório preencher o confirmar palavra-passe!'],
             ['confirmpassword', 'string', 'min' => 6, 'tooShort' => 'O confirmar palavra-passe tem de conter pelo menos 6 carateres!'],
             ['confirmpassword', 'compare', 'compareAttribute'=>'password', 'message'=>"As palavras-passe não combinam!" ],
-            ['file', 'trim'],
-            [['file'], 'image', 'skipOnEmpty' => true, 'extensions' => 'png, jpg, jpeg'],
+            ['photo', 'trim'],
+            [['file'], 'file', 'extensions' => 'png, jpg, jpeg'],
         ];
     } 
     /**
@@ -100,9 +99,16 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getTblAddresses()
+    public function getAddresses()
     {
-        return $this->hasMany(TblAddress::className(), ['idUser' => 'idUser']);
+        return $this->hasMany(Address::className(), ['idUser' => 'idUser']);
+    }
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getIdeaBook()
+    {
+        return $this->hasMany(Ideabook::className(), ['idUser' => 'idUser']);
     }
     /**
      * {@inheritdoc}
@@ -270,7 +276,6 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
    
         }
         return false;   
-   
     }
 
 }

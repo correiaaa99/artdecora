@@ -58,6 +58,10 @@ class UserController extends Controller
         ]);
     }
 
+    public function getUsers()
+    {
+        return User::find()->count();
+    }
     public function getCountUser()
     {
         $count = User::find()->count();
@@ -88,12 +92,14 @@ class UserController extends Controller
         if ($model->load(Yii::$app->request->post()))
         {    
             $model->generateEmailVerificationToken();
-            if($model->file = UploadedFile::getInstance($model,'file'))
+            if(UploadedFile::getInstance($model,'file'))
             {
+                $model->file = UploadedFile::getInstance($model,'file');
                 $imageName = $model->username;
                 $model->photo = 'images/' . $imageName . '.' . $model->file->extension;
+                $model->save();
                 $model->file->saveAs('images/'.$imageName .'.'. $model->file->extension);
-                //guardar foto na bd
+               return $this->redirect(['index']); 
                
             }
             $model->save();
@@ -116,7 +122,25 @@ class UserController extends Controller
         $session = Yii::$app->session;
         $model = $this->findModel($id);
         $session->set('id', $model->idUser);
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {  
+        $oldImage = $model->photo;
+        
+        if ($model->load(Yii::$app->request->post())) {  
+            $image = UploadedFile::getInstance($model, 'file');
+            if(UploadedFile::getInstance($model, 'file'))
+            {
+                
+                $model->photo = 'images/' . $model->username .'.'. $image->extension; 
+            }
+            else
+            {
+                $model->photo = $oldImage;
+            }
+            if($model->save())
+            {
+                if(isset($image)){
+                    $image->saveAs($model->photo);   
+                }
+            }
             return $this->redirect(['index']);
         } else {
             return $this->render('update', [
@@ -138,16 +162,31 @@ class UserController extends Controller
         try 
         {
             $model = $this->findModel($id);
-            if($model->photo != '')
+            $books = $model->ideaBook;
+            $addresses = $model->addresses;
+            if($books != null)
             {
-                unlink(Yii::$app->basePath . '/web/' . $model->photo);
+                \Yii::$app->session->setFlash('erro', 'Não é possível eliminar este utilizador porque está inserido num ou mais livros de ideias!');
+                return $this->redirect(['index']);
             }
-            $this->findModel($id)->delete();        
-            return $this->redirect(['index']);
+            else if($addresses != null)
+            {
+                \Yii::$app->session->setFlash('erro', 'Não é possível eliminar este utilizador porque contém ou mais endereços!');
+                return $this->redirect(['index']);
+            }
+            else
+            {
+                if($model->photo != '')
+                {
+                    unlink(Yii::$app->basePath . '/web/' . $model->photo);
+                }
+                $this->findModel($id)->delete();        
+                return $this->redirect(['index']);
+            }
         }
         catch(\yii\db\IntegrityException $e)
         {
-            \Yii::$app->session->setFlash('erro', 'Não é possível eliminar este utilizador porque está relacionado!');
+            \Yii::$app->session->setFlash('erro', 'Não é possível eliminar este utilizador!');
             return $this->redirect(['index']);
         }
     }
