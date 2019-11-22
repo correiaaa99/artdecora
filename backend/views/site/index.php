@@ -1,6 +1,7 @@
 <?php
 use backend\Controllers\UserController;
 use backend\Controllers\IdeaBookController;
+use backend\Controllers\ProjectController;  
 /* @var $this yii\web\View */
 $this->title = '';
 ?>
@@ -20,7 +21,7 @@ $this->title = '';
         <div class="col-md-3 col-sm-6 col-xs-12">
           <div class="small-box bg-aqua">
             <div class="inner">
-              <h3><?= UserController::getCountUser()?></h3>
+              <h3><?= UserController::getUsers()?></h3>
               <p>Utilizadores</p>
             </div>
             <div class="icon">
@@ -50,13 +51,13 @@ $this->title = '';
         <div class="col-md-3 col-sm-6 col-xs-12">
           <div class="small-box bg-green">
             <div class="inner">
-              <h3>1000</h3>
+              <h3><?= ProjectController::getProjects()?></h3>
               <p>Projetos</p>
             </div>
             <div class="icon">
               <i class="fa fa-home"></i>
             </div>
-            <a href="#" class="small-box-footer">Mais info <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="/project/index" class="small-box-footer">Mais info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- /.col -->

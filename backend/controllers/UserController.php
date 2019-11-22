@@ -11,6 +11,7 @@ use yii\filters\VerbFilter;
 use yii\web\Session;
 use yii\filters\AccessControl;
 use yii\web\UploadedFile;
+use yii\web\ForbiddenHttpException;
 /**
  * UserController implements the CRUD actions for User model.
  */
@@ -62,11 +63,6 @@ class UserController extends Controller
     {
         return User::find()->count();
     }
-    public function getCountUser()
-    {
-        $count = User::find()->count();
-        return $count;
-    }
     /**
      * Displays a single User model.
      * @param integer $id
@@ -87,27 +83,33 @@ class UserController extends Controller
      */
     public function actionCreate()
     {
-        $model = new User();
-        
-        if ($model->load(Yii::$app->request->post()))
-        {    
-            $model->generateEmailVerificationToken();
-            if(UploadedFile::getInstance($model,'file'))
-            {
-                $model->file = UploadedFile::getInstance($model,'file');
-                $imageName = $model->username;
-                $model->photo = 'images/' . $imageName . '.' . $model->file->extension;
+        if (\Yii::$app->user->can('criarUser')) 
+        {
+            $model = new User();
+            if ($model->load(Yii::$app->request->post()))
+            {    
+                $model->generateEmailVerificationToken();
+                if(UploadedFile::getInstance($model,'file'))
+                {
+                    $model->file = UploadedFile::getInstance($model,'file');
+                    $imageName = $model->username;
+                    $model->photo = 'images/' . $imageName . '.' . $model->file->extension;
+                    $model->save();
+                    $model->file->saveAs('images/'.$imageName .'.'. $model->file->extension);
+                return $this->redirect(['index']); 
+                
+                }
                 $model->save();
-                $model->file->saveAs('images/'.$imageName .'.'. $model->file->extension);
-               return $this->redirect(['index']); 
-               
+                return $this->redirect(['index']); 
             }
-            $model->save();
-            return $this->redirect(['index']); 
+            return $this->render('create', [
+                'model' => $model,
+            ]);
         }
-        return $this->render('create', [
-            'model' => $model,
-        ]);
+        else  
+        {
+            throw new ForbiddenHttpException;
+        }
     }
 
     /**
@@ -164,6 +166,7 @@ class UserController extends Controller
             $model = $this->findModel($id);
             $books = $model->ideaBook;
             $addresses = $model->addresses;
+            //testar se o user está relacionado noutra tabela 
             if($books != null)
             {
                 \Yii::$app->session->setFlash('erro', 'Não é possível eliminar este utilizador porque está inserido num ou mais livros de ideias!');

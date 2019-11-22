@@ -43,8 +43,9 @@ $this->params['breadcrumbs'][] = $this->title;
                 'label' => 'Apelido',
             ],
             [
-                'attribute'=> 'photo',
-                'label' => 'Foto',
+                'attribute'=>'Foto',
+                'value'=> '@web/' . $model->photo,
+                'format' => ['image',['width'=>'60','height'=>'50']],
             ],
             [
                 'attribute'=> 'birth_date',
@@ -60,5 +61,6 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
         ],
     ]) ?>
+    
 
 </div>

@@ -5,6 +5,7 @@ use yii\web\IdentityInterface;
 use Yii;
 use yii\db\ActiveRecord;
 use yii\behaviors\TimestampBehavior;
+
 /**
  * This is the model class for table "tbl_user".
  *
@@ -65,8 +66,8 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
             ['email', 'unique', 'targetClass' => '\backend\models\User', 'message' => 'Este email já existe!.'],
             ['password', 'required', 'message' => 'É obrigatório preencher a palavra-passe!'],
             ['password', 'string', 'min' => 6, 'tooShort' => 'A palavra-passe tem de conter pelo menos 6 carateres!'],
+            ['password', 'match', 'pattern' => '/^.*(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).*$/', 'message' => 'A palavra-passe deve conter pelo menos um carácter minúsculo e maiúsculo e um dígito!'],
             ['confirmpassword', 'required', 'message' => 'É obrigatório preencher o confirmar palavra-passe!'],
-            ['confirmpassword', 'string', 'min' => 6, 'tooShort' => 'O confirmar palavra-passe tem de conter pelo menos 6 carateres!'],
             ['confirmpassword', 'compare', 'compareAttribute'=>'password', 'message'=>"As palavras-passe não combinam!" ],
             ['photo', 'trim'],
             [['file'], 'file', 'extensions' => 'png, jpg, jpeg'],

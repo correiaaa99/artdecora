@@ -24,7 +24,7 @@
                     ['label' => 'Pedidos', 'icon' => ' fa-calendar', 'url' => '/gii'],
                     ['label' => 'Livros de ideias', 'icon' => ' fa-book', 'url' => '/idea-book/index'],       
                     ['label' => 'Designers', 'icon' => ' fa-users', 'url' => '/designer/index'],   
-                    ['label' => 'Projetos', 'icon' => ' fa-home', 'url' => '#'],  
+                    ['label' => 'Projetos', 'icon' => ' fa-home', 'url' => '/project/index'],  
                     ['label' => 'Categorias', 'icon' => ' fa-image', 'url' => '/category/index'],    
                 ],
             ]

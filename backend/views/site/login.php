@@ -36,7 +36,7 @@ $fieldOptions2 = [
         <?= $form
             ->field($model, 'password', $fieldOptions2)
             ->label(false)
-            ->passwordInput(['placeholder' => $model->getAttributeLabel('Password')]) ?>
+            ->passwordInput(['placeholder' => 'Palavra-passe']) ?>
         <div class="row">
             <div class="col-xs-8">
                 <?= $form->field($model, 'rememberMe')->checkbox() ?>

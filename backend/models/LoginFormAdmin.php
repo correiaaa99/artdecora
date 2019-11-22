@@ -18,7 +18,8 @@ class LoginFormAdmin extends Model
     {
         return [
             // username and password are both required
-            [['email', 'password'], 'required'],
+            ['email', 'required', 'message' => 'É obrigatório preencher o email!'],
+            ['password', 'required', 'message' => 'É obrigatório preencher a palavra-passe!'],
             // rememberMe must be a boolean value
             ['rememberMe', 'boolean'],
             // password is validated by validatePassword()

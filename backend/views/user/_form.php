@@ -6,6 +6,7 @@ use yii\bootstrap\ActiveForm;
 /* @var $model app\models\User */
 /* @var $form yii\widgets\ActiveForm */
 use kartik\date\DatePicker;
+use kartik\password\PasswordInput;
 ?>
 
 <div class="user-form">
@@ -39,8 +40,8 @@ use kartik\date\DatePicker;
     <p>
     <?= $form
         ->field($model, 'username', $fieldOptions1)
-        ->label('Username *')
-        ->textInput(['placeholder' => $model->getAttributeLabel('Username *')]) ?>    
+        ->label('Utilizador *')
+        ->textInput(['placeholder' => $model->getAttributeLabel('Utilizador *')]) ?>    
      <?= $form
         ->field($model, 'name', $fieldOptions1)
         ->label('Nome')
@@ -72,14 +73,24 @@ use kartik\date\DatePicker;
     ])
     ->label('Telemóvel') 
     ->textInput(['placeholder' => $model->getAttributeLabel('Telemóvel')]) ?>
-    <?= $form
-        ->field($model, 'password', $fieldOptions3)
-        ->label('Palavra-passe * ')
-        ->passwordInput(['placeholder' => $model->getAttributeLabel('Palavra-passe *')]) ?>
-     <?= $form
-        ->field($model, 'confirmpassword', $fieldOptions3)
+    <?php 
+        echo $form->field($model, 'password')
+        ->label('Palavra-passe *')
+        ->widget(PasswordInput::classname(), [
+        'pluginOptions' => [
+            'showMeter' => false,
+            'toggleMask' => true
+        ]
+        ]);?>
+     <?php 
+        echo $form->field($model, 'confirmpassword')
         ->label('Confirma palavra-passe *')
-        ->passwordInput(['placeholder' => $model->getAttributeLabel('Confirmar Palavra-passe *')]) ?>
+        ->widget(PasswordInput::classname(), [
+        'pluginOptions' => [
+            'showMeter' => false,
+            'toggleMask' => true
+        ]
+        ]);?>
     <?php
     if(!$model->isNewRecord)
     {

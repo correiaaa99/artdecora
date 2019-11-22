@@ -37,7 +37,7 @@ class Address extends \yii\db\ActiveRecord
             [['name'], 'string', 'max' => 100],
             [['city'], 'string', 'max' => 50],
             [['zip_code'], 'string', 'max' => 8],
-            [['name'], 'unique'],
+            ['name', 'unique', 'targetClass' => '\backend\models\Address', 'message' => 'Esta morada já existe!'],
         ];
     }
 
