@@ -19,6 +19,7 @@ class DesignerSearch extends Designer
         return [
             [['idDesigner'], 'integer'],
             [['name'], 'safe'],
+            [['email'], 'safe'],
         ];
     }
 
@@ -62,7 +63,7 @@ class DesignerSearch extends Designer
         ]);
 
         $query->andFilterWhere(['like', 'name', $this->name]);
-
+        $query->andFilterWhere(['like', 'email', $this->email]);
         return $dataProvider;
     }
 }

@@ -15,6 +15,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'project' => $project,
         'designer' => $designer,
         'category' => $category,
+        'image' => $image,
     ]) ?>
 
 </div>

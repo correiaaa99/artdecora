@@ -10,6 +10,9 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use backend\models\Designerproject;
 use backend\models\Projectcategory;
+use backend\models\Image;
+use yii\web\ForbiddenHttpException;
+use yii\web\UploadedFile;
 
 /**
  * ProjectController implements the CRUD actions for Project model.
@@ -22,12 +25,24 @@ class ProjectController extends Controller
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => \yii\filters\AccessControl::className(),
+                'only' => ['create', 'update', 'index', 'delete'],
+                'rules' => [                
+                    // allow authenticated users
+                    [
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                    // everything else is denied
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST'],
                 ],
-            ],
+            ], 
         ];
     }
 
@@ -70,18 +85,64 @@ class ProjectController extends Controller
      */
     public function actionCreate()
     {
-        $project = new Project();
-        $project_designer = new Designerproject();
-        $project_category = new Projectcategory();
-        if ($project->load(Yii::$app->request->post()) && $project->save()) {
-            return $this->redirect(['view', 'id' => $project->idProject]);
+        if (\Yii::$app->user->can('criarProjeto')) 
+        {
+            $image = new Image();
+            $project = new Project();
+            $project_category = new Projectcategory();
+            $project_designer = new Designerproject();
+            if ($project->load(Yii::$app->request->post()))
+            {
+                $project->save(false);
+                if($project_designer->load(Yii::$app->request->post()))
+                {
+                    foreach($project_designer->idDesigner as $value)
+                    {
+                        $project_designer = new Designerproject();  
+                        $project_designer->idDesigner = $value;
+                        $project_designer->idProject = $project->idProject;
+                        $project_designer->isNewRecord = true;
+                        $project_designer->save();
+                    } 
+                }
+                if($project_category->load(Yii::$app->request->post()))
+                {
+                    foreach($project_category->idCategory as $value)
+                    {
+                        $project_category = new Projectcategory();  
+                        $project_category->idCategory = $value;
+                        $project_category->idProject = $project->idProject;
+                        $project_category->isNewRecord = true;
+                        $project_category->save();
+                    } 
+                }
+                if($image->load(Yii::$app->request->post()))
+                {
+                    $image->file = UploadedFile::getInstances($image, 'file');
+                    foreach($image->file as $file)
+                    {
+                        $image = new Image();
+                        $image->name = 'images/' .  preg_replace("/[^a-zA-Z0-9.]/", "",str_replace(' ', '_' , $file->baseName)) . '.' . $file->extension;
+                        $image->idProject = $project->idProject;
+                        $project_designer->isNewRecord = true;
+                        $image->save(false);
+                        $path = 'images/' .  preg_replace("/[^a-zA-Z0-9.]/", "",str_replace(' ', '_' , $file->baseName)) . '.' . $file->extension;
+                        $file->saveAs($path);
+                    }
+                }
+                return $this->redirect(['index']);
+            }   
+            return $this->render('create', [
+                'project' => $project,
+                'designer'=> $project_designer,
+                'category' => $project_category,
+                'image' => $image,
+            ]);
+        } 
+        else
+        {
+            throw new ForbiddenHttpException;
         }
-
-        return $this->render('create', [
-            'project' => $project,
-            'designer'=> $project_designer,
-            'category' => $project_category,
-        ]);
     }
 
     /**
@@ -93,15 +154,27 @@ class ProjectController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
+        if (\Yii::$app->user->can('atualizarProjeto')) 
+        {
+            $project = $this->findModel($id);
+            $project_category = new Projectcategory();
+            $project_designer = new Designerproject();
+            $image = new Image();
+            if ($project->load(Yii::$app->request->post()) && $project->save()) {
+                return $this->redirect(['view', 'id' => $project->idProject]);
+            }
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->idProject]);
+            return $this->render('update', [
+                'project' => $project,
+                'designer' => $project_designer,
+                'category' => $project_category,
+                'image' => $image,
+            ]);
         }
-
-        return $this->render('update', [
-            'model' => $model,
-        ]);
+        else
+        {
+            throw new ForbiddenHttpException;
+        }
     }
 
     /**
@@ -113,9 +186,17 @@ class ProjectController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        
+        if (\Yii::$app->user->can('eliminarProjeto')) 
+        {
+            $this->findModel($id)->delete();
+            return $this->redirect(['index']);
+        } 
+        else 
+        {
+            throw new ForbiddenHttpException;
+        }
 
-        return $this->redirect(['index']);
     }
 
     /**

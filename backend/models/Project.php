@@ -29,12 +29,15 @@ class Project extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'price', 'description', 'date'], 'required'],
-            [['price'], 'number', 'numberPattern' => '/^\s*[-+]?[0-9]*[.,]?[0-9]+([eE][-+]?[0-9]+)?\s*$/'],
+            ['name', 'required', 'message' => 'É obrigatório preencher o nome!'],
+            ['price', 'required', 'message' => 'É obrigatório preencher o preço!'],
+            ['price', 'number'],
+            ['date', 'required', 'message' => 'É obrigatório preencher a data!'],
+            ['date', 'date'],
+            ['description', 'required', 'message' => 'É obrigatório preencher a descrição!'],
             [['description'], 'string'],
             [['name'], 'string', 'max' => 50],
-            [['date'], 'string', 'max' => 20],
-
+            [['date'], 'string', 'max' => 20],      
         ];
     }
 
@@ -49,21 +52,16 @@ class Project extends \yii\db\ActiveRecord
             'price' => 'Price',
             'description' => 'Description',
             'date' => 'Date',
+            'idCategory' => 'idCategory',
+            'idDesigner' => 'idDesigner',
         ];
     }
-    public function beforeSave($insert) 
-    {   
-        if (parent::beforeSave($insert)) 
-        {
-            $this->price = str_replace(",", ".", $this->prod_price);
-            return true;
-        } 
-        else 
-        {
-
-            return false;
-
-        }
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getImages()
+    {
+        return $this->hasMany(Image::className(), ['idProject' => 'idProject']);
     }
     public function getDesigners()
     {

@@ -47,28 +47,27 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'label' => 'Designer(s)',
                 'value' => function($model)
-                    {
-                        $designer = [];
-                        foreach($model->designers as $designer) {
-        
-                           $designers[] = $designer->name;
-                        }
-                        return implode(', ', $designers);
-                     },
-             ],
-             [
-
+                {
+                    $designer = [];
+                    foreach($model->designers as $designer) {
+    
+                       $designers[] = $designer->name;
+                    }
+                    return implode(', ', $designers);
+                },
+            ],
+            [
                 'label' => 'Categoria(s)',
                 'value' => function($model)
-                    {
-                        $category = [];
-                        foreach($model->categorys as $category) {
-        
-                           $categorys[] = $category->name;
-                        }
-                        return implode(', ', $categorys);
-                     },
-             ],
+                {
+                    $category = [];
+                    foreach($model->categorys as $category) {
+    
+                        $categorys[] = $category->name;
+                    }
+                    return implode(', ', $categorys);
+                },
+            ],
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

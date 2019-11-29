@@ -28,7 +28,8 @@ class Designer extends \yii\db\ActiveRecord
         return [
             [['name'],'required', 'message' => 'É obrigatório preencher o nome!'],
             [['name'], 'string', 'max' => 100],
-            ['name', 'unique', 'targetClass' => '\backend\models\Designer', 'message' => 'Este nome já existe!'],
+            [['email'],'required', 'message' => 'É obrigatório preencher o email!'],
+            ['email', 'unique', 'targetClass' => '\backend\models\Designer', 'message' => 'Este email já existe!'],
         ];
     }
 

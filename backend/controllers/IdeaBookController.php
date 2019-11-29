@@ -8,6 +8,7 @@ use backend\models\IdeaBookSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\ForbiddenHttpException;
 
 /**
  * IdeaBookController implements the CRUD actions for IdeaBook model.
@@ -69,16 +70,24 @@ class IdeaBookController extends Controller
      */
     public function actionCreate()
     {
-        $model = new IdeaBook();
-        if ($model->load(Yii::$app->request->post())) {
-            $model->date = date('Y-m-d');
-            $model->save();
-            return $this->redirect(['index']); 
-        }
+        if (\Yii::$app->user->can('criarLivro')) 
+        {
+            $model = new IdeaBook();
+            if ($model->load(Yii::$app->request->post())) {
+                $model->date = date('Y-m-d');
+                $model->save();
+                return $this->redirect(['index']); 
+            }
 
-        return $this->render('create', [
-            'model' => $model,
-        ]);
+            return $this->render('create', [
+                'model' => $model,
+            ]);
+        }
+        else
+        {
+            throw new ForbiddenHttpException;
+        }
+        
     }
 
     /**
@@ -90,15 +99,21 @@ class IdeaBookController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
+        if (\Yii::$app->user->can('atualizarLivro')) 
+        {
+            $model = $this->findModel($id);
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->idBook]);
+            }
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->idBook]);
+            return $this->render('update', [
+                'model' => $model,
+            ]);
         }
-
-        return $this->render('update', [
-            'model' => $model,
-        ]);
+        else
+        {
+            throw new ForbiddenHttpException;
+        }
     }
 
     /**
@@ -110,9 +125,16 @@ class IdeaBookController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
+        if (\Yii::$app->user->can('eliminarLivro')) 
+        {
+            $this->findModel($id)->delete();
+            return $this->redirect(['index']);
+        }
+        else
+        {
+            throw new ForbiddenHttpException;
+        }
+        
     }
 
     /**

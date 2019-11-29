@@ -27,8 +27,8 @@ class Projectcategory extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['idProject', 'idCategory'], 'required'],
-            [['idProject', 'idCategory'], 'integer'],
+            [['idCategory'], 'integer'],
+            ['idCategory', 'required', 'message' => 'É obrigatório preencher pelo menos uma categoria!'],
         ];
     }
 

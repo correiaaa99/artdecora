@@ -10,6 +10,7 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use yii\web\Session;
+use yii\web\ForbiddenHttpException;
 
 /**
  * CategoryController implements the CRUD actions for Category model.
@@ -78,15 +79,22 @@ class CategoryController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Category();
+        if (\Yii::$app->user->can('criarCategory')) 
+        {
+            $model = new Category();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect('index');
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                return $this->redirect('index');
+            }
+
+            return $this->render('create', [
+                'model' => $model,
+            ]);
         }
-
-        return $this->render('create', [
-            'model' => $model,
-        ]);
+        else
+        {
+            throw new ForbiddenHttpException;
+        }
     }
 
     /**
@@ -98,15 +106,20 @@ class CategoryController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect('index');
+        if (\Yii::$app->user->can('atualizarCategory')) 
+        {
+            $model = $this->findModel($id);
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                return $this->redirect('index');
+            }
+            return $this->render('update', [
+                'model' => $model,
+            ]);
         }
-
-        return $this->render('update', [
-            'model' => $model,
-        ]);
+        else
+        {
+            throw new ForbiddenHttpException;
+        }
     }
 
     /**
@@ -118,9 +131,16 @@ class CategoryController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        if (\Yii::$app->user->can('eliminarCategory')) 
+        {
+            $this->findModel($id)->delete();
 
-        return $this->redirect(['index']);
+            return $this->redirect(['index']);
+        }
+        else
+        {
+            throw new ForbiddenHttpException;
+        }
     }
 
     /**

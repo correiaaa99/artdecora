@@ -76,12 +76,13 @@ use kartik\password\PasswordInput;
     <?php 
         echo $form->field($model, 'password')
         ->label('Palavra-passe *')
+        ->hint('Mínimo = 6 carateres | 1 dígito | 1 caráter maiúsculo e 1 minúsculo')
         ->widget(PasswordInput::classname(), [
         'pluginOptions' => [
             'showMeter' => false,
             'toggleMask' => true
         ]
-        ]);?>
+    ]);?>
      <?php 
         echo $form->field($model, 'confirmpassword')
         ->label('Confirma palavra-passe *')
@@ -90,7 +91,7 @@ use kartik\password\PasswordInput;
             'showMeter' => false,
             'toggleMask' => true
         ]
-        ]);?>
+    ]);?>
     <?php
     if(!$model->isNewRecord)
     {

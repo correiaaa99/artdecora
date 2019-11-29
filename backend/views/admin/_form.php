@@ -5,6 +5,7 @@ use yii\bootstrap\ActiveForm;
 /* @var $this yii\web\View */
 /* @var $model app\models\Category */
 /* @var $form yii\widgets\ActiveForm */
+use kartik\password\PasswordInput;
 ?>
 
 <div class="category-form">
@@ -30,12 +31,27 @@ use yii\bootstrap\ActiveForm;
     <?= $form
             ->field($model, 'email', $fieldOptions2)
             ->label('Email')
-            ->textInput(['placeholder' => $model->getAttributeLabel('Email')]) ?>        
-    <?= $form->field($model, 'password_hash', $fieldOptions3)->passwordInput(['placeholder' => Yii::t('app', 'Palavra-passe'), 'value' => ''])->label('Palavra-passe') ?>
-    <?= $form
-        ->field($model, 'confirmpassword', $fieldOptions3)
-        ->label('Confirmar palavra-passe')
-        ->passwordInput(['placeholder' => $model->getAttributeLabel('Confirmar Palavra-passe ')]) ?>
+            ->textInput(['placeholder' => $model->getAttributeLabel('Email')]) ?>         
+    <?php 
+        $model->password_hash='';
+        echo $form->field($model, 'password_hash')
+        ->label('Palavra-passe *')
+        ->hint('Mínimo = 6 carateres | 1 dígito | 1 caráter maiúsculo e 1 minúsculo')
+        ->widget(PasswordInput::classname(), [
+        'pluginOptions' => [
+            'showMeter' => false,
+            'toggleMask' => true
+        ]
+    ]);?>   
+     <?php 
+        echo $form->field($model, 'confirmpassword')
+        ->label('Confirma palavra-passe *')
+        ->widget(PasswordInput::classname(), [
+        'pluginOptions' => [
+            'showMeter' => false,
+            'toggleMask' => true
+        ]
+    ]);?>    
     <div class="form-group">
         <?= Html::submitButton('Guardar', ['class' => 'btn btn-primary']) ?>
     </div>

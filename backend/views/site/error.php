@@ -7,7 +7,10 @@ use yii\helpers\Html;
 /* @var $message string */
 /* @var $exception Exception */
 
-$this->title = $name;
+if($name == 'Forbidden (#403)')
+{
+    $this->title = "Erro de permissão!";
+}
 ?>
 <section class="content">
 
@@ -15,29 +18,22 @@ $this->title = $name;
         <h2 class="headline text-info"><i class="fa fa-warning text-yellow"></i></h2>
 
         <div class="error-content">
-            <h3><?= $name ?></h3>
+            <?php if($name == 'Forbidden (#403)')
+            {
+                ?>
+                <h3>Erro de permissão!</h3>
+                <?php
+            }
+            ?>
 
             <p>
                 <?= nl2br(Html::encode($message)) ?>
             </p>
 
             <p>
-                The above error occurred while the Web server was processing your request.
-                Please contact us if you think this is a server error. Thank you.
-                Meanwhile, you may <a href='<?= Yii::$app->homeUrl ?>'>return to dashboard</a> or try using the search
-                form.
+                Você não tem permissão para executar esta ação. 
+                Deve voltar para o  <a href='<?= Yii::$app->homeUrl ?>'>painel de controlo.</a>
             </p>
-
-            <form class='search-form'>
-                <div class='input-group'>
-                    <input type="text" name="search" class='form-control' placeholder="Search"/>
-
-                    <div class="input-group-btn">
-                        <button type="submit" name="submit" class="btn btn-primary"><i class="fa fa-search"></i>
-                        </button>
-                    </div>
-                </div>
-            </form>
         </div>
     </div>
 

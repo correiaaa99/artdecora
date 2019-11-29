@@ -10,6 +10,7 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use yii\web\Session;
+use yii\web\ForbiddenHttpException;
 
 /**
  * DesignerController implements the CRUD actions for Designer model.
@@ -78,15 +79,20 @@ class DesignerController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Designer();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect('index');
+        if (\Yii::$app->user->can('criarDesigner')) 
+        {
+            $model = new Designer();
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                return $this->redirect('index');
+            }
+            return $this->render('create', [
+                'model' => $model,
+            ]);
         }
-
-        return $this->render('create', [
-            'model' => $model,
-        ]);
+        else
+        {
+            throw new ForbiddenHttpException;
+        }
     }
 
     /**
@@ -98,15 +104,21 @@ class DesignerController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
+        if (\Yii::$app->user->can('atualizarDesigner')) 
+        {
+            $model = $this->findModel($id);
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                return $this->redirect('index');
+            }
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect('index');
+            return $this->render('update', [
+                'model' => $model,
+            ]);
         }
-
-        return $this->render('update', [
-            'model' => $model,
-        ]);
+        else
+        {
+            throw new ForbiddenHttpException;
+        }
     }
 
     /**
@@ -118,9 +130,16 @@ class DesignerController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        if (\Yii::$app->user->can('eliminarDesigner')) 
+        {
+            $this->findModel($id)->delete();
 
-        return $this->redirect(['index']);
+            return $this->redirect(['index']);
+        }
+        else
+        {
+            throw new ForbiddenHttpException;
+        }
     }
 
     /**

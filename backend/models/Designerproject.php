@@ -27,8 +27,8 @@ class Designerproject extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['idDesigner', 'idProject'], 'required'],
-            [['idDesigner', 'idProject'], 'integer'],
+            [['idDesigner'], 'integer'],
+            ['idDesigner', 'required', 'message' => 'É obrigatório preencher pelo menos um designer!'],
         ];
     }
 

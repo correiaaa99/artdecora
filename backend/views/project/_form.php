@@ -6,6 +6,11 @@ use yii\helpers\ArrayHelper;
 use backend\models\Designer;
 use backend\models\Category;
 use kartik\number\NumberControl;
+use kartik\date\DatePicker;
+use kartik\select2\Select2;
+use kartik\file\FileInput;
+use yii\helpers\Url;
+
 /* @var $this yii\web\View */
 /* @var $model backend\models\Project */
 /* @var $form yii\widgets\ActiveForm */
@@ -21,50 +26,93 @@ use kartik\number\NumberControl;
     'options' => ['class' => 'form-group has-feedback'],
     'inputTemplate' => "{input}<span class='glyphicon glyphicon-calendar form-control-feedback'></span>"
     ];?>
-     <?php $fieldOptions3 = [
+    <?php $fieldOptions3 = [
     'options' => ['class' => 'form-group has-feedback'],
     'inputTemplate' => "{input}<span class='glyphicon glyphicon-euro form-control-feedback'></span>"
     ];?>
-    <?php $form = ActiveForm::begin(); ?>
-
+    <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
     <small id="emailHelp" class="form-text text-muted">Campo de preenchimento obrigatório (*)</small>
     <p>
     <?= $form
         ->field($project, 'name', $fieldOptions1)
         ->label('Nome *')
         ->textInput(['placeholder' => $project->getAttributeLabel('Nome *')]) ?> 
-    <?php
-         echo NumberControl::widget([
-            'name' => 'normal-decimal',
-            'value' => 43829.39,
-        ]);   
-    ?> 
-    <?= $form
-        ->field($project, 'price', $fieldOptions3)
-        ->label('Preço *')
-        ->textInput(['placeholder' => $project->getAttributeLabel('Preço *')]) ?> 
-    <?= $form->field($project, 'description')->textarea(['rows' => 6]) ?>
 
+    <?php 
+    echo $form->field($project, 'price')
+    ->label('Preço *')
+    ->widget(NumberControl::classname(), [
+    'value' => null,
+    'maskedInputOptions' => [
+        'suffix' => ' €',
+        'allowMinus' => false,  
+    ],
+    ]);?>
     <?= $form
-        ->field($project, 'date', $fieldOptions2)
+        ->field($project, 'description')
+        ->label('Descrição *')
+        ->textArea(['rows' => 6]) ?>
+    <?= $form->field($project, 'date')
         ->label('Data *')
-        ->textInput(['placeholder' => $project->getAttributeLabel('Data *')]) ?> 
-    <?php $designers = ArrayHelper::map(\backend\models\Designer::find()->orderBy('idDesigner')->all(), 'idDesigner', 'name') ?>
-    <?= $form->field($designer, 'idDesigner')
-    ->dropDownList($designers,
-     [
-        'multiple'=>'multiple',     
-    ],
-    ['prompt' => '---- Selecione o(s) designer(s) ----'])->label('Designer(s) *') ?>
-    <?php $categorias = ArrayHelper::map(\backend\models\Category::find()->orderBy('idCategory')->all(), 'idCategory', 'name') ?>
-    <?= $form->field($category, 'idCategory')
-    ->dropDownList($categorias,
-     [
-        'multiple'=>'multiple',     
-    ],
-    ['prompt' => '---- Selecione a(s) categoria(s) ----'])->label('Categoria(s) *') ?>
+        ->widget(
+        DatePicker::className(), [
+            'options' => ['placeholder' => 'Data'],
+            'pluginOptions' => [
+                'format' => 'dd-M-yyyy',
+                'todayHighlight' => true,
+
+            ]
+    ]);?>
+    <?php
+    if($project->isNewRecord)
+    {
+        ?>
+        <?php $designers = ArrayHelper::map(\backend\models\Designer::find()->orderBy('idDesigner')->all(), 'idDesigner', 'name')?>
+        <?php echo $form->field($designer, 'idDesigner')
+        ->label('Designer(s)')
+        ->widget(Select2::classname(), [
+            'data' => $designers,
+            'options' => ['placeholder' => 'Seleciona um designer ...', 'multiple' => true],
+            'pluginOptions' => [
+                'allowClear' => true
+            ],
+        ]);?>
+     
+        <?php $categorias = ArrayHelper::map(\backend\models\Category::find()->orderBy('idCategory')->all(), 'idCategory', 'name')?>
+        <?php echo $form->field($category, 'idCategory')
+        ->label('Categoria(s)')
+        ->widget(Select2::classname(), [
+            'data' => $categorias,
+            'options' => ['placeholder' => 'Seleciona uma categoria ...', 'multiple' => true],
+            'pluginOptions' => [
+                'allowClear' => true
+            ],
+        ]);
+        echo $form->field($image, 'file[]')
+        ->label('Imagens')
+        ->widget(FileInput::classname(), [
+        'options' => ['accept' => 'image/*', 'multiple' => true],
+        ]);
+    }
+    ?>
+    <?php
+    if(!$project->isNewRecord)
+    {
+        ?>
+        <?= Html::a('Atualizar designer(s)', ['address/index'], ['class' => 'btn btn-primary']) ?>
+        <p>
+        <p>
+        <?= Html::a('Atualizar categoria(s)', ['address/index'], ['class' => 'btn btn-primary']) ?>
+        <p>
+        <?= Html::a('Atualizar imagens', ['image/index'], ['class' => 'btn btn-primary']) ?>
+        <p>
+        <?php
+    }
+    ?>
+    
+
     <div class="form-group">
-        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton('Guardar', ['class' => 'btn btn-primary']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>
