@@ -43,4 +43,14 @@ class Projectcategory extends \yii\db\ActiveRecord
             'idCategory' => 'Id Category',
         ];
     }
+    public function getCategory()
+    {
+        return $this->hasOne(Category::className(), ['idCategory' => 'idCategory']);
+    }
+    public function getCategorys() {
+        $categorias = Category::find()->select('tbl_category.*')
+        ->leftJoin('tbl_projectcategory','tbl_category.idCategory = tbl_projectcategory.idCategory')
+        ->where(['tbl_projectcategory.idCategory' => NULL])->all();
+        return $categorias;
+    }
 }

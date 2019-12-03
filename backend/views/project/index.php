@@ -13,6 +13,13 @@ $this->title = 'Projetos';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="project-index">
+    <?php if (Yii::$app->session->hasFlash('erro')): ?>
+    <div class="alert alert-error alert-dismissable">
+         <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+         <h4><i class="icon fa fa-close"></i>Erro</h4>
+         <?= Yii::$app->session->getFlash('erro') ?>
+    </div>
+    <?php endif; ?>
     <p>
         <?= Html::a('Criar projeto', ['create'], ['class' => 'btn btn-primary']) ?>
     </p>
@@ -49,11 +56,19 @@ $this->params['breadcrumbs'][] = $this->title;
                 'value' => function($model)
                 {
                     $designer = [];
-                    foreach($model->designers as $designer) {
+                    if($model->designers != null)
+                    {
+                        foreach($model->designers as $designer) {
     
-                       $designers[] = $designer->name;
+                            $designers[] = $designer->name;
+                         }
+                         return implode(', ', $designers);
                     }
-                    return implode(', ', $designers);
+                    else
+                    {        
+                        return 'Não há designers';
+                    }
+                    
                 },
             ],
             [
@@ -61,11 +76,19 @@ $this->params['breadcrumbs'][] = $this->title;
                 'value' => function($model)
                 {
                     $category = [];
-                    foreach($model->categorys as $category) {
-    
-                        $categorys[] = $category->name;
+                    if($model->categorys != null)
+                    {
+                        foreach($model->categorys as $category) {
+        
+                            $categorys[] = $category->name;
+                        }
+                        return implode(', ', $categorys);
                     }
-                    return implode(', ', $categorys);
+                    else
+                    {        
+                        return 'Não há categorias';
+                    }
+                    
                 },
             ],
 

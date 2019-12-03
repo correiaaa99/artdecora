@@ -33,7 +33,6 @@ class Project extends \yii\db\ActiveRecord
             ['price', 'required', 'message' => 'É obrigatório preencher o preço!'],
             ['price', 'number'],
             ['date', 'required', 'message' => 'É obrigatório preencher a data!'],
-            ['date', 'date'],
             ['description', 'required', 'message' => 'É obrigatório preencher a descrição!'],
             [['description'], 'string'],
             [['name'], 'string', 'max' => 50],
@@ -72,5 +71,10 @@ class Project extends \yii\db\ActiveRecord
     {
        return $this->hasMany(Category::className(), ['idCategory' => 'idCategory'])
            ->viaTable('tbl_projectcategory', ['idProject' => 'idProject']);
+    }
+
+    public function getProjectsIdeaBooks()
+    {
+        return $this->hasMany(ProjectIdeaBook::className(), ['idProject' => 'idProject']);
     }
 }

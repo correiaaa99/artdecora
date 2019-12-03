@@ -13,6 +13,7 @@ use Yii;
  */
 class Designerproject extends \yii\db\ActiveRecord
 {
+    public $oi;
     /**
      * {@inheritdoc}
      */
@@ -42,6 +43,16 @@ class Designerproject extends \yii\db\ActiveRecord
             'idDesigner' => 'Id Designer',
             'idProject' => 'Id Project',
         ];
+    }
+    public function getDesigner()
+    {
+        return $this->hasOne(Designer::className(), ['idDesigner' => 'idDesigner']);
+    }
+    public function getDesigners() {
+        $designers = Designer::find()->select('tbl_designer.*')
+        ->leftJoin('tbl_designerproject','tbl_designer.idDesigner = tbl_designerproject.idDesigner')
+        ->where(['tbl_designerproject.idDesigner' => NULL])->all();
+        return $designers;
     }
     
 }

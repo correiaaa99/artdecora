@@ -2,9 +2,9 @@
 
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
-use kartik\depdrop\DepDrop;
 use yii\helpers\ArrayHelper;
 use backend\models\User;
+use kartik\select2\Select2;
 /* @var $this yii\web\View */
 /* @var $model app\models\IdeaBook */
 /* @var $form yii\widgets\ActiveForm */
@@ -39,6 +39,15 @@ use backend\models\User;
     <?php $utilizadores = ArrayHelper::map(\backend\models\User::find()->orderBy('idUser')->all(), 'idUser', 'username') ?>
     <?= $form->field($model, 'idUser')
     ->dropDownList($utilizadores, ['prompt' => '---- Selecionar o utilizador ----'])->label('Utilizador *') ?>
+    <?php
+    if(!$model->isNewRecord)
+    {
+        ?>
+        <?= Html::a('Adicionar projetos', ['project-idea-book/index'], ['class' => 'btn btn-primary']) ?>
+        <?php
+    }
+    ?>
+    <p>
     <div class="form-group">
         <?= Html::submitButton('Guardar', ['class' => 'btn btn-primary']) ?>
     </div>

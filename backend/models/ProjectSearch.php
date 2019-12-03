@@ -11,7 +11,6 @@ use backend\models\Project;
  */
 class ProjectSearch extends Project
 {
-    public $designer;
     public $category;
     /**
      * {@inheritdoc}
@@ -22,6 +21,7 @@ class ProjectSearch extends Project
             [['idProject'], 'integer'],
             [['name', 'description', 'date'], 'safe'],
             [['price'], 'number'],
+
         ];
     }
 

@@ -8,6 +8,9 @@ use backend\models\ImageSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\Session;
+use yii\web\UploadedFile;
+
 
 /**
  * ImageController implements the CRUD actions for Image model.
@@ -20,6 +23,18 @@ class ImageController extends Controller
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => \yii\filters\AccessControl::className(),
+                'only' => ['update', 'create', 'index', 'delete'],
+                'rules' => [                
+                    // allow authenticated users
+                    [
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                    // everything else is denied
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -35,13 +50,20 @@ class ImageController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new ImageSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        if (\Yii::$app->user->can('verImagens')) 
+        { 
+            $searchModel = new ImageSearch();
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
+            return $this->render('index', [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+            ]);
+        }
+        else
+        {
+            throw new ForbiddenHttpException;
+        }
     }
 
     /**
@@ -52,9 +74,17 @@ class ImageController extends Controller
      */
     public function actionView($id)
     {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
+        if (\Yii::$app->user->can('verImagens')) 
+        {
+            return $this->render('view', [
+                'model' => $this->findModel($id),
+            ]);
+        }
+        else
+        {
+            throw new ForbiddenHttpException;
+        }
+
     }
 
     /**
@@ -63,16 +93,34 @@ class ImageController extends Controller
      * @return mixed
      */
     public function actionCreate()
-    {
-        $model = new Image();
+    { 
+        if (\Yii::$app->user->can('criarImagem')) 
+        {  
+            $model = new Image();
+            if ($model->load(Yii::$app->request->post())) {
+                $model->file = UploadedFile::getInstances($model, 'file');
+                foreach($model->file as $file)
+                {
+                    $model = new Image();
+                    $session = Yii::$app->session;
+                    $projeto = $session->get('projeto');
+                    $model->name = 'images/' .  preg_replace("/[^a-zA-Z0-9.]/", "",str_replace(' ', '_' , $file->baseName)) . '.' . $file->extension;
+                    $model->idProject = $projeto;
+                    $model->save(false);
+                    $path = 'images/' .  preg_replace("/[^a-zA-Z0-9.]/", "",str_replace(' ', '_' , $file->baseName)) . '.' . $file->extension;
+                    $file->saveAs($path);
+                }
+                return $this->redirect(['index']);
+            }
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->idImage]);
+            return $this->render('create', [
+                'model' => $model,
+            ]);
         }
-
-        return $this->render('create', [
-            'model' => $model,
-        ]);
+        else
+        {
+            throw new ForbiddenHttpException;
+        }
     }
 
     /**
@@ -84,15 +132,30 @@ class ImageController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
+        if (\Yii::$app->user->can('atualizarImagem')) 
+        { 
+            $model = $this->findModel($id);
+            if ($model->load(Yii::$app->request->post())) {
+                unlink(Yii::$app->basePath . '/web/' . $model->name);
+                $image = UploadedFile::getInstance($model, 'file');
+                if(UploadedFile::getInstance($model, 'file'))
+                {               
+                    $model->name = 'images/' .  preg_replace("/[^a-zA-Z0-9.]/", "",str_replace(' ', '_' , $image->baseName)) . '.' . $image->extension;
+                }
+                $model->save(false);
+                $path = 'images/' .  preg_replace("/[^a-zA-Z0-9.]/", "",str_replace(' ', '_' , $image->baseName)) . '.' . $image->extension;
+                $image->saveAs($path);
+                return $this->redirect(['index']);
+            }
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->idImage]);
+            return $this->render('update', [
+                'model' => $model,
+            ]);
         }
-
-        return $this->render('update', [
-            'model' => $model,
-        ]);
+        else
+        {
+            throw new ForbiddenHttpException;
+        }
     }
 
     /**
@@ -104,9 +167,20 @@ class ImageController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
+        if (\Yii::$app->user->can('eliminarImagem')) 
+        { 
+            $model = $this->findModel($id);
+            if($model->name != '')
+            {
+                unlink(Yii::$app->basePath . '/web/' . $model->name);
+            }
+            $this->findModel($id)->delete();
+            return $this->redirect(['index']);
+        }
+        else
+        {
+            throw new ForbiddenHttpException;
+        }
     }
 
     /**

@@ -132,8 +132,25 @@ class DesignerController extends Controller
     {
         if (\Yii::$app->user->can('eliminarDesigner')) 
         {
-            $this->findModel($id)->delete();
-
+            $model = $this->findModel($id);
+            $designers = $model->designers;
+            try 
+            {
+                if($designers != null)
+                {
+                    \Yii::$app->session->setFlash('erro', 'Não é possível eliminar este designer porque está associado a um ou mais projetos!');
+                    return $this->redirect(['index']);
+                }
+                else
+                {
+                    $this->findModel($id)->delete();
+                }
+            } 
+            catch(\yii\db\IntegrityException $e)
+            {
+                \Yii::$app->session->setFlash('erro', 'Não é possível eliminar este designer!');
+                return $this->redirect(['index']);
+            }
             return $this->redirect(['index']);
         }
         else

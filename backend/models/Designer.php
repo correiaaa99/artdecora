@@ -43,4 +43,8 @@ class Designer extends \yii\db\ActiveRecord
             'name' => 'Name',
         ];
     }
+    public function getDesigners() {
+        return $this->hasMany(Designer::className(), ['idDesigner' => 'idDesigner'])
+          ->viaTable('tbl_designerproject', ['idDesigner' => 'idDesigner']);
+    }
 }

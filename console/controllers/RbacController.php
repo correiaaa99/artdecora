@@ -112,6 +112,91 @@ class RbacController extends Controller
         $verPedidos->description = 'Ver pedidos';
         $auth->add($verPedidos);
 
+        //Gestão de imagens
+        $createImagem = $auth->createPermission('criarImagem');
+        $createImagem->description = 'Criar uma imagem';
+        $auth->add($createImagem);
+
+        $atualizarImagem = $auth->createPermission('atualizarImagem');
+        $atualizarImagem->description = 'Atualizar uma imagem';
+        $auth->add($atualizarImagem);
+
+        $eliminarImagem = $auth->createPermission('eliminarImagem');
+        $eliminarImagem->description = 'Eliminar uma imagem';
+        $auth->add($eliminarImagem);
+
+        $verImagens = $auth->createPermission('verImagens');
+        $verImagens->description = 'Ver imagens';
+        $auth->add($verImagens);
+
+        //Gestão de designers nos projetos
+        $createDesignerProjeto = $auth->createPermission('criarDesignerProjeto');
+        $createDesignerProjeto->description = 'Criar um designer no projeto';
+        $auth->add($createDesignerProjeto);
+
+        $atualizarDesignerProjeto = $auth->createPermission('atualizarDesignerProjeto');
+        $atualizarDesignerProjeto->description = 'Atualizar um designer no projeto';
+        $auth->add($atualizarDesignerProjeto);
+
+        $eliminarDesignerProjeto = $auth->createPermission('eliminarDesignerProjeto');
+        $eliminarDesignerProjeto->description = 'Eliminar um designer no projeto';
+        $auth->add($eliminarDesignerProjeto);
+
+        $verDesignersProjeto = $auth->createPermission('verDesignersProjeto');
+        $verDesignersProjeto->description = 'Ver designers no projeto';
+        $auth->add($verDesignersProjeto);
+
+        //Gestão de categorias nos projetos
+        $createCategoriaProjeto = $auth->createPermission('criarCategoriaProjeto');
+        $createCategoriaProjeto->description = 'Criar uma categoria no projeto';
+        $auth->add($createCategoriaProjeto);
+
+        $atualizarCategoriaProjeto = $auth->createPermission('atualizarCategoriaProjeto');
+        $atualizarCategoriaProjeto->description = 'Atualizar uma categoria no projeto';
+        $auth->add($atualizarCategoriaProjeto);
+
+        $eliminarCategoriaProjeto = $auth->createPermission('eliminarCategoriaProjeto');
+        $eliminarCategoriaProjeto->description = 'Eliminar uma categoria no projeto';
+        $auth->add($eliminarCategoriaProjeto);
+
+        $verCategoriasProjeto = $auth->createPermission('verCategoriasProjeto');
+        $verCategoriasProjeto->description = 'Ver categorias no projeto';
+        $auth->add($verCategoriasProjeto);
+
+        //Gestão de projetos nos livros
+        $createProjetoLivro = $auth->createPermission('criarProjetoLivro');
+        $createProjetoLivro->description = 'Criar um projeto no livro';
+        $auth->add($createProjetoLivro);
+
+        $atualizarProjetoLivro = $auth->createPermission('atualizarProjetoLivro');
+        $atualizarProjetoLivro->description = 'Atualizar um projeto no livro';
+        $auth->add($atualizarProjetoLivro);
+
+        $eliminarProjetoLivro = $auth->createPermission('eliminarProjetoLivro');
+        $eliminarProjetoLivro->description = 'Eliminar um projeto no livro';
+        $auth->add($eliminarProjetoLivro);
+
+        $verProjetosLivro = $auth->createPermission('verProjetosLivro');
+        $verProjetosLivro->description = 'Ver projetos no livro';
+        $auth->add($verProjetosLivro);
+
+        //Gestão de moradas
+        $createMorada = $auth->createPermission('criarMorada');
+        $createMorada->description = 'Criar uma morada';
+        $auth->add($createMorada);
+
+        $atualizarMorada = $auth->createPermission('atualizarMorada');
+        $atualizarMorada->description = 'Atualizar uma morada';
+        $auth->add($atualizarMorada);
+
+        $eliminarMorada = $auth->createPermission('eliminarMorada');
+        $eliminarMorada->description = 'Eliminar uma morada';
+        $auth->add($eliminarMorada);
+
+        $verMoradas = $auth->createPermission('verMoradas');
+        $verMoradas->description = 'Ver moradas';
+        $auth->add($verMoradas);
+
         //Criar role do subAdmin e atribuir permissões
         $subAdmin = $auth->createRole('subAdmin');
         $auth->add($subAdmin);
@@ -143,6 +228,26 @@ class RbacController extends Controller
         $auth->addChild($admin, $createPedido);
         $auth->addChild($admin, $atualizarPedido);
         $auth->addChild($admin, $eliminarPedido);
+        $auth->addChild($admin, $createImagem);
+        $auth->addChild($admin, $atualizarImagem);
+        $auth->addChild($admin, $eliminarImagem);
+        $auth->addChild($admin, $verImagens);
+        $auth->addChild($admin, $createDesignerProjeto);
+        $auth->addChild($admin, $atualizarDesignerProjeto);
+        $auth->addChild($admin, $eliminarDesignerProjeto);
+        $auth->addChild($admin, $verDesignersProjeto);
+        $auth->addChild($admin, $createCategoriaProjeto);
+        $auth->addChild($admin, $atualizarCategoriaProjeto);
+        $auth->addChild($admin, $eliminarCategoriaProjeto);
+        $auth->addChild($admin, $verCategoriasProjeto);
+        $auth->addChild($admin, $createMorada);
+        $auth->addChild($admin, $atualizarMorada);
+        $auth->addChild($admin, $eliminarMorada);
+        $auth->addChild($admin, $verMoradas);
+        $auth->addChild($admin, $createProjetoLivro);
+        $auth->addChild($admin, $atualizarProjetoLivro);
+        $auth->addChild($admin, $eliminarProjetoLivro);
+        $auth->addChild($admin, $verProjetosLivro);
         $auth->addChild($admin, $subAdmin);
         
         // Atribui roles para usuários. 1 and 2 são IDs retornados por IdentityInterface::getId()

@@ -49,13 +49,20 @@ class AddressController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new AddressSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
+        if (\Yii::$app->user->can('verMoradas')) 
+        {
+            $searchModel = new AddressSearch();
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+            
+            return $this->render('index', [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+            ]);
+        }
+        else
+        {
+            throw new ForbiddenHttpException;
+        }
     }
 
     /**
@@ -66,9 +73,16 @@ class AddressController extends Controller
      */
     public function actionView($id)
     {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
+        if (\Yii::$app->user->can('verMoradas')) 
+        {
+            return $this->render('view', [
+                'model' => $this->findModel($id),
+            ]);
+        }
+        else
+        {
+            throw new ForbiddenHttpException;
+        }
     }
 
     /**
@@ -78,17 +92,24 @@ class AddressController extends Controller
      */
     public function actionCreate()
     {
-        $session = Yii::$app->session;
-        $user = $session->get('id');
-        $model = new Address();
-        $model->idUser = $user;
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['index']); 
-        }
+        if (\Yii::$app->user->can('criarMorada')) 
+        {
+            $session = Yii::$app->session;
+            $user = $session->get('id');
+            $model = new Address();
+            $model->idUser = $user;
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                return $this->redirect(['index']); 
+            }
 
-        return $this->render('create', [
-            'model' => $model,
-        ]);
+            return $this->render('create', [
+                'model' => $model,
+            ]);
+        }
+        else
+        {
+            throw new ForbiddenHttpException;
+        }
     }
 
     /**
@@ -100,15 +121,22 @@ class AddressController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
+        if (\Yii::$app->user->can('atualizarMorada')) 
+        {
+            $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->idAddress]);
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                return $this->redirect(['index']);
+            }
+
+            return $this->render('update', [
+                'model' => $model,
+            ]);
         }
-
-        return $this->render('update', [
-            'model' => $model,
-        ]);
+        else
+        {
+            throw new ForbiddenHttpException;
+        }
     }
 
     /**
@@ -120,11 +148,16 @@ class AddressController extends Controller
      */
     public function actionDelete($id)
     {
-        $model = $this->findModel($id);
-
-        $this->findModel($id)->delete();
-
-        return $this->redirect(['index', 'id' => $model->idUser]);
+        if (\Yii::$app->user->can('eliminarMorada')) 
+        {
+            $model = $this->findModel($id);
+            $this->findModel($id)->delete();
+            return $this->redirect(['index']);
+        }
+        else
+        {
+            throw new ForbiddenHttpException;
+        }
     }
 
     /**

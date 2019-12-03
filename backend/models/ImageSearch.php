@@ -2,10 +2,11 @@
 
 namespace backend\models;
 
+use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use backend\models\Image;
 use yii\web\Session;
+use backend\models\Image;
 /**
  * ImageSearch represents the model behind the search form of `backend\models\Image`.
  */
@@ -40,7 +41,9 @@ class ImageSearch extends Image
      */
     public function search($params)
     {
-        $query = Image::find();
+        $session = Yii::$app->session;
+        $projeto = $session->get('projeto');
+        $query = Image::find()->where(['idProject' => $projeto]);
 
         // add conditions that should always apply here
 

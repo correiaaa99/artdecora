@@ -32,6 +32,7 @@ class Image extends \yii\db\ActiveRecord
             [['name'], 'required'],
             [['idRequest', 'idProject'], 'integer'],
             [['name'], 'string', 'max' => 50],
+            [['file'], 'required', 'message' => 'É obrigatório inserir uma imagem!'],
             [['file'], 'file', 'extensions' => 'png, jpg, jpeg', 'maxFiles' => 0],
         ];
     }
@@ -54,5 +55,9 @@ class Image extends \yii\db\ActiveRecord
     public function getProject()
     {
         return $this->hasOne(Project::className(), ['idProject' => 'idProject']);
+    }
+    public function getImages()
+    {
+        return Image::find()->all();
     }
 }

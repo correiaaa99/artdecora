@@ -13,6 +13,7 @@ use backend\models\Projectcategory;
 use backend\models\Image;
 use yii\web\ForbiddenHttpException;
 use yii\web\UploadedFile;
+use yii\web\Session;
 
 /**
  * ProjectController implements the CRUD actions for Project model.
@@ -124,7 +125,7 @@ class ProjectController extends Controller
                         $image = new Image();
                         $image->name = 'images/' .  preg_replace("/[^a-zA-Z0-9.]/", "",str_replace(' ', '_' , $file->baseName)) . '.' . $file->extension;
                         $image->idProject = $project->idProject;
-                        $project_designer->isNewRecord = true;
+                        $image->isNewRecord = true;
                         $image->save(false);
                         $path = 'images/' .  preg_replace("/[^a-zA-Z0-9.]/", "",str_replace(' ', '_' , $file->baseName)) . '.' . $file->extension;
                         $file->saveAs($path);
@@ -156,12 +157,15 @@ class ProjectController extends Controller
     {
         if (\Yii::$app->user->can('atualizarProjeto')) 
         {
+            $session = Yii::$app->session;
             $project = $this->findModel($id);
             $project_category = new Projectcategory();
             $project_designer = new Designerproject();
             $image = new Image();
+            $session->set('projeto', $project->idProject);
+            $session->set('projetoNome', $project->name);
             if ($project->load(Yii::$app->request->post()) && $project->save()) {
-                return $this->redirect(['view', 'id' => $project->idProject]);
+                return $this->redirect(['index']);
             }
 
             return $this->render('update', [
@@ -185,12 +189,41 @@ class ProjectController extends Controller
      * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionDelete($id)
-    {
-        
+    {   
         if (\Yii::$app->user->can('eliminarProjeto')) 
         {
-            $this->findModel($id)->delete();
-            return $this->redirect(['index']);
+            try 
+            {
+                $model = $this->findModel($id);
+                $images = $model->images;
+                $designers = $model->designers;
+                $categorys = $model->categorys;
+                if($images != null)
+                {
+                    \Yii::$app->session->setFlash('erro', 'Não é possível eliminar este projeto porque tem imagens associadas!');
+                    return $this->redirect(['index']);
+                }
+                else if($designers != null)
+                {
+                    \Yii::$app->session->setFlash('erro', 'Não é possível eliminar este projeto porque tem designers associados!');
+                    return $this->redirect(['index']);
+                }
+                else if($categorys != null)
+                {
+                    \Yii::$app->session->setFlash('erro', 'Não é possível eliminar este projeto porque tem categorias associadas!');
+                    return $this->redirect(['index']);
+                }
+                else
+                {
+                    $this->findModel($id)->delete();
+                    return $this->redirect(['index']);
+                }
+            }
+            catch(\yii\db\IntegrityException $e)
+            {
+                \Yii::$app->session->setFlash('erro', 'Não é possível eliminar este projeto!');
+                return $this->redirect(['index']);
+            }
         } 
         else 
         {

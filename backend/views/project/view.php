@@ -52,11 +52,18 @@ $this->params['breadcrumbs'][] = $this->title;
                 'value' => function($model)
                 {
                     $designer = [];
-                    foreach($model->designers as $designer) {
-    
-                       $designers[] = $designer->name;
+                    if($model->designers != null)
+                    {
+                        foreach($model->designers as $designer) {
+        
+                        $designers[] = $designer->name;
+                        }
+                        return implode(', ', $designers);
                     }
-                    return implode(', ', $designers);
+                    else
+                    {
+                        return 'Não há designers';
+                    }
                 },
             ],
             [
@@ -64,34 +71,21 @@ $this->params['breadcrumbs'][] = $this->title;
                 'value' => function($model)
                 {
                     $category = [];
-                    foreach($model->categorys as $category) {
-    
-                        $categorys[] = $category->name;
+                    if($model->categorys != null)
+                    {
+                        foreach($model->categorys as $category) {
+        
+                            $categorys[] = $category->name;
+                        }
+                        return implode(', ', $categorys);
                     }
-                    return implode(', ', $categorys);
+                    else
+                    {
+                        return 'Não há categorias';
+                    }
 
                 },
-            ],
-            /*[
-                'label' => 'Imagens', 
-            'value' => function($model)
-                {
-                    $designer = [];
-                    foreach($model->images as $imagem) {
-                      $imagens[] = $imagem->idImage;
-                    }  
-                    return $imagens; 
-                },
-                'value' => function($model)
-                {
-                    foreach($model->images as $image)
-                    {
-                       $imagens[] = '@web/' . $image->name;
-                    }
-                    return $imagens;
-                    
-                },
-            ],*/            
+            ],        
             [               
                 'label' => 'Imagens',
                 'value' => function($model){

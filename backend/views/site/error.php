@@ -8,9 +8,7 @@ use yii\helpers\Html;
 /* @var $exception Exception */
 
 if($name == 'Forbidden (#403)')
-{
     $this->title = "Erro de permissão!";
-}
 ?>
 <section class="content">
 
@@ -18,14 +16,9 @@ if($name == 'Forbidden (#403)')
         <h2 class="headline text-info"><i class="fa fa-warning text-yellow"></i></h2>
 
         <div class="error-content">
-            <?php if($name == 'Forbidden (#403)')
-            {
-                ?>
+            <?php if($name == 'Forbidden (#403)'):?>
                 <h3>Erro de permissão!</h3>
-                <?php
-            }
-            ?>
-
+            <?php endif; ?>
             <p>
                 <?= nl2br(Html::encode($message)) ?>
             </p>

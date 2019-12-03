@@ -42,4 +42,8 @@ class Category extends \yii\db\ActiveRecord
             'name' => 'Name',
         ];
     }
+    public function getCategorys() {
+        return $this->hasMany(Category::className(), ['idCategory' => 'idCategory'])
+          ->viaTable('tbl_projectcategory', ['idCategory' => 'idCategory']);
+    }
 }

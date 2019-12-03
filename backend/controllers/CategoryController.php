@@ -133,8 +133,25 @@ class CategoryController extends Controller
     {
         if (\Yii::$app->user->can('eliminarCategory')) 
         {
-            $this->findModel($id)->delete();
-
+            $model = $this->findModel($id);
+            $categorys = $model->categorys;
+            try 
+            {
+                if($categorys != null)
+                {
+                    \Yii::$app->session->setFlash('erro', 'Não é possível eliminar esta categoria porque está associada a um ou mais projetos!');
+                    return $this->redirect(['index']);
+                }
+                else
+                {
+                    $this->findModel($id)->delete();
+                }
+            } 
+            catch(\yii\db\IntegrityException $e)
+            {
+                \Yii::$app->session->setFlash('erro', 'Não é possível eliminar este designer!');
+                return $this->redirect(['index']);
+            }
             return $this->redirect(['index']);
         }
         else

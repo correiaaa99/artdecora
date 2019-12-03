@@ -180,7 +180,7 @@ class UserController extends Controller
                 }
                 else if($addresses != null)
                 {
-                    \Yii::$app->session->setFlash('erro', 'Não é possível eliminar este utilizador porque contém ou mais endereços!');
+                    \Yii::$app->session->setFlash('erro', 'Não é possível eliminar este utilizador porque contém um ou mais endereços!');
                     return $this->redirect(['index']);
                 }
                 else

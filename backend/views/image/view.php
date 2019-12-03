@@ -5,22 +5,18 @@ use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
 /* @var $model backend\models\Image */
-
-$this->title = $model->name;
+$this->title = 'Imagem';
 $this->params['breadcrumbs'][] = ['label' => 'Images', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
 <div class="image-view">
-
-    <h1><?= Html::encode($this->title) ?></h1>
-
     <p>
-        <?= Html::a('Update', ['update', 'id' => $model->idImage], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->idImage], [
+        <?= Html::a('Atualizar', ['update', 'id' => $model->idImage], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Eliminar', ['delete', 'id' => $model->idImage], [
             'class' => 'btn btn-danger',
             'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
+                'confirm' => 'Tens a certeza que desejas eliminar esta imagem?',
                 'method' => 'post',
             ],
         ]) ?>
@@ -29,10 +25,16 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'idImage',
-            'name',
-            'idRequest',
-            'idProject',
+            [
+                'attribute'=> 'idImage',
+                'label' => 'Identificador',
+            ],
+            [
+                'attribute'=> 'name',
+                'label' => 'Imagem',
+                'value'=> '@web/' . $model->name,
+                'format' => ['image',['width'=>'60','height'=>'50']],
+            ],
         ],
     ]) ?>
 

@@ -99,12 +99,12 @@ use yii\helpers\Url;
     if(!$project->isNewRecord)
     {
         ?>
-        <?= Html::a('Atualizar designer(s)', ['address/index'], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Designer(s)', ['designerproject/index'], ['class' => 'btn btn-primary']) ?>
         <p>
         <p>
-        <?= Html::a('Atualizar categoria(s)', ['address/index'], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Categoria(s)', ['projectcategory/index'], ['class' => 'btn btn-primary']) ?>
         <p>
-        <?= Html::a('Atualizar imagens', ['image/index'], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Imagens', ['image/index'], ['class' => 'btn btn-primary']) ?>
         <p>
         <?php
     }
