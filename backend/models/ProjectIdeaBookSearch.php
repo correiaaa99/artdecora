@@ -2,23 +2,28 @@
 
 namespace backend\models;
 
+use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use backend\models\ProjectIdeaBook;
+use yii\web\Session;
+
 
 /**
  * ProjectIdeaBookSearch represents the model behind the search form of `backend\models\ProjectIdeaBook`.
  */
 class ProjectIdeaBookSearch extends ProjectIdeaBook
 {
+    public $name;
     /**
      * {@inheritdoc}
      */
     public function rules()
     {
         return [
-            [['id_Project_idea_book', 'idProject', 'idBook'], 'integer'],
+            [['id_Project_idea_book','idProject', 'idBook'], 'integer'],
             [['title', 'comment'], 'safe'],
+            [['project.name'], 'safe'],
         ];
     }
 
@@ -40,7 +45,11 @@ class ProjectIdeaBookSearch extends ProjectIdeaBook
      */
     public function search($params)
     {
-        $query = ProjectIdeaBook::find();
+        $session = Yii::$app->session;
+        $livro = $session->get('livro');
+        $query = ProjectIdeaBook::find()
+        ->innerJoinWith('project', true)
+        ->where(['idBook' => $livro]);
 
         // add conditions that should always apply here
 
@@ -64,8 +73,8 @@ class ProjectIdeaBookSearch extends ProjectIdeaBook
         ]);
 
         $query->andFilterWhere(['like', 'title', $this->title])
-            ->andFilterWhere(['like', 'comment', $this->comment]);
-
+            ->andFilterWhere(['like', 'comment', $this->comment])
+            ->andFilterWhere(['like', 'name', $this->name]); 
         return $dataProvider;
     }
 }

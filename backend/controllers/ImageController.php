@@ -10,7 +10,7 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\Session;
 use yii\web\UploadedFile;
-
+use yii\web\ForbiddenHttpException;
 
 /**
  * ImageController implements the CRUD actions for Image model.
@@ -104,8 +104,16 @@ class ImageController extends Controller
                     $model = new Image();
                     $session = Yii::$app->session;
                     $projeto = $session->get('projeto');
+                    $pedido = $session->get('pedido');
+                    if($projeto != null)
+                    {
+                        $model->idProject = $projeto;
+                    }
+                    else
+                    {
+                        $model->idRequest = $pedido;
+                    }
                     $model->name = 'images/' .  preg_replace("/[^a-zA-Z0-9.]/", "",str_replace(' ', '_' , $file->baseName)) . '.' . $file->extension;
-                    $model->idProject = $projeto;
                     $model->save(false);
                     $path = 'images/' .  preg_replace("/[^a-zA-Z0-9.]/", "",str_replace(' ', '_' , $file->baseName)) . '.' . $file->extension;
                     $file->saveAs($path);

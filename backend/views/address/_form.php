@@ -28,7 +28,7 @@ use yii\bootstrap\ActiveForm;
     <small id="emailHelp" class="form-text text-muted">Campo de preenchimento obrigatório (*)</small>
     <p>
     <?= $form
-        ->field($model, 'name', $fieldOptions1)
+        ->field($model, 'address_name', $fieldOptions1)
         ->label('Endereço *')
         ->textInput(['placeholder' => $model->getAttributeLabel('Endereço *')]) ?> 
     <?= $form

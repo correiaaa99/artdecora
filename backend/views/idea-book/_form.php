@@ -22,10 +22,6 @@ use kartik\select2\Select2;
         'options' => ['class' => 'form-group has-feedback'],
         'inputTemplate' => "{input}<span class='glyphicon glyphicon-bookmark form-control-feedback'></span>"
     ];?>
-    <?php $fieldOptions3 = [
-        'options' => ['class' => 'form-group has-feedback'],
-        'inputTemplate' => "{input}<span class='glyphicon glyphicon-bookmark form-control-feedback'></span>"
-    ];?>
     <small id="emailHelp" class="form-text text-muted">Campo de preenchimento obrigatório (*)</small>
     <p>
     <?= $form

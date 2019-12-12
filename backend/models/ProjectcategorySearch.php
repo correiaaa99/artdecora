@@ -46,7 +46,9 @@ class ProjectcategorySearch extends Projectcategory
     {
         $session = Yii::$app->session;
         $projeto = $session->get('projeto');
-        $query = Projectcategory::find()->where(['idProject' => $projeto]);
+        $query = Projectcategory::find()
+        ->innerJoinWith('category', true)
+        ->where(['idProject' => $projeto]);
 
         // add conditions that should always apply here
 

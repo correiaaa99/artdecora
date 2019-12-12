@@ -13,7 +13,6 @@ use Yii;
  */
 class Designerproject extends \yii\db\ActiveRecord
 {
-    public $oi;
     /**
      * {@inheritdoc}
      */

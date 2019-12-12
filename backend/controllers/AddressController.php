@@ -10,7 +10,7 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use backend\models\User;
 use yii\web\Session;
-
+use yii\web\ForbiddenHttpException;
 /**
  * AddressController implements the CRUD actions for Address model.
  */
@@ -42,7 +42,6 @@ class AddressController extends Controller
             ],
         ];
     }
-
     /**
      * Lists all Address models.
      * @return mixed
@@ -151,8 +150,17 @@ class AddressController extends Controller
         if (\Yii::$app->user->can('eliminarMorada')) 
         {
             $model = $this->findModel($id);
-            $this->findModel($id)->delete();
-            return $this->redirect(['index']);
+            $enderecos = $model->addresses;
+            if($enderecos != null)
+            {
+                \Yii::$app->session->setFlash('erro', 'Não é possível eliminar este endereço porque está associado a um ou mais pedidos!');
+                return $this->redirect(['index']);
+            }
+            else
+            {
+                $this->findModel($id)->delete();
+                return $this->redirect(['index']);
+            }
         }
         else
         {

@@ -26,7 +26,7 @@ use yii\helpers\ArrayHelper;
    
 
     <div class="form-group">
-        <?= Html::submitButton('Adicionar', ['class' => 'btn btn-primary']) ?>
+        <?= Html::submitButton('Guardar', ['class' => 'btn btn-primary']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

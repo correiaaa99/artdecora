@@ -96,7 +96,6 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
             'verification_token' => 'Verification Token',
         ];
     }
-
     /**
      * @return \yii\db\ActiveQuery
      */
@@ -110,6 +109,13 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     public function getIdeaBook()
     {
         return $this->hasMany(Ideabook::className(), ['idUser' => 'idUser']);
+    }
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUsers()
+    {
+        return $this->hasMany(Request::className(), ['idUser' => 'idUser']);
     }
     /**
      * {@inheritdoc}

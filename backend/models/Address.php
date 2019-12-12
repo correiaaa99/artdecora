@@ -8,7 +8,7 @@ use backend\models\User;
  * This is the model class for table "tbl_address".
  *
  * @property int $idAddress
- * @property string $name
+ * @property string $address_name
  * @property string $city
  * @property string $zip_code
  * @property int $idUser
@@ -31,13 +31,13 @@ class Address extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            ['name', 'required', 'message'=>'É obrigatório preencher o endereço!'],
+            ['address_name', 'required', 'message'=>'É obrigatório preencher o endereço!'],
             ['city', 'required', 'message'=>'É obrigatório preencher a cidade!'],
             ['zip_code', 'required', 'message'=>'É obrigatório preencher o código postal!'],
-            [['name'], 'string', 'max' => 100],
+            [['address_name'], 'string', 'max' => 100],
             [['city'], 'string', 'max' => 50],
             [['zip_code'], 'string', 'max' => 8],
-            ['name', 'unique', 'targetClass' => '\backend\models\Address', 'message' => 'Esta morada já existe!'],
+            ['address_name', 'unique', 'targetClass' => '\backend\models\Address', 'message' => 'Esta morada já existe!'],
         ];
     }
 
@@ -48,7 +48,7 @@ class Address extends \yii\db\ActiveRecord
     {
         return [
             'idAddress' => 'Id Address',
-            'name' => 'Name',
+            'address_name' => 'address_name',
             'city' => 'City',
             'zip_code' => 'Zip Code',
             'idUser' => 'Id User',
@@ -61,5 +61,13 @@ class Address extends \yii\db\ActiveRecord
     public function getUser()
     {
         return $this->hasOne(User::className(), ['idUser' => 'idUser']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getAddresses()
+    {
+        return $this->hasMany(Request::className(), ['idAddress' => 'idAddress']);
     }
 }

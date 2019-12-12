@@ -21,11 +21,12 @@
                 'items' => [
                     ['label' => 'Menu', 'options' => ['class' => 'header']],
                     ['label' => 'Utilizadores', 'icon' => ' fa-user', 'url' => '/user/index'],
-                    ['label' => 'Pedidos', 'icon' => ' fa-calendar', 'url' => '/gii'],
+                    ['label' => 'Pedidos', 'icon' => ' fa-calendar', 'url' => '/request/index'],
                     ['label' => 'Livros de ideias', 'icon' => ' fa-book', 'url' => '/idea-book/index'],       
                     ['label' => 'Designers', 'icon' => ' fa-users', 'url' => '/designer/index'],   
                     ['label' => 'Projetos', 'icon' => ' fa-home', 'url' => '/project/index'],  
-                    ['label' => 'Categorias', 'icon' => ' fa-image', 'url' => '/category/index'],    
+                    ['label' => 'Categorias', 'icon' => ' fa-image', 'url' => '/category/index'], 
+                    ['label' => 'Avaliações', 'icon' => 'fa fa-bar-chart', 'url' => '/evalution/index'],    
                 ],
             ]
         

@@ -19,7 +19,7 @@ class AddressSearch extends Address
     {
         return [
             [['idAddress', 'idUser'], 'integer'],
-            [['name', 'city', 'zip_code'], 'safe'],
+            [['address_name', 'city', 'zip_code'], 'safe'],
         ];
     }
 
@@ -63,7 +63,7 @@ class AddressSearch extends Address
             'idUser' => $this->idUser,
         ]);
 
-        $query->andFilterWhere(['like', 'name', $this->name])
+        $query->andFilterWhere(['like', 'address_name', $this->address_name])
             ->andFilterWhere(['like', 'city', $this->city])
             ->andFilterWhere(['like', 'zip_code', $this->zip_code]);
 

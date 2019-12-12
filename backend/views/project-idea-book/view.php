@@ -7,20 +7,18 @@ use yii\widgets\DetailView;
 /* @var $model backend\models\ProjectIdeaBook */
 
 $this->title = $model->title;
-$this->params['breadcrumbs'][] = ['label' => 'Project Idea Books', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Projeto', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
 <div class="project-idea-book-view">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-
     <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id_Project_idea_book], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id_Project_idea_book], [
+        <?= Html::a('Atualizar', ['update', 'id' => $model->id_Project_idea_book], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Eliminar', ['delete', 'id' => $model->id_Project_idea_book], [
             'class' => 'btn btn-danger',
             'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
+                'confirm' => 'Tens a certeza que desejas eliminar este projeto deste livro?',
                 'method' => 'post',
             ],
         ]) ?>
@@ -29,11 +27,22 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id_Project_idea_book',
-            'idProject',
-            'idBook',
-            'title',
-            'comment:ntext',
+            [
+                'attribute' => 'id_Project_idea_book',
+                'label' => 'Identificador'
+            ],
+            [
+                'attribute' => 'title',
+                'label' => 'Título'
+            ],
+            [
+                'attribute' => 'comment',
+                'label' => 'Comentário'
+            ],
+            [
+                'attribute' => 'project.name', //To display called value,
+                'label' => 'Projeto',
+            ],
         ],
     ]) ?>
 

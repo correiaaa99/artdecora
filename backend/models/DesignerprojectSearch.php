@@ -45,7 +45,9 @@ class DesignerprojectSearch extends Designerproject
     {
         $session = Yii::$app->session;
         $projeto = $session->get('projeto');
-        $query = Designerproject::find()->where(['idProject' => $projeto]);
+        $query = Designerproject::find()
+        ->innerJoinWith('designer', true)
+        ->where(['idProject' => $projeto]);
 
         // add conditions that should always apply here
 

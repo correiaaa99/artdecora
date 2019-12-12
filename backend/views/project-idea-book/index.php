@@ -7,15 +7,12 @@ use yii\widgets\Pjax;
 /* @var $searchModel backend\models\ProjectIdeaBookSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Project Idea Books';
+$this->title = 'Adicionar projetos ao livro de ideias: ' . $livro;
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="project-idea-book-index">
-
-    <h1><?= Html::encode($this->title) ?></h1>
-
     <p>
-        <?= Html::a('Create Project Idea Book', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Adicionar projeto', ['create'], ['class' => 'btn btn-primary']) ?>
     </p>
 
     <?php Pjax::begin(); ?>
@@ -25,13 +22,23 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
-            'id_Project_idea_book',
-            'idProject',
-            'idBook',
-            'title',
-            'comment:ntext',
+            [
+                'attribute' => 'id_Project_idea_book', 
+                'label' => 'Identificador',
+            ],
+            [
+                'attribute' => 'title', 
+                'label' => 'Título',
+            ],
+            [
+                'attribute' => 'comment', 
+                'label' => 'Comentário',
+            ],
+            [
+                'attribute' => 'name', //To display called value,
+                'value' => 'project.name',
+                'label' => 'Projeto',
+            ], 
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

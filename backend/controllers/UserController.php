@@ -12,6 +12,7 @@ use yii\web\Session;
 use yii\filters\AccessControl;
 use yii\web\UploadedFile;
 use yii\web\ForbiddenHttpException;
+use yii\db\Expression;
 /**
  * UserController implements the CRUD actions for User model.
  */
@@ -58,7 +59,17 @@ class UserController extends Controller
             'dataProvider' => $dataProvider,
         ]);
     }
-
+    public function getUsersRequestsDashboard()
+    {
+        $dataUsers = User::find()->select([new Expression('COUNT(tbl_request.idRequest) AS total'), 'tbl_user.username'])
+        ->rightJoin('tbl_request', 'tbl_user.idUser = tbl_request.idUser')
+        ->orderBy('total asc')
+        ->groupBy(['tbl_request.idUser'])
+        ->limit(10)
+        ->asArray()
+        ->all();
+        return $dataUsers;
+    }
     public function getUsers()
     {
         return User::find()->count();
@@ -93,9 +104,9 @@ class UserController extends Controller
                 {
                     $model->file = UploadedFile::getInstance($model,'file');
                     $imageName = $model->username;
-                    $model->photo = 'images/' . $imageName . '.' . $model->file->extension;
+                    $model->photo = 'images/' .  preg_replace("/[^a-zA-Z0-9.]/", "",str_replace(' ', '_' ,$imageName)) . '.' . $model->file->extension;
                     $model->save();
-                    $model->file->saveAs('images/'.$imageName .'.'. $model->file->extension);
+                    $model->file->saveAs('images/'. preg_replace("/[^a-zA-Z0-9.]/", "",str_replace(' ', '_' ,$imageName)) .'.'. $model->file->extension);
                     return $this->redirect(['index']); 
                 }
                 $model->save();
@@ -131,7 +142,7 @@ class UserController extends Controller
                 $image = UploadedFile::getInstance($model, 'file');
                 if(UploadedFile::getInstance($model, 'file'))
                 {               
-                    $model->photo = 'images/' . $model->username .'.'. $image->extension; 
+                    $model->photo = 'images/' .  preg_replace("/[^a-zA-Z0-9.]/", "",str_replace(' ', '_' ,$model->username)) . '.' . $image->extension;
                 }
                 else
                 {
@@ -172,6 +183,7 @@ class UserController extends Controller
                 $model = $this->findModel($id);
                 $books = $model->ideaBook;
                 $addresses = $model->addresses;
+                $pedidos = $model->users;
                 //testar se o user está relacionado noutra tabela 
                 if($books != null)
                 {
@@ -181,6 +193,11 @@ class UserController extends Controller
                 else if($addresses != null)
                 {
                     \Yii::$app->session->setFlash('erro', 'Não é possível eliminar este utilizador porque contém um ou mais endereços!');
+                    return $this->redirect(['index']);
+                }
+                else if($pedidos != null)
+                {
+                    \Yii::$app->session->setFlash('erro', 'Não é possível eliminar este utilizador porque está associado a um ou mais pedidos!');
                     return $this->redirect(['index']);
                 }
                 else

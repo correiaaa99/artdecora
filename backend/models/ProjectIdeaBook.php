@@ -29,8 +29,10 @@ class ProjectIdeaBook extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['idProject', 'idBook', 'title', 'comment'], 'required'],
-            [['idProject', 'idBook'], 'integer'],
+            ['idProject', 'integer'],   
+            ['comment', 'required', 'message' => 'É obrigatório preencher o comentário!'],
+            ['title', 'required', 'message' => 'É obrigatório preencher o título!'],
+            [['idProject'], 'required', 'message' => 'É obrigatório preencher o projeto!'],
             [['comment'], 'string'],
             [['title'], 'string', 'max' => 200],
         ];

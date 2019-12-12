@@ -18,7 +18,7 @@ use yii\helpers\ArrayHelper;
         ->label('Categoria(s)')
         ->widget(Select2::classname(), [
             'data' => ArrayHelper::map(\backend\models\Projectcategory::getCategorys(), 'idCategory', 'name'),
-            'options' => ['placeholder' => 'Seleciona um categoria ...', 'multiple' => true],
+            'options' => ['placeholder' => 'Seleciona uma categoria ...', 'multiple' => true],
             'pluginOptions' => [
                 'allowClear' => true
             ],
@@ -26,7 +26,7 @@ use yii\helpers\ArrayHelper;
     ?>
 
     <div class="form-group">
-        <?= Html::submitButton('Adicionar', ['class' => 'btn btn-primary']) ?>
+        <?= Html::submitButton('Guardar', ['class' => 'btn btn-primary']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

@@ -89,7 +89,7 @@ use yii\helpers\Url;
             ],
         ]);
         echo $form->field($image, 'file[]')
-        ->label('Imagens')
+        ->label('Imagens *')
         ->widget(FileInput::classname(), [
         'options' => ['accept' => 'image/*', 'multiple' => true],
         ]);

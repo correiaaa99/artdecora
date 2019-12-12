@@ -8,6 +8,8 @@ use backend\models\ProjectIdeaBookSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\Session;
+use yii\web\ForbiddenHttpException;
 
 /**
  * ProjectIdeaBookController implements the CRUD actions for ProjectIdeaBook model.
@@ -49,12 +51,15 @@ class ProjectIdeaBookController extends Controller
     {
         if (\Yii::$app->user->can('verProjetosLivro')) 
         {
+            $session = Yii::$app->session;
+            $livro = $session->get('nomeLivro');
             $searchModel = new ProjectIdeaBookSearch();
             $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
             return $this->render('index', [
                 'searchModel' => $searchModel,
                 'dataProvider' => $dataProvider,
+                'livro' => $livro
             ]);
         }
         else
@@ -93,14 +98,19 @@ class ProjectIdeaBookController extends Controller
         if (\Yii::$app->user->can('criarProjetoLivro')) 
         {
             $model = new ProjectIdeaBook();
-
-            if ($model->load(Yii::$app->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id_Project_idea_book]);
+            $session = Yii::$app->session;
+            $livro = $session->get('nomeLivro');
+            if ($model->load(Yii::$app->request->post())) {
+                $idLivro = $session->get('livro');
+                $model->idBook = $idLivro;
+                $model->save();
+                return $this->redirect(['index']);
             }
 
             return $this->render('create', [
                 'model' => $model,
-            ]);
+                'livro' => $livro,
+            ]); 
         }
         else
         {
@@ -122,7 +132,7 @@ class ProjectIdeaBookController extends Controller
             $model = $this->findModel($id);
 
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id_Project_idea_book]);
+                return $this->redirect(['index']);
             }
 
             return $this->render('update', [

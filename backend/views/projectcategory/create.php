@@ -6,7 +6,7 @@ use yii\helpers\Html;
 /* @var $model backend\models\Projectcategory */
 
 $this->title = 'Adicionar categoria ao projeto: ' . $projeto;
-$this->params['breadcrumbs'][] = ['label' => 'Projectcategories', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Categorias', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="projectcategory-create">

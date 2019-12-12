@@ -1,53 +1,80 @@
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<style>
+    /*.projeto {
+        border-style:double;
+        border-color: rgb(203, 158, 98);
+        border-width:4.5px;
+        padding:1px;
+    }*/
+    .btn-floating.halfway-fab {
+        background-color: rgb(30, 56, 71);
+    }
+</style>
 <?php
-
 /* @var $this yii\web\View */
-
-$this->title = 'My Yii Application';
+$this->title = 'Página inicial';
 ?>
-<div class="site-index">
-
+<div class="site-index" style="background-color:rgba(30, 56, 71, 0.1)">
     <div class="jumbotron">
-        <h1>Congratulations!</h1>
-
-        <p class="lead">You have successfully created your Yii-powered application.</p>
-
-        <p><a class="btn btn-lg btn-success" href="http://www.yiiframework.com">Get started with Yii</a></p>
+        <img src="imagens/imagem3.png" style="width:100%;height:541px;">
     </div>
-
+    <h3 style="font-size:33px;font-weight:900;font-family:;text-align:center;color:rgb(30, 56, 71);">Os nossos projetos</h3>
     <div class="body-content">
-
         <div class="row">
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/doc/">Yii Documentation &raquo;</a></p>
-            </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/forum/">Yii Forum &raquo;</a></p>
-            </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/extensions/">Yii Extensions &raquo;</a></p>
+            <div class="col m12 s12">
+                <div class="projeto">
+                    <div class="row">   
+                        <div class="col s6 m3">
+                            <div class="card">
+                                <div class="card-image">
+                                <img src="imagens/imagem3.png">
+                                <span class="card-title">Card Title</span>
+                                <a class="btn-floating halfway-fab waves-effect waves-light"><i class="material-icons">add</i></a>
+                                </div>
+                                <div class="card-content">
+                                <p>I am a very simple card. I am good at containing small bits of information. I am convenient because I require little markup to use effectively.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col s6 m3">
+                            <div class="card">
+                                <div class="card-image">
+                                <img src="imagens/imagem3.png">
+                                <span class="card-title">Card Title</span>
+                                <a class="btn-floating halfway-fab waves-effect waves-light"><i class="material-icons">add</i></a>
+                                </div>
+                                <div class="card-content">
+                                <p>I am a very simple card. I am good at containing small bits of information. I am convenient because I require little markup to use effectively.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col s6 m3">
+                            <div class="card">
+                                <div class="card-image">
+                                <img src="imagens/imagem3.png">
+                                <span class="card-title">Card Title</span>
+                                <a class="btn-floating halfway-fab waves-effect waves-light"><i class="material-icons">add</i></a>
+                                </div>
+                                <div class="card-content">
+                                <p>I am a very simple card. I am good at containing small bits of information. I am convenient because I require little markup to use effectively.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col s6 m3">
+                            <div class="card">
+                                <div class="card-image">
+                                <img src="imagens/imagem3.png">
+                                <span class="card-title">Card Title</span>
+                                <a class="btn-floating halfway-fab waves-effect waves-light"><i class="material-icons">add</i></a>
+                                </div>
+                                <div class="card-content">
+                                <p>I am a very simple card. I am good at containing small bits of information. I am convenient because I require little markup to use effectively.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-
     </div>
 </div>

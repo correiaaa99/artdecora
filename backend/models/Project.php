@@ -77,4 +77,19 @@ class Project extends \yii\db\ActiveRecord
     {
         return $this->hasMany(ProjectIdeaBook::className(), ['idProject' => 'idProject']);
     }
+
+    public function getRequests()
+    {
+        return $this->hasMany(Request::className(), ['idProject' => 'idProject']);
+    }
+
+    public function getProjects() {
+        return $this->hasMany(Project::className(), ['idProject' => 'idProject'])
+          ->viaTable('tbl_project_idea_book', ['idProject' => 'idProject']);
+    }
+
+    public function getEvalution()
+    {
+        return $this->hasMany(Evalution::className(), ['idProject' => 'idProject']);
+    }
 }

@@ -11,6 +11,7 @@ use yii\filters\VerbFilter;
 use yii\web\ForbiddenHttpException;
 use yii\web\Session;
 
+
 /**
  * IdeaBookController implements the CRUD actions for IdeaBook model.
  */
@@ -115,8 +116,11 @@ class IdeaBookController extends Controller
         if (\Yii::$app->user->can('atualizarLivro')) 
         {
             $model = $this->findModel($id);
+            $session = Yii::$app->session;
+            $session->set('livro', $model->idBook);
+            $session->set('nomeLivro', $model->title);
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->idBook]);
+                return $this->redirect(['index']);
             }
 
             return $this->render('update', [
@@ -140,8 +144,18 @@ class IdeaBookController extends Controller
     {
         if (\Yii::$app->user->can('eliminarLivro')) 
         {
-            $this->findModel($id)->delete();
-            return $this->redirect(['index']);
+            $model = $this->findModel($id);
+            $projetos = $model->projetos;
+            if($projetos != null)
+            {
+                \Yii::$app->session->setFlash('erro', 'Não é possível eliminar este livro de ideias porque contém um ou mais projetos!');
+                return $this->redirect(['index']);
+            }
+            else
+            {   
+                $this->findModel($id)->delete();
+                return $this->redirect(['index']);
+            }
         }
         else
         {

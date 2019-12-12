@@ -6,7 +6,7 @@ use yii\helpers\Html;
 /* @var $model backend\models\Image */
 
 $this->title = 'Atualizar imagem';
-$this->params['breadcrumbs'][] = ['label' => 'Images', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Imagens', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'id' => $model->idImage]];
 $this->params['breadcrumbs'][] = 'Atualizar';
 ?>

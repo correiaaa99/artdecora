@@ -42,6 +42,10 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute'=> 'price',
                 'label' => 'Preço',
+                'value' => function($model)
+                {
+                    return $model->price . ' €';   
+                }
             ],
             [
                 'attribute'=> 'description',

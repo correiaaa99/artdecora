@@ -47,6 +47,14 @@ class ProjectController extends Controller
         ];
     }
 
+    public function getAllProjects()
+    {
+        $dataProjects = Project::find()
+        ->select('name')
+        ->asArray()
+        ->all();
+        return $dataProjects;
+    }
     public function getProjects()
     { 
         return Project::find()->count();
@@ -164,6 +172,7 @@ class ProjectController extends Controller
             $image = new Image();
             $session->set('projeto', $project->idProject);
             $session->set('projetoNome', $project->name);
+            $session->remove('pedido');
             if ($project->load(Yii::$app->request->post()) && $project->save()) {
                 return $this->redirect(['index']);
             }
@@ -198,6 +207,13 @@ class ProjectController extends Controller
                 $images = $model->images;
                 $designers = $model->designers;
                 $categorys = $model->categorys;
+                $projects = $model->projects;
+                $requests = $model->requests;
+                if($requests != null)
+                {
+                    \Yii::$app->session->setFlash('erro', 'Não é possível eliminar este projeto porque está associado a um ou mais pedidos!');
+                    return $this->redirect(['index']);
+                }
                 if($images != null)
                 {
                     \Yii::$app->session->setFlash('erro', 'Não é possível eliminar este projeto porque tem imagens associadas!');
@@ -211,6 +227,11 @@ class ProjectController extends Controller
                 else if($categorys != null)
                 {
                     \Yii::$app->session->setFlash('erro', 'Não é possível eliminar este projeto porque tem categorias associadas!');
+                    return $this->redirect(['index']);
+                }
+                else if($projects != null)
+                {
+                    \Yii::$app->session->setFlash('erro', 'Não é possível eliminar este projeto porque está inserido num ou mais livros de ideias!');
                     return $this->redirect(['index']);
                 }
                 else

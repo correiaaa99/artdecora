@@ -58,7 +58,7 @@ class IdeaBook extends \yii\db\ActiveRecord
     {
         return $this->hasOne(User::className(), ['idUser' => 'idUser']);
     }
-    public function getProjectsIdeaBooks()
+    public function getProjetos()
     {
         return $this->hasMany(ProjectIdeaBook::className(), ['idBook' => 'idBook']);
     }
