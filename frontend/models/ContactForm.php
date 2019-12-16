@@ -23,12 +23,15 @@ class ContactForm extends Model
     public function rules()
     {
         return [
+            ['name', 'required', 'message' => 'É obrigatório preencher o nome!'],
+            ['email', 'required', 'message' => 'É obrigatório preencher o email!'],
+            ['subject', 'required', 'message' => 'É obrigatório preencher o assunto!'],
+            ['body', 'required', 'message' => 'É obrigatório preencher a descrição!'],
             // name, email, subject and body are required
-            [['name', 'email', 'subject', 'body'], 'required'],
             // email has to be a valid email address
             ['email', 'email'],
             // verifyCode needs to be entered correctly
-            ['verifyCode', 'captcha'],
+            ['verifyCode', 'captcha', 'message' => 'O código de verificação está incorreto!'],
         ];
     }
 

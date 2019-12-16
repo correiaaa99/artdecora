@@ -10,8 +10,8 @@ use common\models\User;
  */
 class ResetPasswordForm extends Model
 {
-    public $password;
-
+    public $new_password;
+    public $confirmpassword;
     /**
      * @var \common\models\User
      */
@@ -43,8 +43,11 @@ class ResetPasswordForm extends Model
     public function rules()
     {
         return [
-            ['password', 'required'],
-            ['password', 'string', 'min' => 6],
+            ['new_password', 'required', 'message' => 'É obrigatório preencher a palavra-passe!'],
+            ['confirmpassword', 'compare', 'compareAttribute'=>'new_password', 'message'=>"As palavras-passe não combinam!" ],
+            ['confirmpassword', 'required', 'message' => 'É obrigatório preencher o confirmar palavra-passe!'],
+            ['new_password', 'string', 'min' => 6, 'tooShort' => 'A palavra-passe tem de conter pelo menos 6 carateres!'],
+            ['new_password', 'match', 'pattern' => '/^.*(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).*$/', 'message' => 'A palavra-passe deve conter pelo menos um carácter minúsculo e maiúsculo e um dígito!'],
         ];
     }
 
@@ -56,7 +59,7 @@ class ResetPasswordForm extends Model
     public function resetPassword()
     {
         $user = $this->_user;
-        $user->setPassword($this->password);
+        $user->setPassword($this->new_password);
         $user->removePasswordResetToken();
 
         return $user->save(false);

@@ -1,22 +1,21 @@
+<!-- Compiled and minified CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+<!-- Compiled and minified JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <style>
-    /*.projeto {
-        border-style:double;
-        border-color: rgb(203, 158, 98);
-        border-width:4.5px;
-        padding:1px;
-    }*/
     .btn-floating.halfway-fab {
         background-color: rgb(30, 56, 71);
     }
 </style>
 <?php
+use frontend\models\Project;
 /* @var $this yii\web\View */
 $this->title = 'Página inicial';
 ?>
-<div class="site-index" style="background-color:rgba(30, 56, 71, 0.1)">
+<div class="site-index" >
     <div class="jumbotron">
-        <img src="imagens/imagem3.png" style="width:100%;height:541px;">
+        <img id="imagem" src="/imagens/site/imagem3.png" style="width:100%;height:541px;">
     </div>
     <h3 style="font-size:33px;font-weight:900;font-family:;text-align:center;color:rgb(30, 56, 71);">Os nossos projetos</h3>
     <div class="body-content">
@@ -24,57 +23,76 @@ $this->title = 'Página inicial';
             <div class="col m12 s12">
                 <div class="projeto">
                     <div class="row">   
-                        <div class="col s6 m3">
+                    <?php $dataProjects = Project::find()
+                        ->select(['tbl_project.idProject', 'tbl_project.name as ProjectName', 'tbl_project.description', 'tbl_image.name as image'])
+                        ->from(['tbl_project'])
+                        ->leftJoin('tbl_image', 'tbl_image.idProject = tbl_project.idProject')
+                        ->asArray()
+                        ->all();?>
+                        <?php foreach($dataProjects as $project)
+                        {
+                        ?>
+                        <div class="col s12 m4">
                             <div class="card">
                                 <div class="card-image">
-                                <img src="imagens/imagem3.png">
-                                <span class="card-title">Card Title</span>
+                                <img src="http://backend.test/<?php echo $project['image'];?>">  
+                                <span class="card-title"><?php echo $project['ProjectName']?></span>
                                 <a class="btn-floating halfway-fab waves-effect waves-light"><i class="material-icons">add</i></a>
                                 </div>
                                 <div class="card-content">
-                                <p>I am a very simple card. I am good at containing small bits of information. I am convenient because I require little markup to use effectively.</p>
+                                <p><?php echo $project['description']?></p>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col s6 m3">
-                            <div class="card">
-                                <div class="card-image">
-                                <img src="imagens/imagem3.png">
-                                <span class="card-title">Card Title</span>
-                                <a class="btn-floating halfway-fab waves-effect waves-light"><i class="material-icons">add</i></a>
-                                </div>
-                                <div class="card-content">
-                                <p>I am a very simple card. I am good at containing small bits of information. I am convenient because I require little markup to use effectively.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col s6 m3">
-                            <div class="card">
-                                <div class="card-image">
-                                <img src="imagens/imagem3.png">
-                                <span class="card-title">Card Title</span>
-                                <a class="btn-floating halfway-fab waves-effect waves-light"><i class="material-icons">add</i></a>
-                                </div>
-                                <div class="card-content">
-                                <p>I am a very simple card. I am good at containing small bits of information. I am convenient because I require little markup to use effectively.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col s6 m3">
-                            <div class="card">
-                                <div class="card-image">
-                                <img src="imagens/imagem3.png">
-                                <span class="card-title">Card Title</span>
-                                <a class="btn-floating halfway-fab waves-effect waves-light"><i class="material-icons">add</i></a>
-                                </div>
-                                <div class="card-content">
-                                <p>I am a very simple card. I am good at containing small bits of information. I am convenient because I require little markup to use effectively.</p>
-                                </div>
-                            </div>
-                        </div>
+                        </div>                    
+                        <?php
+                        }
+                        ?>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <?php 
+    if (Yii::$app->session->hasFlash('success'))
+    { 
+        ?>
+        <script>
+                M.toast({html: 'Registado com sucesso.'});
+        </script>
+        <?php
+    }
+    if (Yii::$app->session->hasFlash('email'))
+    { 
+        ?>
+        <script>
+                M.toast({html: 'Verifique o seu email para obter mais instruções.'});
+        </script>
+        <?php
+    }
+    if (Yii::$app->session->hasFlash('error'))
+    { 
+        ?>
+        <script>
+                M.toast({html: 'Desculpe, não foi possível alterar a palavra-passe para o email fornecido.'});
+        </script>
+        <?php
+    }
+    if (Yii::$app->session->hasFlash('contato'))
+    { 
+        ?>
+        <script>
+                M.toast({html: 'Email enviado com sucesso. Aguarde pela resposta.'});
+        </script>
+        <?php
+    }
+    if (Yii::$app->session->hasFlash('errorcontato'))
+    { 
+        ?>
+        <script>
+                M.toast({html: 'Desculpe, não foi possível enviar o email.'});
+        </script>
+        <?php
+    }
+    
+    ?>
 </div>

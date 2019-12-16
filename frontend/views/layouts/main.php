@@ -10,7 +10,8 @@ use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use frontend\assets\AppAsset;
 use common\widgets\Alert;
-
+use yii\bootstrap\ActiveForm;
+use yii\helpers\Url;
 AppAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
@@ -39,7 +40,7 @@ AppAsset::register($this);
             color: rgb(235, 217, 142);
             font-size:17px;
             margin-top:9px;
-            font-family:"Lucida Sans Unicode", "Lucida Grande", sans-serif;
+            font-family:"Lucida Sans Unicode", "Lucida Grande", sans-serif;    
         }
         @media (max-width: 600px) {
         .navbar-material .nav-wrapper .brand-logo img {
@@ -48,29 +49,27 @@ AppAsset::register($this);
     }
     </style>
 </head>
-<body>
+<body style="background-color:rgba(30, 56, 71, 0.1)">
 <?php $this->beginBody() ?>
 <nav class="navbar-material">
     <div class="nav-wrapper">   
-        <a href="<?= Yii::$app->homeUrl?>" class="brand-logo"><img src="/imagens/logotipo.png"></a>
+        <a href="<?= Yii::$app->homeUrl?>" class="brand-logo"><img src="/imagens/site/logotipo.png"></a>
+        <a href="#" style="margin-top:12px;" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
         <ul id="nav-mobile" class="right hide-on-med-and-down">
-            
-            <?php if (!Yii::$app->user->isGuest) {
+            <?php if (Yii::$app->user->isGuest) {
                 ?>
                     <li><a href="#">Pesquisa avançada</a></li>
-                    <li><a href="#">Contactos</a></li>
-                    <li><a href="badges.html">Registo</a></li>
-                    <li><a href="collapsible.html">Login</a></li>
+                    <li><a href="<?= Url::to('/site/contact')?>">Contatos</a></li>
+                    <li><a href="<?= Url::to('/site/signup')?>">Registo</a></li>
+                    <li><a href="<?= Url::to('/site/login')?>">Entrar</a></li>
                 <?php 
             }
             else
             {
                 ?>
                     <li><a href="#">Pesquisa avançada</a></li>
-                    <li><a href="#">Contactos</a></li>
-                    <li><a href="collapsible.html">Pedidos</a></li>
-                    <li><a href="collapsible.html">Livros de ideias</a></li>
-                    <li><a class="modal-trigger" href="#modal1"><i class="fa fa-user"></i> Perfil</a></li>
+                    <li><a href="<?= Url::to('/site/contact')?>">Contatos</a></li>
+                    <li ><a class='dropdown-trigger ' href='#' data-target='dropdown1' ><i class="fa fa-user"></i> <?= Yii::$app->user->identity->username ?></a></li>
                 <?php 
             }
             ?>
@@ -78,37 +77,62 @@ AppAsset::register($this);
         </ul>      
     </div>
 </nav> 
-<!-- Modal Structure -->
-<div id="modal1" class="modal">
-    <div class="modal-content">
-        <h4>Perfil</h4>
-        <p>A bunch of text</p>
-    </div>
-    <div class="modal-footer">
-        <a style="float:left" href="#!" class="modal-close waves-effect waves-green btn-flat">Editar perfil</a>
-        <a href="#!" class="modal-close waves-effect waves-green btn-flat">Sair</a>
-    </div>
-</div> 
+
+<ul class="sidenav" id="mobile-demo">
+    <?php 
+    if (Yii::$app->user->isGuest) 
+    {
+        ?>
+            <li><a href="<?= Yii::$app->homeUrl?>">Início</a></li>
+            <li><a href="#">Pesquisa avançada</a></li>
+            <li><a href="<?= Url::to('/site/contact')?>">Contatos</a></li>
+            <li><a href="<?= Url::to('/site/signup')?>">Registo</a></li>
+            <li><a href="<?= Url::to('/site/login')?>">Entrar</a></li>
+        <?php 
+    }
+    else
+    {
+        ?>
+            <li><a href="#">Pesquisa avançada</a></li>
+            <li><a href="<?= Url::to('/site/contact')?>">Contactos</a></li>
+            <li><a  class='dropdown-trigger ' href='#' data-target='dropdown2' data-constrainWidth="false" ><i class="fa fa-user"></i><?= Yii::$app->user->identity->username ?></a></li>
+        <?php 
+    }
+    ?>
+</ul>
+<?php if(!Yii::$app->user->isGuest): ?>
+<!-- Dropdown Structure -->
+<ul id='dropdown1' style="min-width: 200px !important;" class='dropdown-content'>
+    <li><a style="color: rgb(30, 56, 71); font-weight:bold;" href="/site/perfil?id=<?php echo Yii::$app->user->identity->id?>"><i style="color: rgb(30, 56, 71)" class="material-icons">account_circle</i>Meu perfil</a></li>
+    <li><a style="color: rgb(30, 56, 71);" href="#!"><i style="color: rgb(30, 56, 71)" class="material-icons">notification_important</i>Notificações</a></li>
+    <li><a style="color: rgb(30, 56, 71);" href="#!"><i style="color: rgb(30, 56, 71)" class="material-icons">edit</i>Editar perfil</a></li>
+    <li><a style="color: rgb(30, 56, 71);" href="#!"><i style="color: rgb(30, 56, 71)" class="material-icons">book</i>Livro de ideias</a></li>
+    <li><a style="color: rgb(30, 56, 71);" href="#!"><i style="color: rgb(30, 56, 71)" class="material-icons">perm_contact_calendar</i>Pedidos</a></li>
+    <li><a style="color: rgb(30, 56, 71)" href="/site/logout"><i style="color: rgb(30, 56, 71)" class="material-icons">input</i>Logout</a></li>
+</ul>
+<!-- Dropdown Structure -->
+<ul id='dropdown2' style="min-width: 200px !important;"  class='dropdown-content'>
+    <li><a style="color: rgb(30, 56, 71); font-weight:bold;" href="/site/perfil?id=<?php echo Yii::$app->user->identity->id?>"><i style="color: rgb(30, 56, 71)" class="material-icons">account_circle</i>Meu perfil</a></li>
+    <li><a style="color: rgb(30, 56, 71);" href="#!"><i style="color: rgb(30, 56, 71)" class="material-icons">notification_important</i>Notificações</a></li>
+    <li><a style="color: rgb(30, 56, 71);" href="#!"><i style="color: rgb(30, 56, 71)" class="material-icons">edit</i>Editar perfil</a></li>
+    <li><a style="color: rgb(30, 56, 71);" href="#!"><i style="color: rgb(30, 56, 71)" class="material-icons">book</i>Livro de ideias</a></li>
+    <li><a style="color: rgb(30, 56, 71);" href="#!"><i style="color: rgb(30, 56, 71)" class="material-icons">perm_contact_calendar</i>Pedidos</a></li>
+    <li><a style="color: rgb(30, 56, 71)" href="#!"><i style="color: rgb(30, 56, 71)" class="material-icons">input</i>Logout</a></li>
+</ul> 
+<?php endif; ?>
 <?= Breadcrumbs::widget([
     'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
 ]) ?>
-<?= Alert::widget() ?>
 <?= $content ?>
-<footer class="footer">
-    <div class="container">
-        <p class="pull-left">&copy; <?= Html::encode(Yii::$app->name) ?> <?= date('Y') ?></p>
-
-        <p class="pull-right"><?= Yii::powered() ?></p>
-    </div>
-</footer>
 <?php $this->endBody() ?>
 </body>
 </html>
 <?php $this->endPage() ?>
 <script>
-    (function ($) {
-    $(function () {
-        $('.modal').modal();
+    $(document).ready(function(){
+        $('.sidenav').sidenav();
     });
-})(jQuery);
+    $(".dropdown-trigger").dropdown({
+   coverTrigger: false
+});
 </script>

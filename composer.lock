@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "45f9ed44e5c1ec3c926a6b2cd1f6a4d3",
+    "content-hash": "f2b1d0f7e8cdb70f498b0c03f540b712",
     "packages": [
         {
             "name": "2amigos/yii2-chartjs-widget",
@@ -344,6 +344,47 @@
                 "yii"
             ],
             "time": "2013-12-10T17:49:58+00:00"
+        },
+        {
+            "name": "developit/yii2-captcha",
+            "version": "1.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/rezaei121/yii2-captcha.git",
+                "reference": "ad5962e36c0383cbd3a9f439746d727f39613e78"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/rezaei121/yii2-captcha/zipball/ad5962e36c0383cbd3a9f439746d727f39613e78",
+                "reference": "ad5962e36c0383cbd3a9f439746d727f39613e78",
+                "shasum": ""
+            },
+            "require": {
+                "yiisoft/yii2": "~2.0"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "developit\\captcha\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "Ehsan Rezaei",
+                    "email": "mr.rezaee121@gmail.com"
+                }
+            ],
+            "description": "yii2 captcha",
+            "keywords": [
+                "captcha",
+                "yii2",
+                "yii2 captcha"
+            ],
+            "time": "2017-09-05T17:50:18+00:00"
         },
         {
             "name": "dmstr/yii2-adminlte-asset",

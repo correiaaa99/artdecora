@@ -51,9 +51,8 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
         return [
             ['status', 'default', 'value' => self::STATUS_ACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_INACTIVE, self::STATUS_DELETED]],
-            ['username', 'trim'],
             ['username', 'required', 'message' => 'É obrigatório preencher o username!'],
-            ['username', 'unique', 'targetClass' => '\backend\models\User', 'message' => 'Este username já existe!'],
+            [['username', 'email'], 'unique'],
             ['username', 'string', 'max' => 255],
             ['name', 'trim'],
             ['surname', 'trim'],
@@ -263,15 +262,15 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
         {             
             if ($this->isNewRecord) 
             {                      
-                $this->setPassword($this->password_hash);
+                $this->setPassword($this->password);
                 $this->auth_key = \Yii::$app->security->generateRandomString();
                 $this->created_at = time();    
             }
             else
             {
-                if (!empty($this->password_hash))
+                if (!empty($this->password))
                 {
-                    $this->setPassword($this->password_hash);
+                    $this->setPassword($this->password);
                 } else 
                 {
                     $this->password_hash = (string) $this->getOldAttribute('password_hash');

@@ -98,19 +98,29 @@ class UserController extends Controller
         {
             $model = new User();
             if ($model->load(Yii::$app->request->post()))
-            {    
-                $model->generateEmailVerificationToken();
-                if(UploadedFile::getInstance($model,'file'))
+            {      
+                if($model->validate())
                 {
-                    $model->file = UploadedFile::getInstance($model,'file');
-                    $imageName = $model->username;
-                    $model->photo = 'images/' .  preg_replace("/[^a-zA-Z0-9.]/", "",str_replace(' ', '_' ,$imageName)) . '.' . $model->file->extension;
+                    $model->generateEmailVerificationToken();
+                    if(UploadedFile::getInstance($model,'file'))
+                    {
+                        $model->file = UploadedFile::getInstance($model,'file');
+                        $imageName = $model->username;
+                        $model->photo = 'images/' .  preg_replace("/[^a-zA-Z0-9.]/", "",str_replace(' ', '_' ,$imageName)) . '.' . $model->file->extension;
+                        $model->password_hash = 
+                        $model->save();
+                        $model->file->saveAs('images/'. preg_replace("/[^a-zA-Z0-9.]/", "",str_replace(' ', '_' ,$imageName)) .'.'. $model->file->extension);
+                        return $this->redirect(['index']); 
+                    }
                     $model->save();
-                    $model->file->saveAs('images/'. preg_replace("/[^a-zA-Z0-9.]/", "",str_replace(' ', '_' ,$imageName)) .'.'. $model->file->extension);
                     return $this->redirect(['index']); 
-                }
-                $model->save();
-                return $this->redirect(['index']); 
+                }    
+                else
+                {
+                    return $this->render('create', [
+                        'model' => $model,
+                   ]);
+                }    
             }
             return $this->render('create', [
                 'model' => $model,
@@ -139,23 +149,38 @@ class UserController extends Controller
             $oldImage = $model->photo;
             
             if ($model->load(Yii::$app->request->post())) {  
-                $image = UploadedFile::getInstance($model, 'file');
-                if(UploadedFile::getInstance($model, 'file'))
-                {               
-                    $model->photo = 'images/' .  preg_replace("/[^a-zA-Z0-9.]/", "",str_replace(' ', '_' ,$model->username)) . '.' . $image->extension;
+                if($model->validate())
+                {
+                    $image = UploadedFile::getInstance($model, 'file');
+                    if(UploadedFile::getInstance($model, 'file'))
+                    {
+                        if($model->photo != '')
+                        {
+                            unlink(Yii::$app->basePath . '/web/' . $model->photo);
+                        }
+                        $model->photo = 'images/' .  preg_replace("/[^a-zA-Z0-9.]/", "",str_replace(' ', '_' ,$model->username)) . '.' . $image->extension;
+                    }
+                    else
+                    {
+                        $model->photo = $oldImage;
+                    }
+                    if($model->save())
+                    {
+                        if(isset($image)){
+                            $image->saveAs($model->photo);   
+                        }
+                    }
+                    return $this->redirect(['index']); 
                 }
                 else
                 {
-                    $model->photo = $oldImage;
-                }
-                if($model->save())
-                {
-                    if(isset($image)){
-                        $image->saveAs($model->photo);   
-                    }
-                }
-                return $this->redirect(['index']);
-            } else {
+                    return $this->render('update', [
+                        'model' => $model,
+                   ]);
+                }   
+            } 
+            else 
+            {
                 return $this->render('update', [
                     'model' => $model,
                 ]);

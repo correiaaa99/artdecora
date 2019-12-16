@@ -28,7 +28,8 @@
         "kartik-v/yii2-widget-select2": "dev-master",
         "kartik-v/yii2-number": "dev-master",
         "kartik-v/yii2-widget-fileinput": "dev-master",
-        "2amigos/yii2-chartjs-widget": "~2.0"
+        "2amigos/yii2-chartjs-widget": "~2.0",
+        "developit/yii2-captcha": "*"
     },
     "require-dev": {
         "yiisoft/yii2-gii": "~2.1.0",
