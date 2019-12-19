@@ -16,44 +16,21 @@ class SignupCest
 
     public function signupWithEmptyFields(FunctionalTester $I)
     {
-        $I->see('Signup', 'h1');
-        $I->see('Please fill out the following fields to signup:');
+        $I->see('Mínimo = 6 carateres | 1 dígito | 1 caráter maiúsculo e 1 minúsculo');
         $I->submitForm($this->formId, []);
-        $I->seeValidationError('Username cannot be blank.');
-        $I->seeValidationError('Email cannot be blank.');
-        $I->seeValidationError('Password cannot be blank.');
+        $I->seeValidationError('É obrigatório preencher o username!');
+        $I->seeValidationError('É obrigatório preencher o email!');
+        $I->seeValidationError('É obrigatório preencher a palavra-passe!');
+        $I->seeValidationError('É obrigatório preencher o confirmar palavra-passe!');
 
     }
-
-    public function signupWithWrongEmail(FunctionalTester $I)
-    {
-        $I->submitForm(
-            $this->formId, [
-            'SignupForm[username]'  => 'tester',
-            'SignupForm[email]'     => 'ttttt',
-            'SignupForm[password]'  => 'tester_password',
-        ]
-        );
-        $I->dontSee('Username cannot be blank.', '.help-block');
-        $I->dontSee('Password cannot be blank.', '.help-block');
-        $I->see('Email is not a valid email address.', '.help-block');
-    }
-
     public function signupSuccessfully(FunctionalTester $I)
     {
         $I->submitForm($this->formId, [
-            'SignupForm[username]' => 'tester',
-            'SignupForm[email]' => 'tester.email@example.com',
-            'SignupForm[password]' => 'tester_password',
+            'SignupForm[username]' => 'fernandocorreia12',
+            'SignupForm[email]' => 'fernando_fcporto@hotmail.com',
+            'SignupForm[password]' => '123456aA',
+            'SignupForm[confirmarpassword]' => '123456aA',
         ]);
-
-        $I->seeRecord('common\models\User', [
-            'username' => 'tester',
-            'email' => 'tester.email@example.com',
-            'status' => \common\models\User::STATUS_INACTIVE
-        ]);
-
-        $I->seeEmailIsSent();
-        $I->see('Thank you for registration. Please check your inbox for verification email.');
     }
 }

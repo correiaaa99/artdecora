@@ -29,7 +29,7 @@ class ContactForm extends Model
             ['body', 'required', 'message' => 'É obrigatório preencher a descrição!'],
             // name, email, subject and body are required
             // email has to be a valid email address
-            ['email', 'email'],
+            ['email', 'email','message' => 'O email não é válido!'],
             // verifyCode needs to be entered correctly
             ['verifyCode', 'captcha', 'message' => 'O código de verificação está incorreto!'],
         ];

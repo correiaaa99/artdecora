@@ -105,7 +105,7 @@ AppAsset::register($this);
 <ul id='dropdown1' style="min-width: 200px !important;" class='dropdown-content'>
     <li><a style="color: rgb(30, 56, 71); font-weight:bold;" href="/user/perfil?id=<?php echo Yii::$app->user->identity->id?>"><i style="color: rgb(30, 56, 71)" class="material-icons">account_circle</i>Meu perfil</a></li>
     <li><a style="color: rgb(30, 56, 71);" href="#!"><i style="color: rgb(30, 56, 71)" class="material-icons">notification_important</i>Notificações</a></li>
-    <li><a style="color: rgb(30, 56, 71);" href="#!"><i style="color: rgb(30, 56, 71)" class="material-icons">edit</i>Editar perfil</a></li>
+    <li><a style="color: rgb(30, 56, 71);" href="/user/update"><i style="color: rgb(30, 56, 71)" class="material-icons">edit</i>Editar perfil</a></li>
     <li><a style="color: rgb(30, 56, 71);" href="#!"><i style="color: rgb(30, 56, 71)" class="material-icons">book</i>Livro de ideias</a></li>
     <li><a style="color: rgb(30, 56, 71);" href="#!"><i style="color: rgb(30, 56, 71)" class="material-icons">perm_contact_calendar</i>Pedidos</a></li>
     <li><a style="color: rgb(30, 56, 71)" href="/site/logout"><i style="color: rgb(30, 56, 71)" class="material-icons">input</i>Terminar sessão</a></li>
@@ -113,11 +113,11 @@ AppAsset::register($this);
 <!-- Dropdown Structure -->
 <ul id='dropdown2' style="min-width: 200px !important;"  class='dropdown-content'>
     <li><a style="color: rgb(30, 56, 71); font-weight:bold;" href="/user/perfil?id=<?php echo Yii::$app->user->identity->id?>"><i style="color: rgb(30, 56, 71)" class="material-icons">account_circle</i>Meu perfil</a></li>
-    <li><a style="color: rgb(30, 56, 71);" href="#!"><i style="color: rgb(30, 56, 71)" class="material-icons">edit</i>Editar perfil</a></li>
+    <li><a style="color: rgb(30, 56, 71);" href="/user/update"><i style="color: rgb(30, 56, 71)" class="material-icons">edit</i>Editar perfil</a></li>
     <li><a style="color: rgb(30, 56, 71);" href="#!"><i style="color: rgb(30, 56, 71)" class="material-icons">book</i>Livro de ideias</a></li>
     <li><a style="color: rgb(30, 56, 71);" href="#!"><i style="color: rgb(30, 56, 71)" class="material-icons">perm_contact_calendar</i>Pedidos</a></li>
     <li><a style="color: rgb(30, 56, 71);" href="#!"><i style="color: rgb(30, 56, 71)" class="material-icons">notification_important</i>Notificações</a></li>
-    <li><a style="color: rgb(30, 56, 71)" href="#!"><i style="color: rgb(30, 56, 71)" class="material-icons">input</i>Terminar sessão</a></li>
+    <li><a style="color: rgb(30, 56, 71)" href="/site/logout"><i style="color: rgb(30, 56, 71)" class="material-icons">input</i>Terminar sessão</a></li>
 </ul> 
 <?php endif; ?>
 <?= Breadcrumbs::widget([

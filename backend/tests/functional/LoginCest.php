@@ -25,8 +25,7 @@ class LoginCest
         $I->click('login-button');
 
         $I->See('Administrador');
-        $I->dontSeeLink('Login');
-        $I->dontSeeLink('Signup');
+
     }
     public function checkEmpty(FunctionalTester $I)
     {

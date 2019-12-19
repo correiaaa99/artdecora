@@ -31845,3 +31845,319 @@ $_SERVER = [
     'REQUEST_TIME_FLOAT' => 1576701706.28
     'REQUEST_TIME' => 1576701706
 ]
+2019-12-19 21:59:25 [127.0.0.1][-][mof66ro25f9mlo1cinr834e5o1][error][yii\db\Exception] exception 'PDOException' with message 'SQLSTATE[HY000] [2002] Nenhuma ligação pôde ser feita porque o computador de destino
+as recusou ativamente.
+' in C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\db\Connection.php:698
+Stack trace:
+#0 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\db\Connection.php(698): PDO->__construct('mysql:host=loca...', 'users_artdecora', 'artdecora1234@', NULL)
+#1 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\db\Connection.php(624): yii\db\Connection->createPdoInstance()
+#2 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\db\Connection.php(1015): yii\db\Connection->open()
+#3 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\db\Connection.php(1002): yii\db\Connection->getMasterPdo()
+#4 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\db\Command.php(253): yii\db\Connection->getSlavePdo()
+#5 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\db\Command.php(1153): yii\db\Command->prepare('<span class="ke...')
+#6 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\db\Command.php(399): yii\db\Command->queryInternal('<span class="st...', '<span class="ke...')
+#7 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\db\mysql\Schema.php(319): yii\db\Command->queryAll()
+#8 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\db\mysql\Schema.php(125): yii\db\mysql\Schema->findColumns(Object(yii\db\TableSchema))
+#9 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\db\Schema.php(754): yii\db\mysql\Schema->loadTableSchema('<span class="st...')
+#10 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\db\Schema.php(193): yii\db\Schema->getTableMetadata('<span class="st...', '<span class="st...', '<span class="ke...')
+#11 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\db\ActiveRecord.php(435): yii\db\Schema->getTableSchema('<span class="st...')
+#12 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\db\ActiveRecord.php(262): yii\db\ActiveRecord::getTableSchema()
+#13 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\db\ActiveRecord.php(234): yii\db\ActiveRecord::filterValidColumnNames(Object(yii\db\Connection), '[]')
+#14 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\db\ActiveRecord.php(191): yii\db\ActiveRecord::filterCondition('[<span class="s...', '[]')
+#15 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\db\BaseActiveRecord.php(112): yii\db\ActiveRecord::findByCondition('[<span class="s...')
+#16 C:\xampp\htdocs\artdecora\backend\models\Admin.php(78): yii\db\BaseActiveRecord::findOne('[<span class="s...')
+#17 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\web\User.php(690): backend\models\Admin::findIdentity('<span class="nu...')
+#18 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\web\User.php(192): yii\web\User->renewAuthStatus()
+#19 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\web\User.php(360): yii\web\User->getIdentity()
+#20 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\base\Component.php(139): yii\web\User->getIsGuest()
+#21 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2-debug\src\panels\UserPanel.php(83): yii\base\Component->__get('<span class="st...')
+#22 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\base\BaseObject.php(109): yii\debug\panels\UserPanel->init()
+#23 [internal function]: yii\base\BaseObject->__construct('[<span class="s...')
+#24 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\di\Container.php(400): ReflectionClass->newInstanceArgs('[[<span class="...')
+#25 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\di\Container.php(159): yii\di\Container->build('<span class="st...', '[]', '[<span class="s...')
+#26 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\BaseYii.php(365): yii\di\Container->get('<span class="st...', '[]', '[<span class="s...')
+#27 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2-debug\src\Module.php(247): yii\BaseYii::createObject('[<span class="s...')
+#28 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2-debug\src\Module.php(218): yii\debug\Module->initPanels()
+#29 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\base\BaseObject.php(109): yii\debug\Module->init()
+#30 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\base\Module.php(158): yii\base\BaseObject->__construct('[]')
+#31 [internal function]: yii\base\Module->__construct('<span class="st...', Object(yii\web\Application), '[]')
+#32 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\di\Container.php(392): ReflectionClass->newInstanceArgs('[<span class="s...')
+#33 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\di\Container.php(159): yii\di\Container->build('<span class="st...', '[<span class="s...', '[]')
+#34 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\BaseYii.php(365): yii\di\Container->get('<span class="st...', '[<span class="s...', '[]')
+#35 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\base\Module.php(427): yii\BaseYii::createObject('[<span class="s...', '[<span class="s...')
+#36 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\base\Application.php(315): yii\base\Module->getModule('<span class="st...')
+#37 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\web\Application.php(69): yii\base\Application->bootstrap()
+#38 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\base\Application.php(273): yii\web\Application->bootstrap()
+#39 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\base\BaseObject.php(109): yii\base\Application->init()
+#40 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\base\Application.php(206): yii\base\BaseObject->__construct('[<span class="s...')
+#41 C:\xampp\htdocs\artdecora\backend\web\index.php(17): yii\base\Application->__construct('[<span class="s...')
+#42 {main}
+
+Next exception 'yii\db\Exception' with message 'SQLSTATE[HY000] [2002] Nenhuma ligação pôde ser feita porque o computador de destino
+as recusou ativamente.
+' in C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\db\Connection.php:635
+Stack trace:
+#0 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\db\Connection.php(1015): yii\db\Connection->open()
+#1 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\db\Connection.php(1002): yii\db\Connection->getMasterPdo()
+#2 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\db\Command.php(253): yii\db\Connection->getSlavePdo()
+#3 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\db\Command.php(1153): yii\db\Command->prepare('<span class="ke...')
+#4 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\db\Command.php(399): yii\db\Command->queryInternal('<span class="st...', '<span class="ke...')
+#5 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\db\mysql\Schema.php(319): yii\db\Command->queryAll()
+#6 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\db\mysql\Schema.php(125): yii\db\mysql\Schema->findColumns(Object(yii\db\TableSchema))
+#7 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\db\Schema.php(754): yii\db\mysql\Schema->loadTableSchema('<span class="st...')
+#8 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\db\Schema.php(193): yii\db\Schema->getTableMetadata('<span class="st...', '<span class="st...', '<span class="ke...')
+#9 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\db\ActiveRecord.php(435): yii\db\Schema->getTableSchema('<span class="st...')
+#10 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\db\ActiveRecord.php(262): yii\db\ActiveRecord::getTableSchema()
+#11 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\db\ActiveRecord.php(234): yii\db\ActiveRecord::filterValidColumnNames(Object(yii\db\Connection), '[]')
+#12 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\db\ActiveRecord.php(191): yii\db\ActiveRecord::filterCondition('[<span class="s...', '[]')
+#13 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\db\BaseActiveRecord.php(112): yii\db\ActiveRecord::findByCondition('[<span class="s...')
+#14 C:\xampp\htdocs\artdecora\backend\models\Admin.php(78): yii\db\BaseActiveRecord::findOne('[<span class="s...')
+#15 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\web\User.php(690): backend\models\Admin::findIdentity('<span class="nu...')
+#16 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\web\User.php(192): yii\web\User->renewAuthStatus()
+#17 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\web\User.php(360): yii\web\User->getIdentity()
+#18 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\base\Component.php(139): yii\web\User->getIsGuest()
+#19 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2-debug\src\panels\UserPanel.php(83): yii\base\Component->__get('<span class="st...')
+#20 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\base\BaseObject.php(109): yii\debug\panels\UserPanel->init()
+#21 [internal function]: yii\base\BaseObject->__construct('[<span class="s...')
+#22 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\di\Container.php(400): ReflectionClass->newInstanceArgs('[[<span class="...')
+#23 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\di\Container.php(159): yii\di\Container->build('<span class="st...', '[]', '[<span class="s...')
+#24 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\BaseYii.php(365): yii\di\Container->get('<span class="st...', '[]', '[<span class="s...')
+#25 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2-debug\src\Module.php(247): yii\BaseYii::createObject('[<span class="s...')
+#26 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2-debug\src\Module.php(218): yii\debug\Module->initPanels()
+#27 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\base\BaseObject.php(109): yii\debug\Module->init()
+#28 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\base\Module.php(158): yii\base\BaseObject->__construct('[]')
+#29 [internal function]: yii\base\Module->__construct('<span class="st...', Object(yii\web\Application), '[]')
+#30 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\di\Container.php(392): ReflectionClass->newInstanceArgs('[<span class="s...')
+#31 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\di\Container.php(159): yii\di\Container->build('<span class="st...', '[<span class="s...', '[]')
+#32 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\BaseYii.php(365): yii\di\Container->get('<span class="st...', '[<span class="s...', '[]')
+#33 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\base\Module.php(427): yii\BaseYii::createObject('[<span class="s...', '[<span class="s...')
+#34 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\base\Application.php(315): yii\base\Module->getModule('<span class="st...')
+#35 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\web\Application.php(69): yii\base\Application->bootstrap()
+#36 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\base\Application.php(273): yii\web\Application->bootstrap()
+#37 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\base\BaseObject.php(109): yii\base\Application->init()
+#38 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\base\Application.php(206): yii\base\BaseObject->__construct('[<span class="s...')
+#39 C:\xampp\htdocs\artdecora\backend\web\index.php(17): yii\base\Application->__construct('[<span class="s...')
+#40 {main}
+Additional Information:
+
+2019-12-19 21:59:21 [127.0.0.1][-][mof66ro25f9mlo1cinr834e5o1][info][application] $_GET = []
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = [
+    '_identity-backend' => 'c6bf8ed71fb5323dbfa8d7a5263b931eaef96b62f1bc0f064b845380bbfaebcfa:2:{i:0;s:17:\"_identity-backend\";i:1;s:46:\"[1,\"-KpH2LJ0FGNnvk6EXcyt5RsUW-izy55e\",2592000]\";}'
+    '_csrf-backend' => '7a450d55d000af628f85a52c60416eddbdc009848796f75b7aa6a6b147ae48aaa:2:{i:0;s:13:\"_csrf-backend\";i:1;s:32:\"nI_VqwAdVzkL4lCvU23fKgbIT4BQsER6\";}'
+    'advanced-backend' => 'mof66ro25f9mlo1cinr834e5o1'
+]
+
+$_SESSION = [
+    '__flash' => []
+    '__id' => 1
+    'projeto' => 187
+    'projetoNome' => 'Exemplo'
+]
+
+$_SERVER = [
+    'MIBDIRS' => 'C:/xampp/php/extras/mibs'
+    'MYSQL_HOME' => '\\xampp\\mysql\\bin'
+    'OPENSSL_CONF' => 'C:/xampp/apache/bin/openssl.cnf'
+    'PHP_PEAR_SYSCONF_DIR' => '\\xampp\\php'
+    'PHPRC' => '\\xampp\\php'
+    'TMP' => '\\xampp\\tmp'
+    'HTTP_HOST' => 'backend.test'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_UPGRADE_INSECURE_REQUESTS' => '1'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36 OPR/65.0.3467.72'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'HTTP_ACCEPT_LANGUAGE' => 'pt-PT,pt;q=0.9,en-US;q=0.8,en;q=0.7'
+    'HTTP_COOKIE' => '_identity-backend=c6bf8ed71fb5323dbfa8d7a5263b931eaef96b62f1bc0f064b845380bbfaebcfa%3A2%3A%7Bi%3A0%3Bs%3A17%3A%22_identity-backend%22%3Bi%3A1%3Bs%3A46%3A%22%5B1%2C%22-KpH2LJ0FGNnvk6EXcyt5RsUW-izy55e%22%2C2592000%5D%22%3B%7D; _csrf-backend=7a450d55d000af628f85a52c60416eddbdc009848796f75b7aa6a6b147ae48aaa%3A2%3A%7Bi%3A0%3Bs%3A13%3A%22_csrf-backend%22%3Bi%3A1%3Bs%3A32%3A%22nI_VqwAdVzkL4lCvU23fKgbIT4BQsER6%22%3B%7D; advanced-backend=mof66ro25f9mlo1cinr834e5o1'
+    'PATH' => 'C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\javapath;C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Windows\\System32\\OpenSSH\\;C:\\xampp\\mysql\\bin;C:\\Program Files\\Git\\cmd;C:\\Program Files\\dotnet\\;C:\\xampp\\php;C:\\ProgramData\\ComposerSetup\\bin;C:\\Program Files\\Microsoft SQL Server\\Client SDK\\ODBC\\130\\Tools\\Binn\\;C:\\Program Files (x86)\\Microsoft SQL Server\\140\\Tools\\Binn\\;C:\\Program Files\\Microsoft SQL Server\\140\\Tools\\Binn\\;C:\\Program Files\\Microsoft SQL Server\\140\\DTS\\Binn\\;C:\\Program Files (x86)\\Microsoft SQL Server\\Client SDK\\ODBC\\130\\Tools\\Binn\\;C:\\Program Files (x86)\\Microsoft SQL Server\\140\\DTS\\Binn\\;C:\\Program Files (x86)\\Microsoft SQL Server\\140\\Tools\\Binn\\ManagementStudio\\;C:\\Program Files\\Microsoft SQL Server\\130\\Tools\\Binn\\;C:\\Program Files\\NVIDIA Corporation\\NVIDIA NvDLISR;C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common;C:\\WINDOWS\\system32;C:\\WINDOWS;C:\\WINDOWS\\System32\\Wbem;C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\;C:\\WINDOWS\\System32\\OpenSSH\\;C:\\Program Files\\nodejs\\;C:\\selenium-server-standalone-3.141.59.jar;C:\\Users\\Fernando Correia\\AppData\\Local\\Microsoft\\WindowsApps;C:\\Users\\Fernando Correia\\AppData\\Roaming\\Composer\\vendor\\bin;C:\\Users\\Fernando Correia\\AppData\\Local\\Programs\\Microsoft VS Code\\bin;C:\\Users\\Fernando Correia\\AppData\\Roaming\\npm'
+    'SystemRoot' => 'C:\\WINDOWS'
+    'COMSPEC' => 'C:\\WINDOWS\\system32\\cmd.exe'
+    'PATHEXT' => '.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC'
+    'WINDIR' => 'C:\\WINDOWS'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.38 (Win64) OpenSSL/1.0.2q PHP/5.6.40 Server at backend.test Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.38 (Win64) OpenSSL/1.0.2q PHP/5.6.40'
+    'SERVER_NAME' => 'backend.test'
+    'SERVER_ADDR' => '127.0.0.1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '127.0.0.1'
+    'DOCUMENT_ROOT' => 'C:/xampp/htdocs/artdecora/backend/web/'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => 'C:/xampp/htdocs/artdecora/backend/web/'
+    'SERVER_ADMIN' => 'postmaster@localhost'
+    'SCRIPT_FILENAME' => 'C:/xampp/htdocs/artdecora/backend/web/index.php'
+    'REMOTE_PORT' => '52745'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/'
+    'SCRIPT_NAME' => '/index.php'
+    'PHP_SELF' => '/index.php'
+    'REQUEST_TIME_FLOAT' => 1576789161.255
+    'REQUEST_TIME' => 1576789161
+]
+2019-12-19 21:59:29 [127.0.0.1][-][mof66ro25f9mlo1cinr834e5o1][error][yii\db\Exception] exception 'PDOException' with message 'SQLSTATE[HY000] [2002] Nenhuma ligação pôde ser feita porque o computador de destino
+as recusou ativamente.
+' in C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\db\Connection.php:698
+Stack trace:
+#0 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\db\Connection.php(698): PDO->__construct('mysql:host=loca...', 'users_artdecora', 'artdecora1234@', NULL)
+#1 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\db\Connection.php(624): yii\db\Connection->createPdoInstance()
+#2 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\db\Connection.php(1015): yii\db\Connection->open()
+#3 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\db\Connection.php(1002): yii\db\Connection->getMasterPdo()
+#4 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\db\Command.php(253): yii\db\Connection->getSlavePdo()
+#5 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\db\Command.php(1153): yii\db\Command->prepare('<span class="ke...')
+#6 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\db\Command.php(399): yii\db\Command->queryInternal('<span class="st...', '<span class="ke...')
+#7 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\db\mysql\Schema.php(319): yii\db\Command->queryAll()
+#8 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\db\mysql\Schema.php(125): yii\db\mysql\Schema->findColumns(Object(yii\db\TableSchema))
+#9 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\db\Schema.php(754): yii\db\mysql\Schema->loadTableSchema('<span class="st...')
+#10 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\db\Schema.php(193): yii\db\Schema->getTableMetadata('<span class="st...', '<span class="st...', '<span class="ke...')
+#11 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\db\ActiveRecord.php(435): yii\db\Schema->getTableSchema('<span class="st...')
+#12 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\db\ActiveRecord.php(262): yii\db\ActiveRecord::getTableSchema()
+#13 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\db\ActiveRecord.php(234): yii\db\ActiveRecord::filterValidColumnNames(Object(yii\db\Connection), '[]')
+#14 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\db\ActiveRecord.php(191): yii\db\ActiveRecord::filterCondition('[<span class="s...', '[]')
+#15 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\db\BaseActiveRecord.php(112): yii\db\ActiveRecord::findByCondition('[<span class="s...')
+#16 C:\xampp\htdocs\artdecora\backend\models\Admin.php(78): yii\db\BaseActiveRecord::findOne('[<span class="s...')
+#17 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\web\User.php(690): backend\models\Admin::findIdentity('<span class="nu...')
+#18 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\web\User.php(192): yii\web\User->renewAuthStatus()
+#19 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\web\User.php(360): yii\web\User->getIdentity()
+#20 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\base\Component.php(139): yii\web\User->getIsGuest()
+#21 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2-debug\src\panels\UserPanel.php(83): yii\base\Component->__get('<span class="st...')
+#22 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\base\BaseObject.php(109): yii\debug\panels\UserPanel->init()
+#23 [internal function]: yii\base\BaseObject->__construct('[<span class="s...')
+#24 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\di\Container.php(400): ReflectionClass->newInstanceArgs('[[<span class="...')
+#25 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\di\Container.php(159): yii\di\Container->build('<span class="st...', '[]', '[<span class="s...')
+#26 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\BaseYii.php(365): yii\di\Container->get('<span class="st...', '[]', '[<span class="s...')
+#27 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2-debug\src\Module.php(247): yii\BaseYii::createObject('[<span class="s...')
+#28 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2-debug\src\Module.php(218): yii\debug\Module->initPanels()
+#29 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\base\BaseObject.php(109): yii\debug\Module->init()
+#30 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\base\Module.php(158): yii\base\BaseObject->__construct('[]')
+#31 [internal function]: yii\base\Module->__construct('<span class="st...', Object(yii\web\Application), '[]')
+#32 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\di\Container.php(392): ReflectionClass->newInstanceArgs('[<span class="s...')
+#33 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\di\Container.php(159): yii\di\Container->build('<span class="st...', '[<span class="s...', '[]')
+#34 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\BaseYii.php(365): yii\di\Container->get('<span class="st...', '[<span class="s...', '[]')
+#35 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\base\Module.php(427): yii\BaseYii::createObject('[<span class="s...', '[<span class="s...')
+#36 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\base\Application.php(315): yii\base\Module->getModule('<span class="st...')
+#37 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\web\Application.php(69): yii\base\Application->bootstrap()
+#38 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\base\Application.php(273): yii\web\Application->bootstrap()
+#39 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\base\BaseObject.php(109): yii\base\Application->init()
+#40 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\base\Application.php(206): yii\base\BaseObject->__construct('[<span class="s...')
+#41 C:\xampp\htdocs\artdecora\backend\web\index.php(17): yii\base\Application->__construct('[<span class="s...')
+#42 {main}
+
+Next exception 'yii\db\Exception' with message 'SQLSTATE[HY000] [2002] Nenhuma ligação pôde ser feita porque o computador de destino
+as recusou ativamente.
+' in C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\db\Connection.php:635
+Stack trace:
+#0 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\db\Connection.php(1015): yii\db\Connection->open()
+#1 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\db\Connection.php(1002): yii\db\Connection->getMasterPdo()
+#2 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\db\Command.php(253): yii\db\Connection->getSlavePdo()
+#3 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\db\Command.php(1153): yii\db\Command->prepare('<span class="ke...')
+#4 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\db\Command.php(399): yii\db\Command->queryInternal('<span class="st...', '<span class="ke...')
+#5 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\db\mysql\Schema.php(319): yii\db\Command->queryAll()
+#6 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\db\mysql\Schema.php(125): yii\db\mysql\Schema->findColumns(Object(yii\db\TableSchema))
+#7 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\db\Schema.php(754): yii\db\mysql\Schema->loadTableSchema('<span class="st...')
+#8 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\db\Schema.php(193): yii\db\Schema->getTableMetadata('<span class="st...', '<span class="st...', '<span class="ke...')
+#9 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\db\ActiveRecord.php(435): yii\db\Schema->getTableSchema('<span class="st...')
+#10 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\db\ActiveRecord.php(262): yii\db\ActiveRecord::getTableSchema()
+#11 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\db\ActiveRecord.php(234): yii\db\ActiveRecord::filterValidColumnNames(Object(yii\db\Connection), '[]')
+#12 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\db\ActiveRecord.php(191): yii\db\ActiveRecord::filterCondition('[<span class="s...', '[]')
+#13 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\db\BaseActiveRecord.php(112): yii\db\ActiveRecord::findByCondition('[<span class="s...')
+#14 C:\xampp\htdocs\artdecora\backend\models\Admin.php(78): yii\db\BaseActiveRecord::findOne('[<span class="s...')
+#15 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\web\User.php(690): backend\models\Admin::findIdentity('<span class="nu...')
+#16 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\web\User.php(192): yii\web\User->renewAuthStatus()
+#17 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\web\User.php(360): yii\web\User->getIdentity()
+#18 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\base\Component.php(139): yii\web\User->getIsGuest()
+#19 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2-debug\src\panels\UserPanel.php(83): yii\base\Component->__get('<span class="st...')
+#20 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\base\BaseObject.php(109): yii\debug\panels\UserPanel->init()
+#21 [internal function]: yii\base\BaseObject->__construct('[<span class="s...')
+#22 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\di\Container.php(400): ReflectionClass->newInstanceArgs('[[<span class="...')
+#23 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\di\Container.php(159): yii\di\Container->build('<span class="st...', '[]', '[<span class="s...')
+#24 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\BaseYii.php(365): yii\di\Container->get('<span class="st...', '[]', '[<span class="s...')
+#25 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2-debug\src\Module.php(247): yii\BaseYii::createObject('[<span class="s...')
+#26 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2-debug\src\Module.php(218): yii\debug\Module->initPanels()
+#27 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\base\BaseObject.php(109): yii\debug\Module->init()
+#28 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\base\Module.php(158): yii\base\BaseObject->__construct('[]')
+#29 [internal function]: yii\base\Module->__construct('<span class="st...', Object(yii\web\Application), '[]')
+#30 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\di\Container.php(392): ReflectionClass->newInstanceArgs('[<span class="s...')
+#31 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\di\Container.php(159): yii\di\Container->build('<span class="st...', '[<span class="s...', '[]')
+#32 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\BaseYii.php(365): yii\di\Container->get('<span class="st...', '[<span class="s...', '[]')
+#33 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\base\Module.php(427): yii\BaseYii::createObject('[<span class="s...', '[<span class="s...')
+#34 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\base\Application.php(315): yii\base\Module->getModule('<span class="st...')
+#35 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\web\Application.php(69): yii\base\Application->bootstrap()
+#36 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\base\Application.php(273): yii\web\Application->bootstrap()
+#37 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\base\BaseObject.php(109): yii\base\Application->init()
+#38 C:\xampp\htdocs\artdecora\vendor\yiisoft\yii2\base\Application.php(206): yii\base\BaseObject->__construct('[<span class="s...')
+#39 C:\xampp\htdocs\artdecora\backend\web\index.php(17): yii\base\Application->__construct('[<span class="s...')
+#40 {main}
+Additional Information:
+
+2019-12-19 21:59:25 [127.0.0.1][-][mof66ro25f9mlo1cinr834e5o1][info][application] $_GET = []
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = [
+    '_identity-backend' => 'c6bf8ed71fb5323dbfa8d7a5263b931eaef96b62f1bc0f064b845380bbfaebcfa:2:{i:0;s:17:\"_identity-backend\";i:1;s:46:\"[1,\"-KpH2LJ0FGNnvk6EXcyt5RsUW-izy55e\",2592000]\";}'
+    '_csrf-backend' => '7a450d55d000af628f85a52c60416eddbdc009848796f75b7aa6a6b147ae48aaa:2:{i:0;s:13:\"_csrf-backend\";i:1;s:32:\"nI_VqwAdVzkL4lCvU23fKgbIT4BQsER6\";}'
+    'advanced-backend' => 'mof66ro25f9mlo1cinr834e5o1'
+]
+
+$_SESSION = [
+    '__flash' => []
+    '__id' => 1
+    'projeto' => 187
+    'projetoNome' => 'Exemplo'
+]
+
+$_SERVER = [
+    'MIBDIRS' => 'C:/xampp/php/extras/mibs'
+    'MYSQL_HOME' => '\\xampp\\mysql\\bin'
+    'OPENSSL_CONF' => 'C:/xampp/apache/bin/openssl.cnf'
+    'PHP_PEAR_SYSCONF_DIR' => '\\xampp\\php'
+    'PHPRC' => '\\xampp\\php'
+    'TMP' => '\\xampp\\tmp'
+    'HTTP_HOST' => 'backend.test'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_UPGRADE_INSECURE_REQUESTS' => '1'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36 OPR/65.0.3467.72'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'HTTP_ACCEPT_LANGUAGE' => 'pt-PT,pt;q=0.9,en-US;q=0.8,en;q=0.7'
+    'HTTP_COOKIE' => '_identity-backend=c6bf8ed71fb5323dbfa8d7a5263b931eaef96b62f1bc0f064b845380bbfaebcfa%3A2%3A%7Bi%3A0%3Bs%3A17%3A%22_identity-backend%22%3Bi%3A1%3Bs%3A46%3A%22%5B1%2C%22-KpH2LJ0FGNnvk6EXcyt5RsUW-izy55e%22%2C2592000%5D%22%3B%7D; _csrf-backend=7a450d55d000af628f85a52c60416eddbdc009848796f75b7aa6a6b147ae48aaa%3A2%3A%7Bi%3A0%3Bs%3A13%3A%22_csrf-backend%22%3Bi%3A1%3Bs%3A32%3A%22nI_VqwAdVzkL4lCvU23fKgbIT4BQsER6%22%3B%7D; advanced-backend=mof66ro25f9mlo1cinr834e5o1'
+    'PATH' => 'C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\javapath;C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Windows\\System32\\OpenSSH\\;C:\\xampp\\mysql\\bin;C:\\Program Files\\Git\\cmd;C:\\Program Files\\dotnet\\;C:\\xampp\\php;C:\\ProgramData\\ComposerSetup\\bin;C:\\Program Files\\Microsoft SQL Server\\Client SDK\\ODBC\\130\\Tools\\Binn\\;C:\\Program Files (x86)\\Microsoft SQL Server\\140\\Tools\\Binn\\;C:\\Program Files\\Microsoft SQL Server\\140\\Tools\\Binn\\;C:\\Program Files\\Microsoft SQL Server\\140\\DTS\\Binn\\;C:\\Program Files (x86)\\Microsoft SQL Server\\Client SDK\\ODBC\\130\\Tools\\Binn\\;C:\\Program Files (x86)\\Microsoft SQL Server\\140\\DTS\\Binn\\;C:\\Program Files (x86)\\Microsoft SQL Server\\140\\Tools\\Binn\\ManagementStudio\\;C:\\Program Files\\Microsoft SQL Server\\130\\Tools\\Binn\\;C:\\Program Files\\NVIDIA Corporation\\NVIDIA NvDLISR;C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common;C:\\WINDOWS\\system32;C:\\WINDOWS;C:\\WINDOWS\\System32\\Wbem;C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\;C:\\WINDOWS\\System32\\OpenSSH\\;C:\\Program Files\\nodejs\\;C:\\selenium-server-standalone-3.141.59.jar;C:\\Users\\Fernando Correia\\AppData\\Local\\Microsoft\\WindowsApps;C:\\Users\\Fernando Correia\\AppData\\Roaming\\Composer\\vendor\\bin;C:\\Users\\Fernando Correia\\AppData\\Local\\Programs\\Microsoft VS Code\\bin;C:\\Users\\Fernando Correia\\AppData\\Roaming\\npm'
+    'SystemRoot' => 'C:\\WINDOWS'
+    'COMSPEC' => 'C:\\WINDOWS\\system32\\cmd.exe'
+    'PATHEXT' => '.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC'
+    'WINDIR' => 'C:\\WINDOWS'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.38 (Win64) OpenSSL/1.0.2q PHP/5.6.40 Server at backend.test Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.38 (Win64) OpenSSL/1.0.2q PHP/5.6.40'
+    'SERVER_NAME' => 'backend.test'
+    'SERVER_ADDR' => '127.0.0.1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '127.0.0.1'
+    'DOCUMENT_ROOT' => 'C:/xampp/htdocs/artdecora/backend/web/'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => 'C:/xampp/htdocs/artdecora/backend/web/'
+    'SERVER_ADMIN' => 'postmaster@localhost'
+    'SCRIPT_FILENAME' => 'C:/xampp/htdocs/artdecora/backend/web/index.php'
+    'REMOTE_PORT' => '52744'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/'
+    'SCRIPT_NAME' => '/index.php'
+    'PHP_SELF' => '/index.php'
+    'REQUEST_TIME_FLOAT' => 1576789165.256
+    'REQUEST_TIME' => 1576789165
+]

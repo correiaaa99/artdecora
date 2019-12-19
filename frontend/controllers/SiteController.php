@@ -151,7 +151,7 @@ class SiteController extends Controller
             {
                 Yii::$app->session->setFlash('errorcontato', 'There was an error sending your message.');
             }
-            return $this->render('index');
+            return $this->redirect(['site/index']); 
         } else {
             return $this->render('contact', [
                 'model' => $model,

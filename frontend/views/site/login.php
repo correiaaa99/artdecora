@@ -112,7 +112,8 @@ $this->title = 'Entrar';
                             'autofocus' => true,
                             'id' => 'email',
                             'placeholder' => 'exemplo@hotmail.com'
-                        ]) ?>
+                        ]) 
+                        ->label('Email')?>
                     </div>
                     <div class="col m3 s12"></div> 
                 </div>
@@ -123,7 +124,7 @@ $this->title = 'Entrar';
                             'id' => 'password',
                             'placeholder' => '********'
                         ])
-                        ->label('Palavra-passe') ?>
+                        ->label('Palavra passe') ?>
                     </div>
                     <div class="col m3 s12"></div> 
                 </div>

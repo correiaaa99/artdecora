@@ -24,43 +24,38 @@ class LoginCest
         ];
     }
 
-    public function _before(FunctionalTester $I)
-    {
-        $I->amOnRoute('site/login');
-    }
 
-    protected function formParams($login, $password)
+    protected function formParams($email, $password)
     {
         return [
-            'LoginForm[username]' => $login,
+            'LoginForm[email]' => $email,
             'LoginForm[password]' => $password,
         ];
     }
 
     public function checkEmpty(FunctionalTester $I)
     {
+        $I->amOnPage('/site/login');
         $I->submitForm('#login-form', $this->formParams('', ''));
-        $I->seeValidationError('Username cannot be blank.');
-        $I->seeValidationError('Password cannot be blank.');
+
+        $I->See('É obrigatório preencher o email!');
+        $I->See('É obrigatório preencher a palavra-passe!');
     }
 
     public function checkWrongPassword(FunctionalTester $I)
     {
-        $I->submitForm('#login-form', $this->formParams('admin', 'wrong'));
-        $I->seeValidationError('Incorrect username or password.');
-    }
-
-    public function checkInactiveAccount(FunctionalTester $I)
-    {
-        $I->submitForm('#login-form', $this->formParams('test.test', 'Test1234'));
-        $I->seeValidationError('Incorrect username or password');
+        $I->amOnPage('/site/login');
+        $I->submitForm('#login-form', $this->formParams('fernando_fcporto@hotmail.com', '718923763'));
+        $I->seeValidationError('Email ou palavra-passe incorretos!');
     }
 
     public function checkValidLogin(FunctionalTester $I)
     {
-        $I->submitForm('#login-form', $this->formParams('erau', 'password_0'));
-        $I->see('Logout (erau)', 'form button[type=submit]');
-        $I->dontSeeLink('Login');
-        $I->dontSeeLink('Signup');
+        $I->amOnPage('/site/login');
+        $I->fillField('Email', 'fernando_fcporto@hotmail.com');
+        $I->fillField('Palavra passe', '123456aA');
+        $I->click('login-button');
+
+        $I->dontSeeLink('Registar');
     }
 }
