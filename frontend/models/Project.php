@@ -52,6 +52,16 @@ class Project extends \yii\db\ActiveRecord
     }
     public function getImages()
     {
-        return $this->hasMany(Project::className(), ['idProject' => 'idProject']);
+        return $this->hasMany(Image::className(), ['idProject' => 'idProject']);
+    }
+    public function getDesigners()
+    {
+       return $this->hasMany(Designer::className(), ['idDesigner' => 'idDesigner'])
+           ->viaTable('tbl_designerproject', ['idProject' => 'idProject']);
+    }
+    public function getCategorys()
+    {
+       return $this->hasMany(Category::className(), ['idCategory' => 'idCategory'])
+           ->viaTable('tbl_projectcategory', ['idProject' => 'idProject']);
     }
 }

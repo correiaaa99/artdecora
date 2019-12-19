@@ -31,7 +31,7 @@ class Image extends \yii\db\ActiveRecord
         return [
             [['name'], 'required'],
             [['idRequest', 'idProject'], 'integer'],
-            [['name'], 'string', 'max' => 50],
+            [['name'], 'string', 'max' => 255],
             [['file'], 'required', 'message' => 'É obrigatório inserir uma imagem!'],
             [['file'], 'file', 'extensions' => 'png, jpg, jpeg', 'maxFiles' => 0],
         ];

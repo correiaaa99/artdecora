@@ -16,6 +16,9 @@ use frontend\models\SignupForm;
 use frontend\models\ContactForm;
 use frontend\models\Project;
 use frontend\models\User;
+use yii\data\Pagination;
+use frontend\models\IdeaBook;
+use frontend\models\ProjectIdeaBook;
 
 /**
  * Site controller
@@ -73,7 +76,28 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        $livro = new ProjectIdeaBook();
+        $dataProjects = Project::find()
+            ->select(['tbl_project.idProject', 'tbl_project.name as ProjectName', 'tbl_project.description', 'tbl_image.name as image'])
+            ->from(['tbl_project'])
+            ->leftJoin('tbl_image', 'tbl_image.idProject = tbl_project.idProject')
+            ->asArray();
+
+        $totalCount = clone $dataProjects;
+
+        $pagination = new Pagination([
+            'defaultPageSize' => 4,
+            'totalCount' => count($totalCount->all()),
+        ]);
+
+        $projetos = $dataProjects->offset($pagination->offset)
+        ->limit($pagination->limit)
+        ->all();
+        return $this->render('index', [
+            'dataProjects' => $projetos,
+            'pages' => $pagination,
+            'livro' => $livro,
+        ]);
     }
 
     /**

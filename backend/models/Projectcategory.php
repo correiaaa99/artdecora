@@ -50,7 +50,7 @@ class Projectcategory extends \yii\db\ActiveRecord
     public function getCategorys() {
         $categorias = Category::find()->select('tbl_category.*')
         ->leftJoin('tbl_projectcategory','tbl_category.idCategory = tbl_projectcategory.idCategory')
-        ->where(['tbl_projectcategory.idCategory' => NULL])->all();
+        ->all();
         return $categorias;
     }
 }

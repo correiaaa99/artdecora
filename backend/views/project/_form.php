@@ -73,9 +73,6 @@ use yii\helpers\Url;
         ->widget(Select2::classname(), [
             'data' => $designers,
             'options' => ['placeholder' => 'Seleciona um designer ...', 'multiple' => true],
-            'pluginOptions' => [
-                'allowClear' => true
-            ],
         ]);?>
      
         <?php $categorias = ArrayHelper::map(\backend\models\Category::find()->orderBy('idCategory')->all(), 'idCategory', 'name')?>
@@ -84,9 +81,6 @@ use yii\helpers\Url;
         ->widget(Select2::classname(), [
             'data' => $categorias,
             'options' => ['placeholder' => 'Seleciona uma categoria ...', 'multiple' => true],
-            'pluginOptions' => [
-                'allowClear' => true
-            ],
         ]);
         echo $form->field($image, 'file[]')
         ->label('Imagens *')

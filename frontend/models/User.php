@@ -110,7 +110,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
      */
     public function getIdeaBook()
     {
-        return $this->hasMany(Ideabook::className(), ['idUser' => 'idUser']);
+        return $this->hasMany(IdeaBook::className(), ['idUser' => 'idUser']);
     }
     /**
      * {@inheritdoc}

@@ -44,10 +44,14 @@ class ImageSearch extends Image
         $session = Yii::$app->session;
         $projeto = $session->get('projeto');
         $pedido = $session->get('pedido');
-        $query = Image::find()->where(['idProject' => $projeto]);
-        $query = Image::find()->where(['idRequest' => $pedido]);
-
-        // add conditions that should always apply here
+        if($projeto)
+        {
+            $query = Image::find()->where(['idProject' => $projeto]);
+        }
+        else
+        {
+            $query = Image::find()->where(['idRequest' => $pedido]);
+        }
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

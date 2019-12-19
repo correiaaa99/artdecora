@@ -1,7 +1,7 @@
 <?php
 
 namespace backend\models;
-
+use yii\web\Session;
 use Yii;
 
 /**
@@ -48,10 +48,15 @@ class Designerproject extends \yii\db\ActiveRecord
         return $this->hasOne(Designer::className(), ['idDesigner' => 'idDesigner']);
     }
     public function getDesigners() {
+        $session = Yii::$app->session;
+        $projeto = $session->get('projeto');
+        echo $projeto;
         $designers = Designer::find()->select('tbl_designer.*')
         ->leftJoin('tbl_designerproject','tbl_designer.idDesigner = tbl_designerproject.idDesigner')
-        ->where(['tbl_designerproject.idDesigner' => NULL])->all();
+        ->where(['<>', 'tbl_designerproject.idProject', $projeto])
+        ->all();
         return $designers;
+
     }
     
 }
