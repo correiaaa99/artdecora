@@ -96,7 +96,7 @@ class UserController extends Controller
     {
         if (\Yii::$app->user->can('criarUser')) 
         {
-            $model = new User();
+            $model = new User(['scenario' => 'create']);
             if ($model->load(Yii::$app->request->post()))
             {      
                 if($model->validate())
@@ -104,11 +104,10 @@ class UserController extends Controller
                     $model->generateEmailVerificationToken();
                     if(UploadedFile::getInstance($model,'file'))
                     {
-                        $model->file = UploadedFile::getInstance($model,'file');
-                        $imageName = $model->username;
-                        $model->photo = 'images/' .  preg_replace("/[^a-zA-Z0-9.]/", "",str_replace(' ', '_' ,$imageName)) . '.' . $model->file->extension;
+                        $imagem = UploadedFile::getInstance($model, 'file'); 
+                        $model->photo = 'images/' .  preg_replace("/[^a-zA-Z0-9.]/", "",str_replace(' ', '_' ,$imagem->baseName)) . '.' . $model->file->extension;
                         $model->save();
-                        $model->file->saveAs('images/'. preg_replace("/[^a-zA-Z0-9.]/", "",str_replace(' ', '_' ,$imageName)) .'.'. $model->file->extension);
+                        $imagem->saveAs('images/'. preg_replace("/[^a-zA-Z0-9.]/", "",str_replace(' ', '_' ,$imagem->baseName)) .'.'. $model->file->extension);
                         return $this->redirect(['index']); 
                     }
                     $model->save();
@@ -157,10 +156,9 @@ class UserController extends Controller
                         {
                             unlink(Yii::$app->basePath . '/web/' . $model->photo);
                         }
-                        $imageName = $model->username;
-                        $model->photo = 'images/' .  preg_replace("/[^a-zA-Z0-9.]/", "",str_replace(' ', '_' ,$imageName)) . '.' . $imagem->extension;
+                        $model->photo = 'images/' .  preg_replace("/[^a-zA-Z0-9.]/", "",str_replace(' ', '_' ,$imagem->baseName)) . '.' . $imagem->extension;
                         $model->save(); 
-                        $path = 'images/' .  preg_replace("/[^a-zA-Z0-9.]/", "",str_replace(' ', '_' , $imageName)) . '.' . $imagem->extension;
+                        $path = 'images/' .  preg_replace("/[^a-zA-Z0-9.]/", "",str_replace(' ', '_' , $imagem->baseName)) . '.' . $imagem->extension;
                         $imagem->saveAs($path);
                         return $this->redirect(['index']);
                     }

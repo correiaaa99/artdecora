@@ -15,6 +15,8 @@ use Yii;
  */
 class Project extends \yii\db\ActiveRecord
 {
+    public $avaliacao;
+    public $contador;   
     /**
      * {@inheritdoc}
      */
@@ -63,5 +65,9 @@ class Project extends \yii\db\ActiveRecord
     {
        return $this->hasMany(Category::className(), ['idCategory' => 'idCategory'])
            ->viaTable('tbl_projectcategory', ['idProject' => 'idProject']);
+    }
+    public function getEvalution()
+    {
+        return $this->hasMany(Evalution::className(), ['idProject' => 'idProject']);
     }
 }

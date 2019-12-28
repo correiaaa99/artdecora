@@ -50,11 +50,10 @@ class Designerproject extends \yii\db\ActiveRecord
     public function getDesigners() {
         $session = Yii::$app->session;
         $projeto = $session->get('projeto');
-        echo $projeto;
         $designers = Designer::find()->select('tbl_designer.*')
         ->leftJoin('tbl_designerproject','tbl_designer.idDesigner = tbl_designerproject.idDesigner')
         ->where(['tbl_designer.idDesigner' => NULL])
-        ->andWhere(['<>', 'tbl_designerproject.idProject', $projeto])
+        ->andWhere(['=', 'tbl_designerproject.idProject', $projeto])
         ->all();
         return $designers;
 

@@ -70,6 +70,8 @@ use frontend\models\Project;
         <div class="row">
             <div class="col m6 s12">
                 <?php
+                    $avaliacao = $projeto->avaliacao;
+                    $contador = $projeto->contador;
                     $name = $projeto->name;
                     $price = $projeto->price;
                     $description = $projeto->description;
@@ -103,7 +105,11 @@ use frontend\models\Project;
                 <label for="username" style="font-size:13.5px;color:rgb(30, 56, 71);">Data</label>
                 <input disabled value="<?php echo $date?>" type="text" class="info">
             </div>
-            <div class="col m6 s12">   
+            <div class="col m3 s12"> 
+                <p style="font-size:16px;font-weight:600">Média das avaliações: <h5> <?php if($projeto['avaliacao'] != 0) { echo $projeto['avaliacao']; } else { echo '0';}?> </h5></p>
+            </div>
+            <div class="col m3 s12"> 
+                <p style="font-size:16px;font-weight:600">Total de avaliações: <h5> <?php if($projeto['contador'] != 0) { echo $projeto['contador']; } else { echo '0';}?> </h5></p>
             </div>
             <div style="margin-top:20px;" class="col m3 s12">  
                 <a href="#">
@@ -122,8 +128,20 @@ use frontend\models\Project;
                     <i style="color:rgb(30, 56, 71);" class="material-icons">star</i>
                 </a>        
             </div>
-            <div style="margin-top:20px;" class="col m3 s12">        
-                <a style="background-color:rgb(30, 56, 71);" class="waves-effect waves-light btn"><i class="material-icons right">add_circle</i>Novo pedido</a>
+            <div style="margin-top:20px;" class="col m3 s12">  
+            <?php if (!Yii::$app->user->isGuest) 
+            {
+                ?>
+                    <a style="background-color:rgb(30, 56, 71);" class="btn"><i class="material-icons right">add_circle</i>Novo pedido</a>
+                <?php
+            }
+            else
+            {
+                ?>
+                    <a onclick="myFunction()" style="background-color:rgb(30, 56, 71);" class="btn"><i class="material-icons right">add_circle</i>Novo pedido</a>
+                <?php
+            }
+            ?>       
             </div>
         </div>
         <div class="row">
@@ -156,4 +174,7 @@ use frontend\models\Project;
     $(document).ready(function(){
         $('.carousel').carousel();
     })    
+    function myFunction() {
+            M.toast({html: 'Inicie sessão para poder criar um pedido.'});
+    }
 </script>   

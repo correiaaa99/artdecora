@@ -29,7 +29,8 @@ class IdeaBook extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['description', 'title', 'date', 'idUser'], 'required'],
+            ['description', 'required', 'message' => 'É obrigatório preencher a descrição!'],
+            ['title', 'required', 'message' => 'É obrigatório preencher o título'],
             [['description'], 'string'],
             [['idUser'], 'integer'],
             [['title'], 'string', 'max' => 30],

@@ -109,30 +109,33 @@ $this->title = 'Página inicial';
                             <div class="card">
                                 <div class="card-image">
                                     <div class="guardar">
-                                        <img class="image" style="height:210px;" src="http://backend.test/<?php echo $project['image'];?>">
-                                        <div class="button">
-                                            <?php if (!Yii::$app->user->isGuest) 
-                                            {
-                                                ?>
-                                                <div class="middle"><a id="<?php echo $project['idProject']?>" style="background-color:rgb(30, 56, 71);" class="waves-effect waves-light btn modal-trigger botao " href="#modal1"><i class="material-icons right">add</i>Guardar</a></div>
-                                                <?php
-                                            }
-                                            else
-                                            {
-                                                ?>
-                                                <div class="middle"><a onclick="myFunction()"  style="background-color:rgb(30, 56, 71);" class="waves-effect waves-light btn"><i class="material-icons right">add</i>Guardar</a></div>
-                                                <?php
-                                            }
-                                            ?>      
-                                        </div>        
+                                        <?php foreach($project->images as $image) : ?>
+                                            <img class="image" style="height:210px;" src="http://backend.test/<?php echo $image->name?>">
+                                            <div class="button">
+                                                <?php if (!Yii::$app->user->isGuest) 
+                                                {
+                                                    ?>
+                                                    <div class="middle"><a id="<?php echo $project['idProject']?>" style="background-color:rgb(30, 56, 71);" class="waves-effect waves-light btn modal-trigger botao " href="#modal1"><i class="material-icons right">add</i>Guardar</a></div>
+                                                    <?php
+                                                }
+                                                else
+                                                {
+                                                    ?>
+                                                    <div class="middle"><a onclick="myFunction()"  style="background-color:rgb(30, 56, 71);" class="waves-effect waves-light btn"><i class="material-icons right">add</i>Guardar</a></div>
+                                                    <?php
+                                                }
+                                                ?>      
+                                            </div>  
+                                            <?php break;?>      
+                                        <?php endforeach; ?>
                                     </div>  
                                 </div>
                                 <div style="height:170px;margin-top:-40px" class="card-content">
-                                    <p style="font-weight:bold;font-size:20px;"><?php echo $project['ProjectName']?></p>
-                                    <p><?php echo $project['description']?></p>
+                                    <p style="font-weight:bold;font-size:20px;"><?php echo $project->name;?></p>
+                                    <p><?php echo $project->description?></p>
                                 </div>
                                 <div class="card-action">
-                                    <a style="color:rgb(30, 56, 71);" href="/project/detalhes?id=<?php echo $project['idProject']?>">Detalhes</a>
+                                    <a style="color:rgb(30, 56, 71);" href="/project/detalhes?id=<?php echo $project->idProject?>">Detalhes</a>
                                 </div>
                             </div>
                         </div>                                 
@@ -142,12 +145,12 @@ $this->title = 'Página inicial';
                     </div>
                 </div>
             </div>
+            <?php
+                echo LinkPager::widget([
+                    'pagination' => $pages,
+                ]);
+            ?>
         </div>
-        <?php
-            echo LinkPager::widget([
-                'pagination' => $pages,
-            ]);
-        ?>
     </div>
     <?php Pjax::end() ?>
     <?php $form = ActiveForm::begin(['action' => ['/project-idea-book/create'],'options' => ['method' => 'post']]); ?>
@@ -173,28 +176,21 @@ $this->title = 'Página inicial';
                     ->label(false);
                 ?>
                 <div class="row">
-                    <div class="input-field col s12 m4">    
+                    <div class="input-field col s12 m12">    
                         <?= $form->field($livro, 'title')->textInput([
                             'id' => 'titulo',
                         ])
                         ->label('Título')?>
                     </div>
-                    <div class="input-field col s12 m8">    
-                        <?= $form->field($livro, 'comment')->textArea([
-                            'id' => 'comentario',
-                            'class' => 'materialize-textarea'
-                        ])
+                </div> 
+                <div class="row">
+                    <div class="input-field col s12 m12">
+                        <?= $form->field($livro, 'comment')->widget(alexantr\ckeditor\CKEditor::className())
                         ->label('Comentário')?>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="input-field col m4"></div>
-                    <div class="input-field col m4">  
-                        <div style="text-align:center;">
-                            <?= Html::submitButton('Guardar', ['class' => 'btn btn-primary']) ?>
-                        </div>
-                    </div>
-                    <div class="input-field col m4"></div>
+                <div style="text-align:center;">
+                    <?= Html::submitButton('Guardar', ['class' => 'btn btn-primary']) ?>
                 </div>
             </div>
         </div>

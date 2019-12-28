@@ -77,20 +77,15 @@ class SiteController extends Controller
     public function actionIndex()
     {
         $livro = new ProjectIdeaBook();
-        $dataProjects = Project::find()
-            ->select(['tbl_project.idProject', 'tbl_project.name as ProjectName', 'tbl_project.description', 'tbl_image.name as image'])
-            ->from(['tbl_project'])
-            ->leftJoin('tbl_image', 'tbl_image.idProject = tbl_project.idProject')
-            ->asArray();
+        $dataProjects = Project::find();
 
         $totalCount = clone $dataProjects;
-
         $pagination = new Pagination([
             'defaultPageSize' => 4,
             'totalCount' => count($totalCount->all()),
         ]);
 
-        $projetos = $dataProjects->offset($pagination->offset)
+        $projetos = $totalCount->offset($pagination->offset)
         ->limit($pagination->limit)
         ->all();
         return $this->render('index', [
@@ -175,7 +170,7 @@ class SiteController extends Controller
      */
     public function actionSignup()
     {
-        $model = new User();
+        $model = new User(['scenario' => 'create']);
         if ($model->load(Yii::$app->request->post()))
         {
             if($model->validate())
