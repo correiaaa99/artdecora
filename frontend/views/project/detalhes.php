@@ -12,6 +12,9 @@
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use frontend\models\Project;
+use yii\helpers\ArrayHelper;
+use kartik\rating\StarRating;
+use yii\web\JsExpression;
 ?>
 
 
@@ -64,12 +67,20 @@ use frontend\models\Project;
     #editar {
         background-color: rgb(30, 56, 71);
     }
+    .btn:hover {
+        color:white;
+    }
+    #description:focus {
+        border-bottom: 1px solid #BD9056;
+        box-shadow: 0 1px 0 0 #BD9056;
+    }
 </style>
 <div class="project-detalhes">
     <div class="container">  
         <div class="row">
             <div class="col m6 s12">
                 <?php
+                    $project = $projeto->idProject;
                     $avaliacao = $projeto->avaliacao;
                     $contador = $projeto->contador;
                     $name = $projeto->name;
@@ -93,7 +104,7 @@ use frontend\models\Project;
                 <label for="username" style="font-size:13.5px;color:rgb(30, 56, 71);">Nome</label>
                 <input disabled value="<?php echo $name?>" type="text" class="info" >
                 <label for="nome" style="font-size:13.5px;color:rgb(30, 56, 71);">Descrição</label>
-                <input disabled value="<?php echo $description ?>" class=" info"> 
+                <input disabled value="<?php echo $description ?>" class="info"> 
             </div>
             <div class="col m6 s12">      
             </div>
@@ -105,43 +116,46 @@ use frontend\models\Project;
                 <label for="username" style="font-size:13.5px;color:rgb(30, 56, 71);">Data</label>
                 <input disabled value="<?php echo $date?>" type="text" class="info">
             </div>
-            <div class="col m3 s12"> 
-                <p style="font-size:16px;font-weight:600">Média das avaliações: <h5> <?php if($projeto['avaliacao'] != 0) { echo $projeto['avaliacao']; } else { echo '0';}?> </h5></p>
+            <div class="col m6 s12">      
             </div>
             <div class="col m3 s12"> 
-                <p style="font-size:16px;font-weight:600">Total de avaliações: <h5> <?php if($projeto['contador'] != 0) { echo $projeto['contador']; } else { echo '0';}?> </h5></p>
+                <p style="font-size:16px;font-weight:600">Média das avaliações: <h5><div id="avaliacao"> <?php if($projeto['avaliacao'] != 0) { echo $projeto['avaliacao']; } else { echo '0';}?></div></h5></p>
+            </div>
+            <div class="col m3 s12"> 
+                <p style="font-size:16px;font-weight:600">Total de avaliações: <h5><div id="contador"><?php if($projeto['contador'] != 0) { echo $projeto['contador']; } else { echo '0';}?> </div></h5></p>
+            </div>
+            <div class="col m6 s12">      
             </div>
             <div style="margin-top:20px;" class="col m3 s12">  
-                <a href="#">
-                    <i style="color:rgb(30, 56, 71);"  class="material-icons">star</i>
-                </a>
-                <a href="#">
-                    <i style="color:rgb(30, 56, 71);" class="material-icons">star</i>
-                </a>
-                <a href="#">
-                    <i style="color:rgb(30, 56, 71);" class="material-icons">star</i>
-                </a>
-                <a href="#">
-                    <i style="color:rgb(30, 56, 71);" class="material-icons">star</i>
-                </a>
-                <a href="#">
-                    <i style="color:rgb(30, 56, 71);" class="material-icons">star</i>
-                </a>        
+                <?php 
+                   echo StarRating::widget([
+                       'id' => 'evalution',
+                       'name' => 'evalution',
+                       'value' => $evalutionSearch,
+                       'pluginOptions' => [
+                            'showCaption' => false,
+                            'showClear' => false,
+                            'size' => 'sm',
+                            'filledStar' => '<i style="color:rgb(30, 56, 71);" class="glyphicon glyphicon-star"></i>',
+                            'emptyStar' => '<i class="glyphicon glyphicon-star"></i>',
+                        ]
+                   ]);
+                ?>
             </div>
             <div style="margin-top:20px;" class="col m3 s12">  
-            <?php if (!Yii::$app->user->isGuest) 
-            {
-                ?>
-                    <a style="background-color:rgb(30, 56, 71);" class="btn"><i class="material-icons right">add_circle</i>Novo pedido</a>
-                <?php
-            }
-            else
-            {
-                ?>
-                    <a onclick="myFunction()" style="background-color:rgb(30, 56, 71);" class="btn"><i class="material-icons right">add_circle</i>Novo pedido</a>
-                <?php
-            }
-            ?>       
+                <?php if (!Yii::$app->user->isGuest) 
+                {
+                    ?>
+                        <a href="/request/create?projeto=<?php echo $project?>" style="background-color:rgb(30, 56, 71);" class="btn"><i class="material-icons right">add_circle</i>Novo pedido</a>
+                    <?php
+                }
+                else
+                {
+                    ?>
+                        <a onclick="myFunction()" style="background-color:rgb(30, 56, 71);" class="btn"><i class="material-icons right">add_circle</i>Novo pedido</a>
+                    <?php
+                }
+                ?>       
             </div>
         </div>
         <div class="row">
@@ -169,12 +183,26 @@ use frontend\models\Project;
             </div>
         </div>
     </div>
-</div>
 <script>
+
     $(document).ready(function(){
         $('.carousel').carousel();
-    })    
+    })   
     function myFunction() {
             M.toast({html: 'Inicie sessão para poder criar um pedido.'});
     }
+    $(document).ready(function() {
+        $('#evalution').on('rating:change', function(event, value, caption) {
+            $.ajax({
+                url: '<?php echo Yii::$app->request->baseUrl. '/evalution/create' ?>',
+                type: 'post',
+                data: {evalution: value, project: "<?php echo $project; ?>"},
+                dataType: 'json',
+                success: function (data) {
+                    $("#avaliacao").text(data[0]);
+                    $("#contador").text(data[1]);
+                }
+            });
+        });
+    }) 
 </script>   

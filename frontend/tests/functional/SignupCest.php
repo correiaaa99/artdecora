@@ -32,5 +32,9 @@ class SignupCest
             'SignupForm[password]' => '123456aA',
             'SignupForm[confirmarpassword]' => '123456aA',
         ]);
+        $I->dontseeRecord('frontend\models\User', 
+        [
+            'username'=>'fernndocorreia12'
+        ]);
     }
 }

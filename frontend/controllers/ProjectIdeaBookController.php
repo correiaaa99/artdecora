@@ -11,7 +11,7 @@ class ProjectIdeaBookController extends \yii\web\Controller
         return [
             'access' => [
                 'class' => \yii\filters\AccessControl::className(),
-                'only' => ['projetos', 'create', 'index'],
+                'only' => ['projetos', 'create', 'index', 'update'],
                 'rules' => [                
                     // allow authenticated users
                     [
@@ -40,9 +40,13 @@ class ProjectIdeaBookController extends \yii\web\Controller
         ->where(['idBook' => $id])
         ->limit(1)
         ->one();
+
+        $projetoIdeabook = new ProjectIdeaBook();
+
         return $this->render('projetos', [
             'projetos' => $projetosIdeaBook,
             'book' => $book,
+            'projetoUpdate' => $projetoIdeabook,
         ]);
         
     }
@@ -55,20 +59,56 @@ class ProjectIdeaBookController extends \yii\web\Controller
         $livro = new ProjectIdeaBook();
         if($livro->load(Yii::$app->request->post()))
         {
-            //testar se o projeto selecionado já está associado ao livro
-            $projectBook = ProjectIdeaBook::findByProjectAndBook($livro->idProject,$livro->idBook);
-            if($projectBook)
+            if($livro->idBook != null)
             {
-                Yii::$app->session->setFlash('projetoassociado', 'projetoassociado');
-                return $this->redirect(['site/index']);
+                //testar se o projeto selecionado já está associado ao livro
+                $projectBook = ProjectIdeaBook::findByProjectAndBook($livro->idProject,$livro->idBook);
+                if($projectBook)
+                {
+                    Yii::$app->session->setFlash('projetoassociado', 'projetoassociado');
+                    return $this->redirect(['site/index']);
+                }
+                else
+                {
+                    Yii::$app->session->setFlash('projetoassociadosucesso', 'projetoassociadosucesso');
+                    $livro->save();
+                    return $this->redirect(['site/index']); 
+                }
             }
             else
             {
-                Yii::$app->session->setFlash('projetoassociadosucesso', 'projetoassociadosucesso');
-                $livro->save();
-                return $this->redirect(['site/index']); 
+                Yii::$app->session->setFlash('livronull', 'livronull');
+                return $this->redirect(['user/perfil']);
             }
         }
     }
+    public function actionUpdate($id)
+    {
+        $projectIdeaBookUpdate = $this->findModel($id);
+        if(Yii::$app->request->isAjax)  {
+            $data = Yii::$app->request->post();
+            $title = $data['title'];
+            $comment = $data['comment'];;
+            $projectIdeaBookUpdate->title = $title;
+            $projectIdeaBookUpdate->comment = $comment;
+           if($projectIdeaBookUpdate->save())
+           {
+               return "alterado";
+           }
+        }
+    }
+    public function actionDelete($id)
+    {
+        $model = $this->findModel($id);
+        $this->findModel($id)->delete();
+        return "eliminado";
+    }
+    protected function findModel($id) {
+        if (($model = ProjectIdeaBook::findOne($id)) !== null) {
+            return $model;
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    } 
 
 }

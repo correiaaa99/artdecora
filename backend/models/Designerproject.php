@@ -52,8 +52,7 @@ class Designerproject extends \yii\db\ActiveRecord
         $projeto = $session->get('projeto');
         $designers = Designer::find()->select('tbl_designer.*')
         ->leftJoin('tbl_designerproject','tbl_designer.idDesigner = tbl_designerproject.idDesigner')
-        ->where(['tbl_designer.idDesigner' => NULL])
-        ->andWhere(['=', 'tbl_designerproject.idProject', $projeto])
+        ->where(['tbl_designerproject.idProject' => NULL])
         ->all();
         return $designers;
 

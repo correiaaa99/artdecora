@@ -2,6 +2,9 @@
 
 namespace frontend\controllers;
 use frontend\models\Project;
+use frontend\models\Request;
+use frontend\models\Evalution;
+use Yii;
 class ProjectController extends \yii\web\Controller
 {
     public function actionIndex()
@@ -18,10 +21,35 @@ class ProjectController extends \yii\web\Controller
             ->where(['tbl_project.idProject' => $id])
             ->limit(1)
             ->one();
+        if(!Yii::$app->user->isGuest)
+        {
+            $evalutionSearch = Evalution::find()
+            ->where(['idUser' =>  Yii::$app->user->identity->id])
+            ->andWhere(['idProject' => $id])
+            ->one();
+            if($evalutionSearch)
+            {
+                $avaliacao = $evalutionSearch->evalution;
+            }
+            else
+            {
+                $avaliacao = 0;
+            }
+        }
+        else
+        {
+            $avaliacao = 0;
+        }
+
+        $request = new Request();
+        $evalution = new Evalution();
         if($projeto)
         {
             return $this->render('detalhes', [
                 'projeto' => $projeto,
+                'request' => $request,
+                'evalution' => $evalution,
+                'evalutionSearch'  => $avaliacao,
             ]);
         }
         else

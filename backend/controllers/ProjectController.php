@@ -209,6 +209,7 @@ class ProjectController extends Controller
                 $categorys = $model->categorys;
                 $projects = $model->projects;
                 $requests = $model->requests;
+                $avaliacoes = $model->evalution;
                 if($requests != null)
                 {
                     \Yii::$app->session->setFlash('erro', 'Não é possível eliminar este projeto porque está associado a um ou mais pedidos!');
@@ -236,6 +237,13 @@ class ProjectController extends Controller
                 }
                 else
                 {
+                    if($avaliacoes != null)
+                    {
+                        foreach($avaliacoes as $avaliacao)
+                        {
+                            $avaliacao->delete();
+                        }
+                    }
                     $this->findModel($id)->delete();
                     return $this->redirect(['index']);
                 }

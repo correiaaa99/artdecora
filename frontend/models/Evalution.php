@@ -1,6 +1,6 @@
 <?php
 
-namespace app\models;
+namespace frontend\models;
 
 use Yii;
 
@@ -14,6 +14,8 @@ use Yii;
  */
 class Evalution extends \yii\db\ActiveRecord
 {
+    public $avaliacao;
+    public $contador;
     /**
      * {@inheritdoc}
      */

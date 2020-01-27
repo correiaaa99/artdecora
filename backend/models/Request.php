@@ -35,6 +35,7 @@ class Request extends \yii\db\ActiveRecord
             ['idAddress', 'required', 'message' => 'É obrigatório preencher o endereço'],
             ['status', 'required', 'message' => 'É obrigatório preencher o estado do pedido!'],
             [['description', 'status'], 'string'], 
+            [['idProject'], 'integer'],
         ];
     }
 

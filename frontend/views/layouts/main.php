@@ -40,7 +40,7 @@ AppAsset::register($this);
             color: rgb(235, 217, 142);
             font-size:17px;
             margin-top:9px;
-            font-family:"Lucida Sans Unicode", "Lucida Grande", sans-serif;    
+            font-family:"Lucida Sans Unicode", "Lucida Grande", sans-serif;
         }
         @media (max-width: 600px) {
         .navbar-material .nav-wrapper .brand-logo img {
@@ -57,8 +57,7 @@ AppAsset::register($this);
         <a href="#" style="margin-top:12px;" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
         <ul id="nav-mobile" class="right hide-on-med-and-down">
             <?php if (Yii::$app->user->isGuest) {
-                ?>
-                    <li><a href="#">Pesquisa avançada</a></li>
+                ?> 
                     <li><a href="<?= Url::to('/site/contact')?>">Contatos</a></li>
                     <li><a href="<?= Url::to('/site/signup')?>">Registo</a></li>
                     <li><a href="<?= Url::to('/site/login')?>">Entrar</a></li>
@@ -67,7 +66,6 @@ AppAsset::register($this);
             else
             {
                 ?>
-                    <li><a href="#">Pesquisa avançada</a></li>
                     <li><a href="<?= Url::to('/site/contact')?>">Contatos</a></li>
                     <li ><a class='dropdown-trigger ' href='#' data-target='dropdown1' ><i class="fa fa-user"></i> <?= Yii::$app->user->identity->username ?></a></li>
                 <?php 
@@ -104,10 +102,9 @@ AppAsset::register($this);
 <!-- Dropdown Structure -->
 <ul id='dropdown1' style="min-width: 200px !important;" class='dropdown-content'>
     <li><a style="color: rgb(30, 56, 71); font-weight:bold;" href="/user/perfil"><i style="color: rgb(30, 56, 71)" class="material-icons">account_circle</i>Meu perfil</a></li>
-    <li><a style="color: rgb(30, 56, 71);" href="#!"><i style="color: rgb(30, 56, 71)" class="material-icons">notification_important</i>Notificações</a></li>
     <li><a style="color: rgb(30, 56, 71);" href="/user/update"><i style="color: rgb(30, 56, 71)" class="material-icons">edit</i>Editar perfil</a></li>
     <li><a style="color: rgb(30, 56, 71);" href="/user/perfil"><i style="color: rgb(30, 56, 71)" class="material-icons">book</i>Livros de ideias</a></li>
-    <li><a style="color: rgb(30, 56, 71);" href="#!"><i style="color: rgb(30, 56, 71)" class="material-icons">perm_contact_calendar</i>Pedidos</a></li>
+    <li><a style="color: rgb(30, 56, 71);" href="/request/index"><i style="color: rgb(30, 56, 71)" class="material-icons">perm_contact_calendar</i>Pedidos</a></li>
     <li><a style="color: rgb(30, 56, 71)" href="/site/logout"><i style="color: rgb(30, 56, 71)" class="material-icons">input</i>Terminar sessão</a></li>
 </ul>
 <!-- Dropdown Structure -->
@@ -115,8 +112,7 @@ AppAsset::register($this);
     <li><a style="color: rgb(30, 56, 71); font-weight:bold;" href="/user/perfil"><i style="color: rgb(30, 56, 71)" class="material-icons">account_circle</i>Meu perfil</a></li>
     <li><a style="color: rgb(30, 56, 71);" href="/user/update"><i style="color: rgb(30, 56, 71)" class="material-icons">edit</i>Editar perfil</a></li>
     <li><a style="color: rgb(30, 56, 71);" href="/user/perfil"><i style="color: rgb(30, 56, 71)" class="material-icons">book</i>Livros de ideias</a></li>
-    <li><a style="color: rgb(30, 56, 71);" href="#!"><i style="color: rgb(30, 56, 71)" class="material-icons">perm_contact_calendar</i>Pedidos</a></li>
-    <li><a style="color: rgb(30, 56, 71);" href="#!"><i style="color: rgb(30, 56, 71)" class="material-icons">notification_important</i>Notificações</a></li>
+    <li><a style="color: rgb(30, 56, 71);" href="/request/index"><i style="color: rgb(30, 56, 71)" class="material-icons">perm_contact_calendar</i>Pedidos</a></li>
     <li><a style="color: rgb(30, 56, 71)" href="/site/logout"><i style="color: rgb(30, 56, 71)" class="material-icons">input</i>Terminar sessão</a></li>
 </ul> 
 <?php endif; ?>

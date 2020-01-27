@@ -91,7 +91,8 @@ use yii\helpers\Url;
 <div class="user-perfil">
     <div class="container">  
         <div class="row">
-            <div class="col m6 s12">
+            <div class="col m2 s12"></div>
+            <div class="col m4 s12">
                 <?php
                     $username = $user->username;
                     $photo = $user->photo;
@@ -103,7 +104,7 @@ use yii\helpers\Url;
                     if($photo)
                     {
                         ?>
-                        <img style="width:250px;height:200px;border-radius: 10px;"  class="materialboxed" src="http://backend.test/<?php echo $photo?>">
+                        <img style="width:250px;height:200px;border-radius: 10px;" class="materialboxed" src="http://backend.test/<?php echo $photo?>">
                         <?php
                     }
                     else
@@ -152,7 +153,7 @@ use yii\helpers\Url;
                 <?php foreach($books as $book) : ?>
                     <div class="col s6 m4">
                         <div class="card">
-                            <div style="height:200px" class="card-image waves-effect waves-block waves-light">
+                            <div style="height:200px;" class="card-image waves-effect waves-block waves-light">
                                 <?php if($book['imagem'] != '') :?>
                                     <img src="http://backend.test/<?php echo $book['imagem'];?>">
                                 <?php endif ?>
@@ -298,6 +299,15 @@ use yii\helpers\Url;
         </script>
         <?php
     }
+    if (Yii::$app->session->hasFlash('livronull'))
+    { 
+        ?>
+        <script>
+                M.toast({html: 'Crie um novo livro de ideias para poder adicionar um projeto.'});
+        </script>
+        <?php
+    }
+
 ?>
 <script>
     $(document).ready(function(){

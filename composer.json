@@ -30,7 +30,9 @@
         "kartik-v/yii2-widget-fileinput": "dev-master",
         "2amigos/yii2-chartjs-widget": "~2.0",
         "developit/yii2-captcha": "*",
-        "alexantr/yii2-ckeditor": "^2.2"
+        "alexantr/yii2-ckeditor": "^2.2",
+        "kartik-v/yii2-widget-rating": "*",
+        "yii2mod/yii2-star-rating": "*"
     },
     "require-dev": {
         "yiisoft/yii2-gii": "~2.1.0",

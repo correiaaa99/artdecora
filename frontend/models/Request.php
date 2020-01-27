@@ -16,6 +16,10 @@ use Yii;
  */
 class Request extends \yii\db\ActiveRecord
 {
+    public $estado;
+    public $endereco;
+    public $descricao;
+    public $name;
     /**
      * {@inheritdoc}
      */
@@ -30,7 +34,9 @@ class Request extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['description', 'idUser', 'idAddress', 'status'], 'required'],
+            ['description', 'required', 'message' => 'É obrigatório preencher a descrição!'],
+            ['idAddress', 'required', 'message' => 'É obrigatório preencher o endereço!'],
+            [['idUser','status'], 'required'],
             [['description'], 'string'],
             [['idUser', 'idProject', 'idAddress'], 'integer'],
             [['status'], 'string', 'max' => 1],
@@ -50,5 +56,28 @@ class Request extends \yii\db\ActiveRecord
             'idAddress' => 'Id Address',
             'status' => 'Status',
         ];
+    }
+    public function getUser()
+    {
+        return $this->hasOne(User::className(), ['idUser' => 'idUser']);
+    }
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getProject()
+    {
+        return $this->hasOne(Project::className(), ['idProject' => 'idProject']);
+    }
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getAddress()
+    {
+        return $this->hasOne(Address::className(), ['idAddress' => 'idAddress']);
+    }
+
+    public function getImages()
+    {
+        return $this->hasMany(Image::className(), ['idRequest' => 'idRequest']);
     }
 }

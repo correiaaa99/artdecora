@@ -19,7 +19,7 @@ use frontend\models\User;
 use yii\data\Pagination;
 use frontend\models\IdeaBook;
 use frontend\models\ProjectIdeaBook;
-
+use frontend\models\Category;
 /**
  * Site controller
  */
@@ -78,10 +78,9 @@ class SiteController extends Controller
     {
         $livro = new ProjectIdeaBook();
         $dataProjects = Project::find();
-
         $totalCount = clone $dataProjects;
         $pagination = new Pagination([
-            'defaultPageSize' => 4,
+            'defaultPageSize' => 8,
             'totalCount' => count($totalCount->all()),
         ]);
 
@@ -94,7 +93,117 @@ class SiteController extends Controller
             'livro' => $livro,
         ]);
     }
-
+    public function actionCategory()
+    {   
+        if (Yii::$app->request->isAjax) {
+            $data = Yii::$app->request->post();
+            $categoria = $data['categoria'];
+            $nomeCategoria = $data['nome'];
+            $projetos = Project::find()
+            ->select('tbl_project.name, tbl_project.idProject, tbl_project.description')
+            ->innerJoin('tbl_projectcategory', 'tbl_project.idProject = tbl_projectcategory.idProject')
+            ->where(['idCategory' => $categoria])
+            ->orderBy('idProject desc')
+            ->all();
+            if(!empty($projetos))
+            {
+                $output = '';
+                foreach($projetos as $projeto)
+                {
+                    $idProjeto = $projeto->idProject;
+                    foreach($projeto->images as $image)
+                    {
+                        $imagem = $image->name;
+                        break;
+                    }
+                    $output .= '<div class="col s6 m3">
+                        <div class="card">
+                            <div class="card-image">
+                                <div class="guardar">
+                                    <img class="image" style="height:210px;" src="http://backend.test/'.$imagem.'">
+                                    <div class="button">';
+                                        if (!Yii::$app->user->isGuest) 
+                                            $output .= '<div class="middle"><a id="'. $idProjeto .'" style="background-color:rgb(30, 56, 71);" class="waves-effect waves-light btn modal-trigger botao" href="#modal1"><i class="material-icons right">add</i>Guardar</a></div>';
+                                        else 
+                                            $output .= '<div class="middle"><a onclick="myFunction()" style="background-color:rgb(30, 56, 71);" class="waves-effect waves-light btn"><i class="material-icons right">add</i>Guardar</a></div>';
+                                    $output .= '</div>  
+                                </div>
+                            </div>
+                            <div style="height:170px;margin-top:-40px" class="card-content">
+                                <p style="font-weight:bold;font-size:20px;">' . $projeto->name . '</p>
+                                <p>'. $projeto->description . '</p>
+                            </div>
+                            <div class="card-action">
+                                <a style="color:rgb(30, 56, 71);" href="/project/detalhes?id='. $projeto->idProject . '">Detalhes</a>
+                            </div>
+                        </div>
+                    </div>';
+            
+                }
+                echo $output;
+            }
+            else
+            {
+                echo '<div style="background-color:rgb(30, 56, 71);height:80px;border-radius:15px;">
+                        <h6 style="text-align:center;color:white;padding:32px;font-weight:600;">Não existem projetos com a categoria <a style="color:rgb(235, 217, 142);">'.$nomeCategoria.'</a></h6>
+                    </div>';
+            }
+        }
+    }
+    public function actionPrice()
+    {   
+        if (Yii::$app->request->isAjax) {
+            $data = Yii::$app->request->post();
+            $precoMinimo = $data['precoMinimo'];
+            $precoMaximo = $data['precoMaximo'];
+            $projetos = Project::find()       
+            ->where(['between', 'price', $precoMinimo, $precoMaximo])
+            ->all();
+            if(!empty($projetos))
+            {
+               $output = '';
+                foreach($projetos as $projeto)
+                {
+                    $idProjeto = $projeto->idProject;
+                    foreach($projeto->images as $image)
+                    {
+                        $imagem = $image->name;
+                        break;
+                    }
+                    $output .= '<div class="col s6 m3">
+                        <div class="card">
+                            <div class="card-image">
+                                <div class="guardar">
+                                    <img class="image" style="height:210px;" src="http://backend.test/'.$imagem.'">
+                                    <div class="button">';
+                                        if (!Yii::$app->user->isGuest) 
+                                            $output .= '<div class="middle"><a id="'. $idProjeto .'" style="background-color:rgb(30, 56, 71);" class="waves-effect waves-light btn modal-trigger botao" href="#modal1"><i class="material-icons right">add</i>Guardar</a></div>';
+                                        else 
+                                            $output .= '<div class="middle"><a onclick="myFunction()" style="background-color:rgb(30, 56, 71);" class="waves-effect waves-light btn"><i class="material-icons right">add</i>Guardar</a></div>';
+                                    $output .= '</div>  
+                                </div>
+                            </div>
+                            <div style="height:170px;margin-top:-40px" class="card-content">
+                                <p style="font-weight:bold;font-size:20px;">' . $projeto->name . '</p>
+                                <p>'. $projeto->description . '</p>
+                            </div>
+                            <div class="card-action">
+                                <a style="color:rgb(30, 56, 71);" href="/project/detalhes?id='. $projeto->idProject . '">Detalhes</a>
+                            </div>
+                        </div>
+                    </div>';
+            
+                }
+                echo $output;
+            }
+            else
+            {
+                echo '<div style="background-color:rgb(30, 56, 71);height:80px;border-radius:15px;">
+                        <h6 style="text-align:center;color:white;padding:32px;font-weight:600;">Não existem projetos entre o preço <a style="color:rgb(235, 217, 142);">'.$precoMinimo.' €</a> e <a style="color:rgb(235, 217, 142);">'.$precoMaximo.' €</a> </h6>
+                    </div>';
+            }
+        }
+    }
     /**
      * Logs in a user.
      *

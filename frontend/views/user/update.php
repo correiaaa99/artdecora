@@ -363,6 +363,14 @@ if (Yii::$app->session->hasFlash('enderecoigual'))
             M.toast({html: 'Endereço já existe.'});
     </script>
     <?php
+}
+if (Yii::$app->session->hasFlash('endereconull'))
+{ 
+    ?>
+    <script>
+            M.toast({html: 'Crie um novo endereço para criar um pedido.'});
+    </script>
+    <?php
 }?>
 <script>
     $(document).ready(function(){
